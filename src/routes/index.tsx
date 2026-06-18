@@ -44,6 +44,7 @@ function Home() {
           <Hero />
           <Marquee />
           <Products />
+          <HeroSlider />
           <Divider />
           <WhyElysof />
           <Results />
