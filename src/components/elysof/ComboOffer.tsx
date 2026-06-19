@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { products } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { toast } from "sonner";
-import comboPackImage from "@/assets/combo-pack.jpeg.asset.json";
+import comboPackImage from "@/assets/combo-pack.jpeg";
 
 const COMBO_PRICE = 499;
 const COMBO_MRP = 1215;
@@ -170,7 +170,7 @@ export function ComboOffer() {
                 style={{ filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.5))" }}
               >
                 <img
-                  src={comboPackImage.url}
+                  src={comboPackImage}
                   alt="ElySof Combo Pack — Glutasof Facewash, Neem Soap, Sandalwood & Kesar Soap, Honey & Almond Scrub Soap"
                   className="block h-auto w-full object-cover"
                 />

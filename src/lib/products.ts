@@ -1,7 +1,7 @@
-import honeyAlmond from "@/assets/honey-almond.jpeg.asset.json";
-import glutasof from "@/assets/glutasof.jpeg.asset.json";
-import neem from "@/assets/neem.jpeg.asset.json";
-import sandalwood from "@/assets/sandalwood-kesar-new.png.asset.json";
+import honeyAlmond from "@/assets/honey-almond.jpeg";
+import glutasof from "@/assets/glutasof.jpeg";
+import neem from "@/assets/neem.jpeg";
+import sandalwood from "@/assets/sandalwood-kesar-new.png";
 
 export type Product = {
   id: string;
@@ -23,7 +23,7 @@ export const products: Product[] = [
     description: "Exfoliates gently, nourishes deeply. The ultimate 2-in-1 soap for soft, radiant skin.",
     mrp: 250,
     price: 109,
-    image: honeyAlmond.url,
+    image: honeyAlmond,
     tags: ["Exfoliating", "Moisturizing", "125g"],
     rating: 5,
   },
@@ -34,7 +34,7 @@ export const products: Product[] = [
     description: "Enriched with Glutathione, Kojic Acid & Alpha Arbutin for skin brightening and rejuvenation.",
     mrp: 490,
     price: 299,
-    image: glutasof.url,
+    image: glutasof,
     tags: ["Brightening", "Paraben Free", "SLS Free", "100ml"],
     rating: 5,
   },
@@ -45,7 +45,7 @@ export const products: Product[] = [
     description: "Ayurvedic Neem goodness that gently cleanses, protects, and refreshes your skin every day.",
     mrp: 225,
     price: 89,
-    image: neem.url,
+    image: neem,
     tags: ["Anti-Acne", "Ayurvedic", "100g"],
     rating: 5,
   },
@@ -56,7 +56,7 @@ export const products: Product[] = [
     description: "Soothing, divine, and elegant. Sandalwood + Saffron for luminous, calm skin.",
     mrp: 250,
     price: 99,
-    image: sandalwood.url,
+    image: sandalwood,
     tags: ["Soothing", "Luxury", "100g"],
     rating: 5,
   },

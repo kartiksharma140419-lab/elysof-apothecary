@@ -5,6 +5,7 @@ import { products, discount, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { toast } from "sonner";
 import { CheckoutModal } from "./CheckoutModal";
+import brandLogo from "@/assets/logo.png";
 
 /* ---------------- Announcement bar ---------------- */
 const announcements = [
@@ -36,22 +37,15 @@ export function AnnouncementBar() {
   );
 }
 
-/* ---------------- Bird logo (SVG) ---------------- */
+/* ---------------- Bird logo (PNG) ---------------- */
 function BirdLogo({ className = "h-7 w-7" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden>
-      <defs>
-        <linearGradient id="birdg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#E84E9E" />
-          <stop offset="100%" stopColor="#6D5BD0" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M6 38 C18 30 28 26 40 28 C48 29 54 24 58 18 C56 30 50 38 42 42 C36 45 28 46 22 44 L26 52 L18 50 L14 56 L12 48 L6 38 Z"
-        fill="url(#birdg)"
-      />
-      <circle cx="48" cy="22" r="1.5" fill="#fff" />
-    </svg>
+    <img
+      src={brandLogo}
+      alt="ElySof Logo"
+      className={`${className} object-contain`}
+      style={{ mixBlendMode: "multiply" }}
+    />
   );
 }
 
