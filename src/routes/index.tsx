@@ -16,6 +16,7 @@ import {
 } from "@/components/elysof/Sections";
 import { CartDrawer } from "@/components/elysof/CartDrawer";
 import { HeroSlider } from "@/components/elysof/HeroSlider";
+import { ComboOffer } from "@/components/elysof/ComboOffer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -44,6 +45,7 @@ function Home() {
           <Hero />
           <Marquee />
           <Products />
+          <ComboOffer />
           <HeroSlider />
           <Divider />
           <WhyElysof />
