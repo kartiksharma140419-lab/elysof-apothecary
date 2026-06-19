@@ -6,6 +6,12 @@ import { useCart } from "@/lib/cart-context";
 import { toast } from "sonner";
 import { CheckoutModal } from "./CheckoutModal";
 import brandLogo from "@/assets/logo.png";
+import beforeTired from "@/assets/before-tired.png";
+import afterBright from "@/assets/after-bright.png";
+import beforeAcne from "@/assets/before-acne.png";
+import afterAcne from "@/assets/after-acne.png";
+import beforeSoft from "@/assets/before-soft.png";
+import afterSoft from "@/assets/after-soft.png";
 
 /* ---------------- Announcement bar ---------------- */
 const announcements = [
@@ -139,6 +145,8 @@ const heroStories = [
     after: ["bg-[oklch(0.88_0.04_70)]", "Clear & glowing"],
     quote: "Neem Soap cleared my breakouts in 3 weeks.",
     who: "Priya, Mumbai",
+    beforeImg: beforeAcne,
+    afterImg: afterAcne,
   },
   {
     tag: "Dullness · gone",
@@ -146,6 +154,8 @@ const heroStories = [
     after: ["bg-[oklch(0.86_0.07_75)]", "Bright & radiant"],
     quote: "Glutasof Face Wash gave me my glow back.",
     who: "Ritika, Delhi",
+    beforeImg: beforeTired,
+    afterImg: afterBright,
   },
   {
     tag: "Dryness · hydrated",
@@ -153,6 +163,8 @@ const heroStories = [
     after: ["bg-[oklch(0.88_0.05_65)]", "Soft & smooth"],
     quote: "Honey & Almond Soap — my skin drinks it up.",
     who: "Anjali, Pune",
+    beforeImg: beforeSoft,
+    afterImg: afterSoft,
   },
 ];
 
@@ -190,8 +202,8 @@ function StoryCard() {
           transition={{ duration: 0.45 }}
           className="mt-4 grid grid-cols-2 gap-3"
         >
-          <SkinPanel cls={s.before[0]} label="Before" sub={s.before[1]} acne />
-          <SkinPanel cls={s.after[0]} label="After" sub={s.after[1]} glow />
+          <SkinPanel cls={s.before[0]} label="Before" sub={s.before[1]} acne={idx === 0} img={(s as any).beforeImg} />
+          <SkinPanel cls={s.after[0]} label="After" sub={s.after[1]} glow={idx === 0} img={(s as any).afterImg} />
         </motion.div>
 
         <motion.blockquote
@@ -212,25 +224,43 @@ function StoryCard() {
   );
 }
 
-function SkinPanel({ cls, label, sub, acne, glow }: { cls: string; label: string; sub: string; acne?: boolean; glow?: boolean }) {
+function SkinPanel({
+  cls,
+  label,
+  sub,
+  acne,
+  glow,
+  img,
+}: {
+  cls?: string;
+  label: string;
+  sub: string;
+  acne?: boolean;
+  glow?: boolean;
+  img?: string;
+}) {
   return (
     <div className="relative overflow-hidden border-2 border-ink">
-      <div className={`relative h-40 w-full ${cls}`}>
-        {acne && (
-          <div className="absolute inset-0">
-            {[..."abcdefgh"].map((k, i) => (
-              <span
-                key={k}
-                className="absolute h-2 w-2 rounded-full bg-[oklch(0.55_0.15_25)]/70"
-                style={{ top: `${15 + ((i * 37) % 70)}%`, left: `${10 + ((i * 53) % 75)}%` }}
-              />
-            ))}
-          </div>
+      <div className={`relative h-40 w-full ${cls || ""}`}>
+        {img ? (
+          <img src={img} alt={sub} className="h-full w-full object-cover" />
+        ) : (
+          acne && (
+            <div className="absolute inset-0">
+              {[..."abcdefgh"].map((k, i) => (
+                <span
+                  key={k}
+                  className="absolute h-2 w-2 rounded-full bg-[oklch(0.55_0.15_25)]/70"
+                  style={{ top: `${15 + ((i * 37) % 70)}%`, left: `${10 + ((i * 53) % 75)}%` }}
+                />
+              ))}
+            </div>
+          )
         )}
-        {glow && (
+        {glow && !img && (
           <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-gold/30" />
         )}
-        <div className="absolute bottom-0 left-0 m-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+        <div className="absolute bottom-0 left-0 m-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
           {label}
         </div>
       </div>
@@ -491,9 +521,9 @@ export function WhyElysof() {
 
 /* ---------------- Results / Before-After ---------------- */
 const results = [
-  { who: "Priya · Mumbai", quote: "My acne is finally calm.", product: "Neem Soap", before: "oklch(0.78 0.05 50)", after: "oklch(0.88 0.04 70)" },
-  { who: "Ritika · Delhi", quote: "Brightness in 14 days.", product: "Glutasof Facewash", before: "oklch(0.72 0.01 70)", after: "oklch(0.86 0.07 75)" },
-  { who: "Anjali · Pune", quote: "Soft like never before.", product: "Honey & Almond Soap", before: "oklch(0.78 0.03 55)", after: "oklch(0.88 0.05 65)" },
+  { who: "Priya · Mumbai", quote: "My acne is finally calm.", product: "Neem Soap", before: "oklch(0.78 0.05 50)", after: "oklch(0.88 0.04 70)", beforeImg: beforeAcne, afterImg: afterAcne },
+  { who: "Ritika · Delhi", quote: "Brightness in 14 days.", product: "Glutasof Facewash", before: "oklch(0.72 0.01 70)", after: "oklch(0.86 0.07 75)", beforeImg: beforeTired, afterImg: afterBright },
+  { who: "Anjali · Pune", quote: "Soft like never before.", product: "Honey & Almond Soap", before: "oklch(0.78 0.03 55)", after: "oklch(0.88 0.05 65)", beforeImg: beforeSoft, afterImg: afterSoft },
 ];
 
 export function Results() {
@@ -516,26 +546,44 @@ export function Results() {
               className="border-2 border-ink bg-paper shadow-brut-sm"
             >
               <div className="relative grid grid-cols-2">
-                <div className="relative h-44" style={{ background: r.before }}>
-                  <div className="absolute inset-0">
-                    {[...Array(6)].map((_, k) => (
-                      <span
-                        key={k}
-                        className="absolute h-1.5 w-1.5 rounded-full bg-[oklch(0.5_0.15_25)]/60"
-                        style={{ top: `${20 + ((k * 41) % 60)}%`, left: `${15 + ((k * 53) % 70)}%` }}
-                      />
-                    ))}
+                {r.beforeImg ? (
+                  <div className="relative h-44">
+                    <img src={r.beforeImg} alt="Before" className="h-full w-full object-cover" />
+                    <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
+                      Before
+                    </span>
                   </div>
-                  <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
-                    Before
-                  </span>
-                </div>
-                <div className="relative h-44" style={{ background: r.after }}>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-gold/30" />
-                  <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
-                    After
-                  </span>
-                </div>
+                ) : (
+                  <div className="relative h-44" style={{ background: r.before }}>
+                    <div className="absolute inset-0">
+                      {[...Array(6)].map((_, k) => (
+                        <span
+                          key={k}
+                          className="absolute h-1.5 w-1.5 rounded-full bg-[oklch(0.5_0.15_25)]/60"
+                          style={{ top: `${20 + ((k * 41) % 60)}%`, left: `${15 + ((k * 53) % 70)}%` }}
+                        />
+                      ))}
+                    </div>
+                    <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                      Before
+                    </span>
+                  </div>
+                )}
+                {r.afterImg ? (
+                  <div className="relative h-44">
+                    <img src={r.afterImg} alt="After" className="h-full w-full object-cover" />
+                    <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
+                      After
+                    </span>
+                  </div>
+                ) : (
+                  <div className="relative h-44" style={{ background: r.after }}>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-gold/30" />
+                    <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                      After
+                    </span>
+                  </div>
+                )}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-ink bg-paper px-2 py-1 text-xs font-bold">
                   →
                 </div>
