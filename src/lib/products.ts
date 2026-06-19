@@ -1,7 +1,7 @@
 import honeyAlmond from "@/assets/honey-almond.jpeg.asset.json";
 import glutasof from "@/assets/glutasof.jpeg.asset.json";
 import neem from "@/assets/neem.jpeg.asset.json";
-import sandalwood from "@/assets/sandalwood-kesar.jpeg.asset.json";
+import sandalwood from "@/assets/sandalwood-kesar-new.png.asset.json";
 
 export type Product = {
   id: string;

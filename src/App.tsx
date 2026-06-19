@@ -15,6 +15,7 @@ import {
 } from "@/components/elysof/Sections";
 import { CartDrawer } from "@/components/elysof/CartDrawer";
 import { HeroSlider } from "@/components/elysof/HeroSlider";
+import { ComboOffer } from "@/components/elysof/ComboOffer";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
           <Hero />
           <Marquee />
           <Products />
+          <ComboOffer />
           <HeroSlider />
           <Divider />
           <WhyElysof />
