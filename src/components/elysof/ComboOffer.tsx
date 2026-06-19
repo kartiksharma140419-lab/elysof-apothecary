@@ -164,35 +164,16 @@ export function ComboOffer() {
                 Get all 4 ElySof bestsellers — Glutasof Facewash, Neem Soap, Sandalwood & Kesar Soap, and Honey & Almond Scrub Soap — in a single combo built for complete daily care.
               </p>
 
-              {/* Product stack */}
-              <div className="relative mt-10 flex h-[260px] items-end justify-center sm:h-[280px]">
-                {ORDER.map((id, idx) => {
-                  const p = products.find((x) => x.id === id)!;
-                  return (
-                    <div
-                      key={id}
-                      className={`c-product-${idx} relative`}
-                      style={{
-                        width: "clamp(90px, 14vw, 140px)",
-                        marginLeft: idx === 0 ? 0 : "-24px",
-                        zIndex: idx + 1,
-                        transform: ROTATIONS[idx],
-                        filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.5))",
-                        transition: "transform 300ms ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-12px) rotate(0deg) scale(1.08)";
-                        (e.currentTarget as HTMLDivElement).style.zIndex = "20";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLDivElement).style.transform = ROTATIONS[idx];
-                        (e.currentTarget as HTMLDivElement).style.zIndex = String(idx + 1);
-                      }}
-                    >
-                      <img src={p.image} alt={p.name} className="h-auto w-full object-contain" />
-                    </div>
-                  );
-                })}
+              {/* Combo pack image */}
+              <div
+                className="c-product-0 relative mt-10 border-2 border-[#FFFC81] bg-[#111]"
+                style={{ filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.5))" }}
+              >
+                <img
+                  src={comboPackImage.url}
+                  alt="ElySof Combo Pack — Glutasof Facewash, Neem Soap, Sandalwood & Kesar Soap, Honey & Almond Scrub Soap"
+                  className="block h-auto w-full object-cover"
+                />
               </div>
 
               {/* Benefit tags */}
