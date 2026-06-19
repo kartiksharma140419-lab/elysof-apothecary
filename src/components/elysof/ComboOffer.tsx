@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { products } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { toast } from "sonner";
+import comboPackImage from "@/assets/combo-pack.jpeg.asset.json";
 
 const COMBO_PRICE = 499;
 const COMBO_MRP = 1215;
