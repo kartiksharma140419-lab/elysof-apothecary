@@ -105,7 +105,7 @@ export function Navbar() {
         >
           <ShoppingBag size={18} />
           <span className="hidden sm:inline">Cart</span>
-          <span className="grid h-5 min-w-[1.25rem] place-items-center bg-terracotta px-1 text-[11px] font-bold text-primary-foreground">
+          <span className="grid h-5 min-w-[1.25rem] place-items-center bg-terracotta px-1 text-[11px] font-bold text-forest-deep">
             {count}
           </span>
         </button>
@@ -258,13 +258,13 @@ function SkinPanel({
           )
         )}
         {glow && !img && (
-          <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-gold/30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-terracotta/30" />
         )}
-        <div className="absolute bottom-0 left-0 m-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
+        <div className="absolute bottom-0 left-0 m-2 border border-ink bg-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
           {label}
         </div>
       </div>
-      <p className="border-t border-ink bg-paper px-2 py-1 text-center text-[11px] font-medium">{sub}</p>
+      <p className="border-t border-ink bg-white px-2 py-1 text-center text-[11px] font-medium">{sub}</p>
     </div>
   );
 }
@@ -380,7 +380,7 @@ function ProductCard({ p, onBuy }: { p: Product; onBuy: (p: Product) => void }) 
           className="h-full w-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
-        <span className="absolute left-3 top-3 border-2 border-ink bg-terracotta px-2 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">
+        <span className="absolute left-3 top-3 border-2 border-ink bg-[#B2511E] px-2 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">
           {discount(p)}% OFF
         </span>
       </div>
@@ -415,7 +415,7 @@ function ProductCard({ p, onBuy }: { p: Product; onBuy: (p: Product) => void }) 
           </button>
           <button
             onClick={() => onBuy(p)}
-            className="border-2 border-terracotta py-2.5 text-xs font-bold uppercase tracking-wider text-terracotta transition hover:bg-terracotta hover:text-primary-foreground"
+            className="border-2 border-terracotta py-2.5 text-xs font-bold uppercase tracking-wider text-terracotta transition hover:bg-terracotta hover:text-forest-deep"
           >
             Buy Now
           </button>
@@ -521,9 +521,9 @@ export function WhyElysof() {
 
 /* ---------------- Results / Before-After ---------------- */
 const results = [
-  { who: "Priya · Mumbai", quote: "My acne is finally calm.", product: "Neem Soap", before: "oklch(0.78 0.05 50)", after: "oklch(0.88 0.04 70)", beforeImg: beforeAcne, afterImg: afterAcne },
-  { who: "Ritika · Delhi", quote: "Brightness in 14 days.", product: "Glutasof Facewash", before: "oklch(0.72 0.01 70)", after: "oklch(0.86 0.07 75)", beforeImg: beforeTired, afterImg: afterBright },
-  { who: "Anjali · Pune", quote: "Soft like never before.", product: "Honey & Almond Soap", before: "oklch(0.78 0.03 55)", after: "oklch(0.88 0.05 65)", beforeImg: beforeSoft, afterImg: afterSoft },
+  { who: "Priya · Mumbai", quote: "My acne is finally calm.", product: "Neem Soap", before: "oklch(0.78 0.05 50)", after: "#FF99CB", beforeImg: beforeAcne, afterImg: afterAcne },
+  { who: "Ritika · Delhi", quote: "Brightness in 14 days.", product: "Glutasof Facewash", before: "oklch(0.72 0.01 70)", after: "#FF99CB", beforeImg: beforeTired, afterImg: afterBright },
+  { who: "Anjali · Pune", quote: "Soft like never before.", product: "Honey & Almond Soap", before: "oklch(0.78 0.03 55)", after: "#FF99CB", beforeImg: beforeSoft, afterImg: afterSoft },
 ];
 
 export function Results() {
@@ -549,7 +549,7 @@ export function Results() {
                 {r.beforeImg ? (
                   <div className="relative h-44">
                     <img src={r.beforeImg} alt="Before" className="h-full w-full object-cover" />
-                    <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
+                    <span className="absolute bottom-2 left-2 border border-ink bg-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
                       Before
                     </span>
                   </div>
@@ -564,7 +564,7 @@ export function Results() {
                         />
                       ))}
                     </div>
-                    <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                    <span className="absolute bottom-2 left-2 border border-ink bg-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
                       Before
                     </span>
                   </div>
@@ -572,19 +572,19 @@ export function Results() {
                 {r.afterImg ? (
                   <div className="relative h-44">
                     <img src={r.afterImg} alt="After" className="h-full w-full object-cover" />
-                    <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
+                    <span className="absolute bottom-2 left-2 border border-ink bg-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider z-10">
                       After
                     </span>
                   </div>
                 ) : (
                   <div className="relative h-44" style={{ background: r.after }}>
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-gold/30" />
-                    <span className="absolute bottom-2 left-2 border border-ink bg-paper px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-terracotta/30" />
+                    <span className="absolute bottom-2 left-2 border border-ink bg-white px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
                       After
                     </span>
                   </div>
                 )}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-ink bg-paper px-2 py-1 text-xs font-bold">
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-ink bg-white px-2 py-1 text-xs font-bold">
                   →
                 </div>
               </div>
@@ -617,7 +617,7 @@ const reviews = [
   { name: "Siddharth Rao", city: "Ahmedabad", text: "The Sandalwood & Kesar Soap is incredibly soothing. Perfect for sensitive skin. The fragrance stays for hours. Premium luxury at an affordable price!", product: "Sandalwood & Kesar Soap" },
 ];
 
-const avatarColors = ["bg-forest", "bg-terracotta", "bg-gold", "bg-forest-deep"];
+const avatarColors = ["bg-forest", "bg-terracotta", "bg-forest", "bg-terracotta"];
 
 export function Reviews() {
   const [page, setPage] = useState(0);
@@ -653,7 +653,7 @@ export function Reviews() {
               className={`border-2 border-ink bg-parchment p-6 ${i === 1 ? "lg:translate-y-3" : ""}`}
             >
               <div className="flex items-center gap-3">
-                <div className={`grid h-11 w-11 place-items-center rounded-full border-2 border-ink ${avatarColors[i % avatarColors.length]} text-primary-foreground font-bold`}>
+                <div className={`grid h-11 w-11 place-items-center rounded-full border-2 border-ink ${avatarColors[i % avatarColors.length]} ${avatarColors[i % avatarColors.length] === 'bg-terracotta' ? 'text-forest-deep' : 'text-primary-foreground'} font-bold`}>
                   {r.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
                 </div>
                 <div className="min-w-0">
@@ -716,7 +716,7 @@ export function Contact() {
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-terracotta text-primary-foreground"><Mail size={16} /></span>
+              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-forest text-primary-foreground"><Mail size={16} /></span>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Email</p>
                 <a href="mailto:info@elysof.com" className="text-base font-semibold hover:text-forest">info@elysof.com</a>

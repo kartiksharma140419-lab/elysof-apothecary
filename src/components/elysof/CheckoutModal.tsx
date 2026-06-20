@@ -65,7 +65,7 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
       },
       prefill: { name: form.name, email: form.email, contact: form.phone },
       notes: { address: `${form.street}, ${form.city} - ${form.pincode}` },
-      theme: { color: "#2D6A4F" },
+      theme: { color: "#3D5F82" },
     };
 
     try {

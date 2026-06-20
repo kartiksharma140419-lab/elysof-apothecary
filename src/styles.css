@@ -48,9 +48,43 @@
 :root {
   --radius: 0.25rem;
 
-  /* Brand */
+  /* Brand - NEW Logo-Derived Palette */
+  --parchment: #FBF5E9;                   /* Neutral cream/parchment background */
+  --paper: #F8EEF4;                       /* Card/secondary background (very soft pink-tinted off-white) */
+  --forest: #3D5F82;                      /* Logo Navy primary accent */
+  --forest-deep: #2A3F54;                 /* Dark navy variant for footer/dark sections */
+  --terracotta: #FF99CB;                  /* Logo Pink secondary accent */
+  --gold: #D4A847;                        /* Warm gold for star ratings */
+  --ink: #121212;                         /* Near-black body text */
+  --line: oklch(0.88 0.02 70);            /* #E8DDD0 */
+
+  /* shadcn semantics mapped to brand */
+  --background: var(--parchment);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--forest);
+  --primary-foreground: oklch(0.985 0.005 85);
+  --secondary: var(--terracotta);
+  --secondary-foreground: oklch(0.985 0.005 85);
+  --muted: oklch(0.94 0.015 80);
+  --muted-foreground: #5C6B7A;            /* Cool grey-navy tint */
+  --accent: var(--gold);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--forest);
+}
+
+/* Safety lock — prevents global palette vars from leaking into these sections */
+.offer-section-legacy,
+.section-after-offer-legacy {
   --parchment: oklch(0.972 0.018 85);     /* #FBF7F0 */
-  --paper: oklch(1 0 0);
+  --paper: oklch(1 0 0);                  /* #ffffff */
   --forest: oklch(0.46 0.09 158);          /* #2D6A4F */
   --forest-deep: oklch(0.36 0.08 158);
   --terracotta: oklch(0.55 0.14 45);       /* #B5541A */
@@ -58,7 +92,6 @@
   --ink: oklch(0.18 0 0);                  /* #1C1C1C */
   --line: oklch(0.88 0.02 70);             /* #E8DDD0 */
 
-  /* shadcn semantics mapped to brand */
   --background: var(--parchment);
   --foreground: var(--ink);
   --card: var(--paper);
@@ -116,9 +149,9 @@
   box-shadow: 6px 6px 0 0 var(--forest);
 }
 
-/* Botanical divider line */
+/* Botanical divider line - NEW Navy Color */
 .botanical-divider {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' fill='none' stroke='%232D6A4F' stroke-width='1.2'><path d='M0 20 H1200' stroke-dasharray='2 6'/><g transform='translate(600 20)'><path d='M-40 0 Q-20 -14 0 0 Q20 14 40 0'/><circle cx='0' cy='0' r='3' fill='%232D6A4F'/><path d='M-8 -2 Q-4 -8 0 -10 Q4 -8 8 -2'/></g></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' fill='none' stroke='%233D5F82' stroke-width='1.2'><path d='M0 20 H1200' stroke-dasharray='2 6'/><g transform='translate(600 20)'><path d='M-40 0 Q-20 -14 0 0 Q20 14 40 0'/><circle cx='0' cy='0' r='3' fill='%233D5F82'/><path d='M-8 -2 Q-4 -8 0 -10 Q4 -8 8 -2'/></g></svg>");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;

@@ -27,8 +27,12 @@ export default function App() {
           <Hero />
           <Marquee />
           <Products />
-          <ComboOffer />
-          <HeroSlider />
+          <div className="offer-section-legacy">
+            <ComboOffer />
+          </div>
+          <div className="section-after-offer-legacy">
+            <HeroSlider />
+          </div>
           <Divider />
           <WhyElysof />
           <Results />
