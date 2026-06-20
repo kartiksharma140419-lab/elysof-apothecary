@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { CheckoutModal } from "./CheckoutModal";
 
-const FREE_SHIP = 299;
+const FREE_SHIP = 199;
 
 export function CartDrawer() {
   const { items, open, setOpen, setQty, remove, subtotal, comboDiscount } = useCart();
@@ -118,9 +118,19 @@ export function CartDrawer() {
                         <span className="font-bold">-₹{comboDiscount}</span>
                       </div>
                     )}
-                    <div className="mb-3 flex items-end justify-between">
-                      <span className="font-accent text-sm uppercase tracking-wider">Subtotal</span>
-                      <span className="font-display text-3xl">₹{subtotal}</span>
+                    <div className="space-y-1.5 border-b border-dashed border-ink pb-3 mb-3">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-accent uppercase tracking-wider text-muted-foreground">Subtotal</span>
+                        <span className="font-semibold">₹{subtotal}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-accent uppercase tracking-wider text-muted-foreground">Shipping</span>
+                        <span className="font-semibold">{subtotal >= FREE_SHIP ? "FREE" : "₹30"}</span>
+                      </div>
+                    </div>
+                    <div className="mb-4 flex items-end justify-between">
+                      <span className="font-accent text-sm font-bold uppercase tracking-wider">Total Payable</span>
+                      <span className="font-display text-3xl">₹{subtotal + (subtotal >= FREE_SHIP ? 0 : 30)}</span>
                     </div>
                     <button
                       onClick={() => setCheckoutOpen(true)}

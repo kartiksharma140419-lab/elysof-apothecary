@@ -15,7 +15,7 @@ import afterSoft from "@/assets/after-soft.png";
 
 /* ---------------- Announcement bar ---------------- */
 const announcements = [
-  "🌿 Free Shipping on Prepaid Orders above ₹299",
+  "🌿 Free Shipping on Prepaid Orders above ₹199",
   "✨ 100% Natural Ingredients · No Parabens · No SLS",
   "🎁 Trusted by 1000+ Happy Customers Across India",
 ];

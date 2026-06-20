@@ -38,7 +38,7 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
   const [submitting, setSubmitting] = useState(false);
   const [confirmation, setConfirmation] = useState<{ id: string; name: string } | null>(null);
 
-  const shipping = subtotal >= 299 ? 0 : 49;
+  const shipping = subtotal >= 199 ? 0 : 30;
   const total = subtotal + shipping;
 
   const update = (k: keyof AddressForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
