@@ -7,7 +7,7 @@ import { CheckoutModal } from "./CheckoutModal";
 const FREE_SHIP = 299;
 
 export function CartDrawer() {
-  const { items, open, setOpen, setQty, remove, subtotal } = useCart();
+  const { items, open, setOpen, setQty, remove, subtotal, comboDiscount } = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const remaining = Math.max(0, FREE_SHIP - subtotal);
   const progress = Math.min(100, (subtotal / FREE_SHIP) * 100);
@@ -112,6 +112,12 @@ export function CartDrawer() {
                   </ul>
 
                   <footer className="border-t-2 border-ink bg-paper px-6 py-4">
+                    {comboDiscount > 0 && (
+                      <div className="mb-2 flex items-center justify-between text-xs text-forest">
+                        <span className="font-semibold uppercase tracking-wider">★ Combo Discount Applied</span>
+                        <span className="font-bold">-₹{comboDiscount}</span>
+                      </div>
+                    )}
                     <div className="mb-3 flex items-end justify-between">
                       <span className="font-accent text-sm uppercase tracking-wider">Subtotal</span>
                       <span className="font-display text-3xl">₹{subtotal}</span>

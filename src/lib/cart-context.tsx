@@ -13,6 +13,7 @@ type CartCtx = {
   clear: () => void;
   count: number;
   subtotal: number;
+  comboDiscount: number;
 };
 
 const Ctx = createContext<CartCtx | null>(null);
@@ -36,18 +37,32 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   const clear = () => setItems([]);
 
-  const { count, subtotal } = useMemo(() => {
+  const { count, subtotal, comboDiscount } = useMemo(() => {
     let count = 0;
-    let subtotal = 0;
+    let rawSubtotal = 0;
+    let honeyAlmondQty = 0;
+    let glutasofQty = 0;
+    let neemQty = 0;
+    let sandalwoodQty = 0;
+
     items.forEach((i) => {
       count += i.qty;
-      subtotal += i.qty * i.product.price;
+      rawSubtotal += i.qty * i.product.price;
+      if (i.product.id === "honey-almond") honeyAlmondQty = i.qty;
+      else if (i.product.id === "glutasof") glutasofQty = i.qty;
+      else if (i.product.id === "neem") neemQty = i.qty;
+      else if (i.product.id === "sandalwood-kesar") sandalwoodQty = i.qty;
     });
-    return { count, subtotal };
+
+    const comboCount = Math.min(honeyAlmondQty, glutasofQty, neemQty, sandalwoodQty);
+    const comboDiscount = comboCount * 97; // 596 - 499 = 97 discount per combo
+    const subtotal = rawSubtotal - comboDiscount;
+
+    return { count, subtotal, comboDiscount };
   }, [items]);
 
   return (
-    <Ctx.Provider value={{ items, open, setOpen, add, remove, setQty, clear, count, subtotal }}>
+    <Ctx.Provider value={{ items, open, setOpen, add, remove, setQty, clear, count, subtotal, comboDiscount }}>
       {children}
     </Ctx.Provider>
   );

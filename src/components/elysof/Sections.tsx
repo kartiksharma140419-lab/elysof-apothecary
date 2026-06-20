@@ -690,9 +690,25 @@ export function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const phone = formData.get("phone") as string;
+    const email = formData.get("email") as string;
+    const subject = formData.get("subject") as string;
+    const message = formData.get("message") as string;
+
+    const mailtoBody = encodeURIComponent(
+      `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\n\nMessage:\n${message}`
+    );
+    const mailtoUrl = `mailto:info@elysof.com?subject=${encodeURIComponent(
+      subject || "Query from ElySof Website"
+    )}&body=${mailtoBody}`;
+
     setSubmitting(true);
+    window.location.href = mailtoUrl;
+
     setTimeout(() => {
-      toast.success("Thank you! We'll get back to you within 24 hours. 🌿");
+      toast.success("Thank you! Opening your email client to send the message. 🌿");
       (e.target as HTMLFormElement).reset();
       setSubmitting(false);
     }, 500);
@@ -816,8 +832,8 @@ export function Footer() {
           <div>
             <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">Customer Care</p>
             <ul className="mt-3 space-y-2 text-sm">
-              <li>+91 83697 29653</li>
-              <li>info@elysof.com</li>
+              <li><a href="tel:+918369729653" className="hover:text-gold">+91 83697 29653</a></li>
+              <li><a href="mailto:info@elysof.com" className="hover:text-gold">info@elysof.com</a></li>
               <li><a href="#" className="hover:text-gold">Shipping Policy</a></li>
               <li><a href="#" className="hover:text-gold">Return Policy</a></li>
               <li><a href="#" className="hover:text-gold">Privacy Policy</a></li>
