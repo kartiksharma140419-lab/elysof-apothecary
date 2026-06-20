@@ -3,44 +3,76 @@ import { useState } from "react";
 import { X, CheckCircle2 } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { loadRazorpay, RAZORPAY_KEY_ID } from "@/lib/razorpay";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { z } from "zod";
 
-type Customer = {
-  name: string;
-  phone: string;
-  email: string;
-  street: string;
-  city: string;
-  pincode: string;
+const addressSchema = z.object({
+  fullName: z.string().trim().min(2, "Name is required").max(100),
+  phone: z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit Indian mobile number"),
+  email: z.string().trim().email("Enter a valid email").max(255),
+  addressLine1: z.string().trim().min(3, "Address is required").max(200),
+  addressLine2: z.string().trim().max(200).optional().or(z.literal("")),
+  city: z.string().trim().min(2, "City is required").max(80),
+  state: z.string().trim().min(2, "State is required").max(80),
+  pincode: z.string().regex(/^\d{6}$/, "Enter a valid 6-digit pincode"),
+});
+
+type AddressForm = z.infer<typeof addressSchema>;
+
+const empty: AddressForm = {
+  fullName: "",
+  phone: "",
+  email: "",
+  addressLine1: "",
+  addressLine2: "",
+  city: "",
+  state: "",
+  pincode: "",
 };
-
-const empty: Customer = { name: "", phone: "", email: "", street: "", city: "", pincode: "" };
 
 export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { items, subtotal, clear, setOpen: setCartOpen } = useCart();
-  const [form, setForm] = useState<Customer>(empty);
+  const [form, setForm] = useState<AddressForm>(empty);
+  const [errors, setErrors] = useState<Partial<Record<keyof AddressForm, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [confirmation, setConfirmation] = useState<{ id: string; name: string } | null>(null);
 
   const shipping = subtotal >= 299 ? 0 : 49;
   const total = subtotal + shipping;
 
-  const update = (k: keyof Customer) => (e: React.ChangeEvent<HTMLInputElement>) =>
+  const update = (k: keyof AddressForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
+    setErrors((er) => ({ ...er, [k]: undefined }));
+  };
 
   const closeAll = () => {
     setConfirmation(null);
     setForm(empty);
+    setErrors({});
     onClose();
   };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!Object.values(form).every((v) => v.trim().length > 0)) {
-      toast.error("Please fill in all fields.");
+    const parsed = addressSchema.safeParse(form);
+    if (!parsed.success) {
+      const fe: Partial<Record<keyof AddressForm, string>> = {};
+      for (const issue of parsed.error.issues) {
+        const k = issue.path[0] as keyof AddressForm;
+        if (!fe[k]) fe[k] = issue.message;
+      }
+      setErrors(fe);
+      toast.error("Please fix the highlighted fields.");
       return;
     }
+    if (items.length === 0) {
+      toast.error("Your cart is empty.");
+      return;
+    }
+
     setSubmitting(true);
+
     const ok = await loadRazorpay();
     if (!ok) {
       toast.error("Could not load Razorpay. Check your connection.");
@@ -48,37 +80,106 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
       return;
     }
 
+    // 1. Create the order SERVER-SIDE
+    let order: { orderId: string; amount: number; currency: string };
+    try {
+      const { data, error } = await supabase.functions.invoke("create-razorpay-order", {
+        body: { amount: total, currency: "INR", receipt: `elysof_${Date.now()}` },
+      });
+      if (error || !data?.orderId) throw new Error(data?.error || error?.message || "Order failed");
+      order = data;
+    } catch (err) {
+      console.error(err);
+      toast.error("Could not initiate payment. Please try again.");
+      setSubmitting(false);
+      return;
+    }
+
+    const itemsSummary = items
+      .map((i) => `${i.product.shortName} x${i.qty}`)
+      .join(", ")
+      .slice(0, 480);
+
+    const fullAddress = [form.addressLine1, form.addressLine2, form.city, form.state, form.pincode]
+      .filter(Boolean)
+      .join(", ");
+
     const options = {
       key: RAZORPAY_KEY_ID,
-      amount: total * 100,
-      currency: "INR",
+      amount: order.amount,
+      currency: order.currency,
+      order_id: order.orderId,
       name: "ElySof",
       description: "Premium Ayurvedic Skincare",
-      handler: (response: { razorpay_payment_id: string }) => {
-        setConfirmation({ id: response.razorpay_payment_id, name: form.name });
-        setCartOpen(false);
-        clear();
-        setSubmitting(false);
+      notes: {
+        customer_name: form.fullName,
+        customer_phone: form.phone,
+        customer_email: form.email,
+        delivery_address: fullAddress,
+        pincode: form.pincode,
+        items_ordered: itemsSummary,
+      },
+      prefill: { name: form.fullName, email: form.email, contact: form.phone },
+      theme: { color: "#3D5F82" },
+      handler: async (response: {
+        razorpay_payment_id: string;
+        razorpay_order_id: string;
+        razorpay_signature: string;
+      }) => {
+        try {
+          const { data, error } = await supabase.functions.invoke("verify-razorpay-payment", {
+            body: {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              orderDetails: {
+                items: items.map((i) => ({
+                  id: i.product.id,
+                  name: i.product.shortName,
+                  quantity: i.qty,
+                  price: i.product.price,
+                })),
+                customer: form,
+                totalAmount: total,
+              },
+            },
+          });
+          if (error || !data?.verified) {
+            toast.error(
+              "Payment verification failed. If money was deducted it will be refunded. Contact support with payment ID: " +
+                response.razorpay_payment_id,
+            );
+            setSubmitting(false);
+            return;
+          }
+          setConfirmation({ id: response.razorpay_payment_id, name: form.fullName });
+          setCartOpen(false);
+          clear();
+          setSubmitting(false);
+        } catch (err) {
+          console.error(err);
+          toast.error("We couldn't confirm your payment status. Please contact support before retrying.");
+          setSubmitting(false);
+        }
       },
       modal: {
-        ondismiss: () => setSubmitting(false),
+        ondismiss: () => {
+          toast.message("Payment cancelled.");
+          setSubmitting(false);
+        },
       },
-      prefill: { name: form.name, email: form.email, contact: form.phone },
-      notes: { address: `${form.street}, ${form.city} - ${form.pincode}` },
-      theme: { color: "#3D5F82" },
     };
 
     try {
       const rzp = new (window as any).Razorpay(options);
-      rzp.on("payment.failed", () => {
-        toast.error("Payment failed. Please try again.");
+      rzp.on("payment.failed", (resp: any) => {
+        toast.error(`Payment failed: ${resp?.error?.description || "Please try again."}`);
         setSubmitting(false);
       });
       rzp.open();
-    } catch {
-      toast.error(
-        "Razorpay needs a valid Key ID. Replace RAZORPAY_KEY_ID in src/lib/razorpay.ts.",
-      );
+    } catch (err) {
+      console.error(err);
+      toast.error("Could not open Razorpay checkout.");
       setSubmitting(false);
     }
   };
@@ -98,7 +199,7 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 30, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg border-2 border-ink bg-parchment shadow-brut"
+            className="relative max-h-[92vh] w-full max-w-lg overflow-y-auto border-2 border-ink bg-parchment shadow-brut"
           >
             <button
               onClick={closeAll}
@@ -119,12 +220,12 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                   <CheckCircle2 size={48} strokeWidth={2.5} />
                 </motion.div>
                 <h3 className="mt-6 font-display text-3xl">Thank you, {confirmation.name}!</h3>
-                <p className="mt-2 text-sm text-muted-foreground">Your order is confirmed.</p>
+                <p className="mt-2 text-sm text-muted-foreground">Your order is confirmed and verified.</p>
                 <div className="mt-6 border-2 border-dashed border-ink bg-paper px-4 py-3 text-left">
                   <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Payment ID</p>
-                  <p className="font-mono text-sm break-all">{confirmation.id}</p>
+                  <p className="break-all font-mono text-sm">{confirmation.id}</p>
                 </div>
-                <p className="mt-6 font-accent italic text-sm text-muted-foreground">
+                <p className="mt-6 font-accent text-sm italic text-muted-foreground">
                   Our team will contact you within 24 hours for delivery updates. 🌿
                 </p>
                 <button
@@ -139,16 +240,18 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                 <p className="font-accent text-xs uppercase tracking-[0.2em] text-forest">Step 2 of 2</p>
                 <h3 className="mt-1 font-display text-3xl">Delivery details</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  We need a few details before opening Razorpay.
+                  We'll use this to ship your order and share updates. Payment opens after this step.
                 </p>
 
                 <div className="mt-5 grid grid-cols-2 gap-3">
-                  <Field label="Full Name" className="col-span-2" value={form.name} onChange={update("name")} />
-                  <Field label="Phone" type="tel" value={form.phone} onChange={update("phone")} />
-                  <Field label="Email" type="email" value={form.email} onChange={update("email")} />
-                  <Field label="Street Address" className="col-span-2" value={form.street} onChange={update("street")} />
-                  <Field label="City" value={form.city} onChange={update("city")} />
-                  <Field label="Pincode" value={form.pincode} onChange={update("pincode")} />
+                  <Field label="Full Name" className="col-span-2" value={form.fullName} onChange={update("fullName")} error={errors.fullName} />
+                  <Field label="Phone (10-digit)" type="tel" maxLength={10} value={form.phone} onChange={update("phone")} error={errors.phone} />
+                  <Field label="Email" type="email" value={form.email} onChange={update("email")} error={errors.email} />
+                  <Field label="Address Line 1" className="col-span-2" value={form.addressLine1} onChange={update("addressLine1")} error={errors.addressLine1} />
+                  <Field label="Address Line 2 (optional)" className="col-span-2" value={form.addressLine2 ?? ""} onChange={update("addressLine2")} required={false} />
+                  <Field label="City" value={form.city} onChange={update("city")} error={errors.city} />
+                  <Field label="State" value={form.state} onChange={update("state")} error={errors.state} />
+                  <Field label="Pincode" className="col-span-2" maxLength={6} value={form.pincode} onChange={update("pincode")} error={errors.pincode} />
                 </div>
 
                 <div className="mt-5 flex items-center justify-between border-t-2 border-dashed border-ink pt-4">
@@ -161,9 +264,13 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                     disabled={submitting || items.length === 0}
                     className="border-2 border-ink bg-forest px-6 py-3 text-sm font-bold uppercase tracking-wider text-primary-foreground shadow-brut-sm transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none disabled:opacity-60"
                   >
-                    {submitting ? "Opening…" : "Pay with Razorpay →"}
+                    {submitting ? "Opening…" : "Continue to Pay →"}
                   </button>
                 </div>
+
+                <p className="mt-3 text-center text-[10px] uppercase tracking-wider text-muted-foreground">
+                  🔒 Server-verified payments · UPI · Cards · Netbanking
+                </p>
               </form>
             )}
           </motion.div>
@@ -176,16 +283,26 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
 function Field({
   label,
   className = "",
+  error,
+  required = true,
   ...rest
-}: { label: string; className?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+}: {
+  label: string;
+  className?: string;
+  error?: string;
+  required?: boolean;
+} & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className={`flex flex-col gap-1 ${className}`}>
       <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</span>
       <input
         {...rest}
-        required
-        className="border-2 border-ink bg-paper px-3 py-2 text-sm outline-none focus:bg-parchment"
+        required={required}
+        className={`border-2 bg-paper px-3 py-2 text-sm outline-none focus:bg-parchment ${
+          error ? "border-destructive" : "border-ink"
+        }`}
       />
+      {error && <span className="text-[10px] font-medium text-destructive">{error}</span>}
     </label>
   );
 }
