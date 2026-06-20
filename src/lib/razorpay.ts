@@ -1,5 +1,6 @@
-// IMPORTANT: Replace this with your actual Razorpay Key ID before going live.
-export const RAZORPAY_KEY_ID = "REPLACE_WITH_YOUR_RAZORPAY_KEY_ID";
+// Public Razorpay Key ID lives in frontend (safe by design).
+// The Key Secret NEVER leaves the edge function environment.
+export const RAZORPAY_KEY_ID = "rzp_live_T3mRif3T9ttiCd";
 
 let loading: Promise<boolean> | null = null;
 
