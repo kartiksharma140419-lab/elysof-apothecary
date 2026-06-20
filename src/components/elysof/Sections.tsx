@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ShoppingBag, Menu, X, Star, Leaf, Hand, ScaleIcon, HeartHandshake, ArrowRight, Phone, Mail, Instagram, MessageCircle } from "lucide-react";
 import { products, discount, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
@@ -12,6 +12,15 @@ import beforeAcne from "@/assets/before-acne.png";
 import afterAcne from "@/assets/after-acne.png";
 import beforeSoft from "@/assets/before-soft.png";
 import afterSoft from "@/assets/after-soft.png";
+
+// Product Detail Expanded Gallery Images
+import honeyAlmondBenefits from "@/assets/media__1781947909283.jpg";
+import honeyAlmondWhatMakesItWork from "@/assets/media__1781947933413.jpg";
+import sandalwoodOgExperts from "@/assets/media__1781947909390.jpg";
+import sandalwoodWhySpecial from "@/assets/media__1781947909404.jpg";
+import glutasofKeyBenefits from "@/assets/media__1781948612099.jpg";
+import neemBenefits from "@/assets/media__1781949651942.jpg";
+import neemWhyChoose from "@/assets/media__1781949607698.jpg";
 
 /* ---------------- Announcement bar ---------------- */
 const announcements = [
@@ -75,9 +84,8 @@ export function Navbar() {
   ];
   return (
     <header
-      className={`sticky top-0 z-40 border-b-2 border-ink transition-all ${
-        scrolled ? "bg-parchment/90 backdrop-blur" : "bg-parchment"
-      }`}
+      className={`sticky top-0 z-40 border-b-2 border-ink transition-all ${scrolled ? "bg-parchment/90 backdrop-blur" : "bg-parchment"
+        }`}
     >
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
         <a href="#home" className="flex min-w-0 items-center gap-2">
@@ -162,7 +170,7 @@ const heroStories = [
     before: ["bg-[oklch(0.78_0.03_55)]", "Cracked & rough"],
     after: ["bg-[oklch(0.88_0.05_65)]", "Soft & smooth"],
     quote: "Honey & Almond Soap — my skin drinks it up.",
-    who: "Anjali, Pune",
+    who: "Aakash, Pune",
     beforeImg: beforeSoft,
     afterImg: afterSoft,
   },
@@ -365,7 +373,445 @@ export function Marquee() {
 }
 
 /* ---------------- Products ---------------- */
-function ProductCard({ p, onBuy }: { p: Product; onBuy: (p: Product) => void }) {
+
+const productDetailsMap: Record<
+  string,
+  {
+    about: string;
+    benefits: string[];
+    whatMakesItWork: { title: string; desc: string }[];
+    howToUse?: string[];
+    trustLine: string;
+    trustMarkers?: string[];
+    additionalImages: string[];
+  }
+> = {
+  "sandalwood-kesar": {
+    about: "ElySof's Sandalwood & Kesar Soap is a breakthrough natural brightening and nourishing soap, handcrafted to bring the calming richness of sandalwood together with the radiant glow of real kesar (saffron). Every bar is infused with sandalwood oil and kesar extract, rich in antioxidants and natural compounds that work together to deeply cleanse while visibly brightening the skin. This is soap as ritual — soothing, divine, and elegant, designed for those who want their daily cleanse to feel like a luxury.",
+    benefits: [
+      "Deep Cleansing & Skin Brightening — helps reduce the appearance of pigmentation",
+      "Radiant Glow & Nourishment — moisturizes and evens out skin tone",
+      "Sandalwood Oil & Kesar Infused Formula — rich in antioxidants and natural extracts",
+      "Anti-Inflammatory & Anti-Bacterial — helps soothe skin and fight acne"
+    ],
+    whatMakesItWork: [
+      { title: "Sandalwood", desc: "calms inflammation, soothes irritated skin, and leaves a naturally cooling sensation" },
+      { title: "Kesar (Saffron)", desc: "a brightening agent prized in Ayurveda for evening out skin tone and restoring natural radiance" },
+      { title: "Cold-Processed Formula", desc: "preserves the integrity of natural oils so nourishment isn't stripped away during the cleanse" }
+    ],
+    howToUse: [
+      "Apply on damp skin",
+      "Massage gently into a soft lather, then rinse thoroughly",
+      "Use everyday for best results"
+    ],
+    trustLine: "Fights acne, loves your skin. Tough on blemishes, kind to skin. Tough on dark spots, gentle on your skin. Brightens dark spots, lightens mood.",
+    additionalImages: [sandalwoodWhySpecial, sandalwoodOgExperts]
+  },
+  "neem": {
+    about: "ElySof Neem Soap brings the time-trusted power of pure neem into a gentle, everyday cleansing bar. Rooted in an Ayurvedic Inspired Formula, this soap is handcrafted through a cold process using organic neem — prioritizing quality and care in every batch. It's built for people who want their skincare grounded in tradition: a soap that gently cleanses, protects, and refreshes the skin every single day, without harsh chemicals or stripping your skin's natural balance.",
+    benefits: [
+      "Fights Acne — neem's natural antibacterial action helps target breakouts at the source",
+      "Moisturizes Skin — leaves skin feeling soft and hydrated, never tight or dry",
+      "Reduces Skin Inflammation — calms redness and irritation with consistent use",
+      "Anti-Bacterial Properties — helps keep skin clear and protected throughout the day"
+    ],
+    whatMakesItWork: [
+      { title: "Natural Antiseptic Care", desc: "packed with neem's antibacterial and Ayurvedic benefits to soothe and cleanse deeply" },
+      { title: "Gentle Hydration", desc: "retains skin's natural oils, keeping it soft, supple, and irritation-free" },
+      { title: "Ethically Crafted", desc: "handcrafted through a cold process with organic neem, prioritizing quality and care at every step" }
+    ],
+    trustLine: "Ayurvedic Inspired Formula — your neem care for healthy skin.",
+    additionalImages: [neemBenefits, neemWhyChoose]
+  },
+  "glutasof": {
+    about: "Glutasof Facewash is ElySof's answer to dull, uneven-looking skin — a brightening face wash enriched with Glutathione, Kojic Acid Dipalmitate, Niacinamide, and Alpha Arbutin, four of the most trusted actives in modern skin-brightening science. Designed for all skin types and dermatologically tested, this paraben-free, sulfate-free formula goes beyond basic cleansing — it actively works to even out skin tone, fade the appearance of dark spots, and bring back a fresh, radiant glow, all while keeping skin hydrated rather than stripped.",
+    benefits: [
+      "Instant Brightening Effect — helps improve dull and tired skin, giving a fresh and radiant glow",
+      "Evens Out Skin Tone — reduces uneven pigmentation for a clearer, more uniform complexion",
+      "Deep Yet Gentle Cleansing — removes dirt, oil, and impurities without stripping natural moisture",
+      "Supports Skin Rejuvenation — active ingredients help refresh and revive tired-looking skin",
+      "Helps Reduce Dark Spots Appearance — works gradually to improve skin clarity and smoothness",
+      "Hydrating & Non-Drying Formula — leaves skin soft, smooth, and supple after every wash"
+    ],
+    whatMakesItWork: [
+      { title: "Glutathione", desc: "a powerful antioxidant known for its skin-brightening and tone-evening properties" },
+      { title: "Kojic Acid Dipalmitate", desc: "a stable, skin-friendly form of Kojic Acid that targets dark spots and uneven pigmentation" },
+      { title: "Niacinamide", desc: "strengthens the skin barrier while visibly refining texture and tone" },
+      { title: "Alpha Arbutin", desc: "works gradually to brighten skin and fade the look of dark spots over time" }
+    ],
+    trustMarkers: ["Paraben Free", "Sulfate Free", "Dermatologically Tested", "pH Balanced", "For All Skin Types"],
+    trustLine: "Paraben Free · Sulfate Free · Dermatologically Tested · pH Balanced · For All Skin Types",
+    additionalImages: [glutasofKeyBenefits]
+  },
+  "honey-almond": {
+    about: "ElySof's Honey & Almond Scrub Soap Bar is a textured natural soap built for people who want exfoliation and nourishment in a single step. Real crushed almond shells provide gentle physical exfoliation, sweeping away dead skin cells, while pure honey works underneath to hydrate and soothe — leaving skin not just clean, but genuinely cared for. This is the 2-in-1 soap for soft, radiant skin: scrub and glow, in one bar.",
+    benefits: [
+      "Exfoliates Dead Skin Cells — buffs away dullness and roughness for noticeably smoother skin",
+      "Moisturizes and Nourishes Skin — honey locks in hydration so skin never feels stripped after exfoliating",
+      "Soothes and Calms Irritation — gentle enough for regular use without overworking the skin",
+      "Improves Skin's Texture & Glow — consistent use reveals visibly softer, more radiant skin over time"
+    ],
+    whatMakesItWork: [
+      { title: "Almond Oil", desc: "nourishes and softens the skin with every wash" },
+      { title: "Honey", desc: "hydrates and soothes for a healthy, lasting glow" },
+      { title: "Crushed Almond Shells", desc: "gently exfoliate to remove dead skin cells without harsh scrubbing" }
+    ],
+    trustLine: "125g of nourishing dual care — exfoliating and moisturizing in every bar.",
+    additionalImages: [honeyAlmondBenefits, honeyAlmondWhatMakesItWork]
+  }
+};
+
+function ModalGallery({ images }: { images: string[] }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const scrollTo = (index: number) => {
+    if (containerRef.current) {
+      const slideWidth = containerRef.current.clientWidth;
+      containerRef.current.scrollTo({
+        left: slideWidth * index,
+        behavior: "smooth"
+      });
+      setActiveIndex(index);
+    }
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const index = Math.round(container.scrollLeft / container.clientWidth);
+    if (index !== activeIndex && index >= 0 && index < images.length) {
+      setActiveIndex(index);
+    }
+  };
+
+  // Auto-slide every 4 seconds
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const interval = setInterval(() => {
+      const nextIndex = (activeIndex + 1) % images.length;
+      scrollTo(nextIndex);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [activeIndex, images.length]);
+
+  return (
+    <div className="relative w-full">
+      {/* Viewport for images */}
+      <div
+        ref={containerRef}
+        onScroll={handleScroll}
+        className="w-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-none border-2 border-ink bg-parchment aspect-[4/3] sm:aspect-square relative"
+      >
+        {images.map((img, idx) => (
+          <div key={idx} className="w-full shrink-0 snap-start flex items-center justify-center p-4">
+            <img
+              src={img}
+              alt={`Product View ${idx + 1}`}
+              className="max-h-full max-w-full object-contain"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Dots indicators */}
+      {images.length > 1 && (
+        <div className="mt-3 flex justify-center gap-1.5">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollTo(idx)}
+              className={`h-2 w-6 border border-ink transition-colors cursor-pointer ${idx === activeIndex ? "bg-[#3D5F82]" : "bg-paper/40 border-slate-400"
+                }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Thumbnails */}
+      {images.length > 1 && (
+        <div className="hidden sm:flex mt-3 gap-2 overflow-x-auto pb-1">
+          {images.map((img, idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollTo(idx)}
+              className={`h-16 w-16 shrink-0 border-2 cursor-pointer ${idx === activeIndex ? "border-[#3D5F82]" : "border-ink/20 hover:border-ink"
+                } bg-parchment p-1 transition`}
+            >
+              <img src={img} alt="" className="h-full w-full object-contain" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+interface ProductDetailModalProps {
+  product: Product | null;
+  onClose: () => void;
+  onAddToCart: (p: Product) => void;
+  onBuyNow: (p: Product) => void;
+}
+
+function ProductDetailModal({ product, onClose, onAddToCart, onBuyNow }: ProductDetailModalProps) {
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Close on ESC key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  // Lock/Unlock body scroll
+  useEffect(() => {
+    if (product) {
+      document.body.classList.add("body-lock-scroll");
+    } else {
+      document.body.classList.remove("body-lock-scroll");
+    }
+    return () => {
+      document.body.classList.remove("body-lock-scroll");
+    };
+  }, [product]);
+
+  if (!product) return null;
+
+  const details = productDetailsMap[product.id];
+  if (!details) return null;
+
+  const allImages = [product.image, ...details.additionalImages];
+
+  // Mobile swipe down to dismiss gesture handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart !== null && touchEnd !== null) {
+      const distance = touchEnd - touchStart;
+      const isSwipeDown = distance > 150; // swipe down threshold
+      if (isSwipeDown) {
+        onClose();
+      }
+    }
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
+  return (
+    <div
+      className="product-modal-overlay"
+      onClick={onClose}
+    >
+      <div
+        className="product-modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Mobile Swipe-down Dismiss Handle */}
+        <div
+          className="sm:hidden flex justify-center py-2 -mt-4 mb-2 cursor-grab"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="w-12 h-1.5 bg-ink/20 rounded-full" />
+        </div>
+
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center border-2 border-ink bg-paper transition hover:bg-ink hover:text-parchment cursor-pointer"
+          aria-label="Close modal"
+        >
+          <X size={18} />
+        </button>
+
+        {/* Main Columns */}
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          {/* Left Column: Swipeable Gallery */}
+          <div>
+            <ModalGallery images={allImages} />
+          </div>
+
+          {/* Right Column: Title, Ratings, Pricing, Tags, Action Buttons (desktop/tablet) */}
+          <div className="flex flex-col h-full justify-between">
+            <div>
+              <div className="flex items-center gap-1.5 text-gold">
+                {[...Array(product.rating)].map((_, i) => (
+                  <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
+                ))}
+                <span className="text-xs text-muted-foreground ml-1.5 font-accent italic">⭐ 5.0 (verified)</span>
+              </div>
+              <h2 className="mt-3 font-display text-3xl sm:text-4xl text-ink leading-tight">
+                {product.name}
+              </h2>
+
+              <div className="mt-4 flex items-end gap-3">
+                <span className="font-display text-3xl text-ink">₹{product.price}</span>
+                <span className="text-lg text-muted-foreground line-through">₹{product.mrp}</span>
+                <span className="border border-ink bg-[#B2511E] text-primary-foreground px-2 py-0.5 text-xs font-bold uppercase tracking-wider">
+                  {discount(product)}% OFF
+                </span>
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {product.tags.map((t) => (
+                  <span key={t} className="border border-line bg-parchment px-2.5 py-1 text-xs font-accent italic">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop Actions */}
+            <div className="hidden sm:grid grid-cols-2 gap-3 mt-8">
+              <button
+                onClick={() => {
+                  onAddToCart(product);
+                }}
+                className="border-2 border-ink bg-forest py-3 text-sm font-bold uppercase tracking-wider text-primary-foreground transition hover:bg-forest-deep cursor-pointer"
+              >
+                Add to Cart
+              </button>
+              <button
+                onClick={() => {
+                  onBuyNow(product);
+                }}
+                className="border-2 border-terracotta py-3 text-sm font-bold uppercase tracking-wider text-terracotta transition hover:bg-terracotta hover:text-forest-deep cursor-pointer"
+              >
+                Buy Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal-section-divider" />
+
+        {/* Section: About */}
+        <div>
+          <h4 className="modal-section-heading">About this product</h4>
+          <p className="text-sm leading-relaxed text-muted-foreground">{details.about}</p>
+        </div>
+
+        <div className="modal-section-divider" />
+
+        {/* Section: Key Benefits */}
+        <div>
+          <h4 className="modal-section-heading">Key Benefits</h4>
+          <ul className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 text-sm text-ink">
+            {details.benefits.map((b, idx) => (
+              <li key={idx} className="flex items-start gap-2">
+                <span className="text-[#3D5F82] font-bold">✓</span>
+                <span>{b.startsWith("✓ ") ? b.substring(2) : b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="modal-section-divider" />
+
+        {/* Section: What Makes It Work */}
+        <div>
+          <h4 className="modal-section-heading">What Makes It Work</h4>
+          <div className="space-y-4">
+            {details.whatMakesItWork.map((item, idx) => (
+              <div key={idx} className="flex items-start gap-3 text-sm">
+                <span className="shrink-0 text-lg">🌱</span>
+                <div>
+                  <strong className="text-ink font-bold">{item.title}</strong>
+                  <span className="text-muted-foreground"> — {item.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Section: How to Use */}
+        {details.howToUse && (
+          <>
+            <div className="modal-section-divider" />
+            <div>
+              <h4 className="modal-section-heading">How to Feel Good (Usage Steps)</h4>
+              <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6">
+                {details.howToUse.map((step, idx) => (
+                  <div key={idx} className="flex flex-col gap-2 border-l-2 border-line pl-4">
+                    <span className="font-accent text-3xl text-[#FF99CB] font-bold leading-none">0{idx + 1}</span>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{step}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        <div className="modal-section-divider" />
+
+        {/* Section: Trust Line */}
+        {details.trustMarkers ? (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-wrap gap-2 justify-center">
+              {details.trustMarkers.map((marker, idx) => (
+                <span
+                  key={idx}
+                  className="border border-line bg-parchment/60 px-3 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest"
+                >
+                  {marker}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="text-center font-accent italic text-muted-foreground text-sm border-2 border-dashed border-line p-4 bg-parchment/30">
+            "{details.trustLine}"
+          </div>
+        )}
+      </div>
+
+      {/* Mobile Pinned Bottom Actions Bar */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 border-t-2 border-ink bg-parchment p-4 flex gap-3 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddToCart(product);
+          }}
+          className="w-1/2 border-2 border-ink bg-forest py-3 text-xs font-bold uppercase tracking-wider text-primary-foreground transition hover:bg-forest-deep cursor-pointer"
+        >
+          Add to Cart
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onBuyNow(product);
+          }}
+          className="w-1/2 border-2 border-terracotta py-3 text-xs font-bold uppercase tracking-wider text-terracotta transition hover:bg-terracotta hover:text-forest-deep cursor-pointer"
+        >
+          Buy Now
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ProductCard({
+  p,
+  onBuy,
+  onExplore,
+}: {
+  p: Product;
+  onBuy: (p: Product) => void;
+  onExplore: (p: Product) => void;
+}) {
   const { add } = useCart();
   return (
     <motion.article
@@ -403,21 +849,31 @@ function ProductCard({ p, onBuy }: { p: Product; onBuy: (p: Product) => void }) 
           <span className="font-display text-2xl">₹{p.price}</span>
           <span className="text-sm text-muted-foreground line-through">₹{p.mrp}</span>
         </div>
-        <div className="mt-4 grid grid-cols-2 gap-2">
+
+        {/* Buttons Section with responsive stacking */}
+        <div className="mt-4 flex flex-col gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <button
+              onClick={() => {
+                add(p);
+                toast.success(`${p.shortName} added to cart`);
+              }}
+              className="w-full sm:w-1/2 border-2 border-ink bg-forest py-2.5 text-xs font-bold uppercase tracking-wider text-primary-foreground transition hover:bg-forest-deep cursor-pointer"
+            >
+              Add to Cart
+            </button>
+            <button
+              onClick={() => onBuy(p)}
+              className="w-full sm:w-1/2 border-2 border-terracotta py-2.5 text-xs font-bold uppercase tracking-wider text-terracotta transition hover:bg-terracotta hover:text-forest-deep cursor-pointer"
+            >
+              Buy Now
+            </button>
+          </div>
           <button
-            onClick={() => {
-              add(p);
-              toast.success(`${p.shortName} added to cart`);
-            }}
-            className="border-2 border-ink bg-forest py-2.5 text-xs font-bold uppercase tracking-wider text-primary-foreground transition hover:bg-forest-deep"
+            onClick={() => onExplore(p)}
+            className="btn-explore-more"
           >
-            Add to Cart
-          </button>
-          <button
-            onClick={() => onBuy(p)}
-            className="border-2 border-terracotta py-2.5 text-xs font-bold uppercase tracking-wider text-terracotta transition hover:bg-terracotta hover:text-forest-deep"
-          >
-            Buy Now
+            EXPLORE MORE <span className="explore-arrow">→</span>
           </button>
         </div>
       </div>
@@ -428,11 +884,16 @@ function ProductCard({ p, onBuy }: { p: Product; onBuy: (p: Product) => void }) 
 export function Products() {
   const { add, setOpen: setCartOpen } = useCart();
   const [checkout, setCheckout] = useState(false);
+  const [activeProduct, setActiveProduct] = useState<Product | null>(null);
 
   const buyNow = (p: Product) => {
     add(p);
     setCartOpen(false);
     setCheckout(true);
+  };
+
+  const exploreProduct = (p: Product) => {
+    setActiveProduct(p);
   };
 
   return (
@@ -453,10 +914,25 @@ export function Products() {
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((p) => (
-            <ProductCard key={p.id} p={p} onBuy={buyNow} />
+            <ProductCard key={p.id} p={p} onBuy={buyNow} onExplore={exploreProduct} />
           ))}
         </div>
       </div>
+
+      {/* Product Detail Expansion Modal */}
+      <ProductDetailModal
+        product={activeProduct}
+        onClose={() => setActiveProduct(null)}
+        onAddToCart={(p) => {
+          add(p);
+          toast.success(`${p.shortName} added to cart`);
+        }}
+        onBuyNow={(p) => {
+          buyNow(p);
+          setActiveProduct(null);
+        }}
+      />
+
       <CheckoutModal open={checkout} onClose={() => setCheckout(false)} />
     </section>
   );
@@ -523,7 +999,7 @@ export function WhyElysof() {
 const results = [
   { who: "Priya · Mumbai", quote: "My acne is finally calm.", product: "Neem Soap", before: "oklch(0.78 0.05 50)", after: "#FF99CB", beforeImg: beforeAcne, afterImg: afterAcne },
   { who: "Ritika · Delhi", quote: "Brightness in 14 days.", product: "Glutasof Facewash", before: "oklch(0.72 0.01 70)", after: "#FF99CB", beforeImg: beforeTired, afterImg: afterBright },
-  { who: "Anjali · Pune", quote: "Soft like never before.", product: "Honey & Almond Soap", before: "oklch(0.78 0.03 55)", after: "#FF99CB", beforeImg: beforeSoft, afterImg: afterSoft },
+  { who: "Aakash · Pune", quote: "Soft like never before.", product: "Honey & Almond Soap", before: "oklch(0.78 0.03 55)", after: "#FF99CB", beforeImg: beforeSoft, afterImg: afterSoft },
 ];
 
 export function Results() {
