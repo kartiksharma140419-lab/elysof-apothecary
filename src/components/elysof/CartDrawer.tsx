@@ -78,8 +78,18 @@ export function CartDrawer() {
                           <img src={i.product.image} alt={i.product.shortName} className="h-full w-full object-contain" />
                         </div>
                         <div className="flex min-w-0 flex-1 flex-col">
-                          <p className="truncate font-display text-base leading-snug">{i.product.shortName}</p>
-                          <p className="text-sm text-muted-foreground">₹{i.product.price}</p>
+                          <div className="flex items-start justify-between gap-2">
+                            <p className="truncate font-display text-base leading-snug">{i.product.shortName}</p>
+                            <span className="shrink-0 text-sm font-semibold">₹{lineTotal(i)}</span>
+                          </div>
+                          {i.isPromoOrigin ? (
+                            <p className="text-[11px] text-forest">
+                              <span className="font-bold">★ ₹1 promo</span> on 1st unit
+                              {i.qty > 1 ? ` · ${i.qty - 1} × ₹${i.product.price}` : ""}
+                            </p>
+                          ) : (
+                            <p className="text-sm text-muted-foreground">₹{i.product.price}</p>
+                          )}
                           <div className="mt-auto flex items-center justify-between">
                             <div className="flex items-center border-2 border-ink">
                               <button
@@ -112,6 +122,12 @@ export function CartDrawer() {
                   </ul>
 
                   <footer className="border-t-2 border-ink bg-paper px-6 py-4">
+                    {hasPromo && (
+                      <div className="mb-2 flex items-center justify-between text-xs text-forest">
+                        <span className="font-semibold uppercase tracking-wider">★ ₹1 Promo Active</span>
+                        <span className="font-bold">Flat ₹98 shipping</span>
+                      </div>
+                    )}
                     {comboDiscount > 0 && (
                       <div className="mb-2 flex items-center justify-between text-xs text-forest">
                         <span className="font-semibold uppercase tracking-wider">★ Combo Discount Applied</span>
@@ -124,13 +140,15 @@ export function CartDrawer() {
                         <span className="font-semibold">₹{subtotal}</span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-accent uppercase tracking-wider text-muted-foreground">Shipping</span>
-                        <span className="font-semibold">{subtotal >= FREE_SHIP ? "FREE" : "₹30"}</span>
+                        <span className="font-accent uppercase tracking-wider text-muted-foreground">
+                          Shipping &amp; Handling
+                        </span>
+                        <span className="font-semibold">{shipping === 0 ? "FREE" : `₹${shipping}`}</span>
                       </div>
                     </div>
                     <div className="mb-4 flex items-end justify-between">
                       <span className="font-accent text-sm font-bold uppercase tracking-wider">Total Payable</span>
-                      <span className="font-display text-3xl">₹{subtotal + (subtotal >= FREE_SHIP ? 0 : 30)}</span>
+                      <span className="font-display text-3xl">₹{total}</span>
                     </div>
                     <button
                       onClick={() => setCheckoutOpen(true)}
