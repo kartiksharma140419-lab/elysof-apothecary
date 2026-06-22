@@ -32,7 +32,7 @@ const empty: AddressForm = {
 };
 
 export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { items, subtotal, shipping, total, clear, setOpen: setCartOpen } = useCart();
+  const { items, total, clear, setOpen: setCartOpen } = useCart();
   const [form, setForm] = useState<AddressForm>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof AddressForm, string>>>({});
   const [submitting, setSubmitting] = useState(false);
