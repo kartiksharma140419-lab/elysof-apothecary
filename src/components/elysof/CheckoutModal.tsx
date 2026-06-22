@@ -32,14 +32,11 @@ const empty: AddressForm = {
 };
 
 export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { items, subtotal, clear, setOpen: setCartOpen } = useCart();
+  const { items, total, clear, setOpen: setCartOpen } = useCart();
   const [form, setForm] = useState<AddressForm>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof AddressForm, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [confirmation, setConfirmation] = useState<{ id: string; name: string } | null>(null);
-
-  const shipping = subtotal >= 199 ? 0 : 30;
-  const total = subtotal + shipping;
 
   const update = (k: keyof AddressForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
