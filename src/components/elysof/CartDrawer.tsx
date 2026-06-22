@@ -1,4 +1,4 @@
-import { useCart } from "@/lib/cart-context";
+import { useCart, lineTotal } from "@/lib/cart-context";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, Minus, Plus, Trash2 } from "lucide-react";
@@ -7,7 +7,7 @@ import { CheckoutModal } from "./CheckoutModal";
 const FREE_SHIP = 199;
 
 export function CartDrawer() {
-  const { items, open, setOpen, setQty, remove, subtotal, comboDiscount } = useCart();
+  const { items, open, setOpen, setQty, remove, subtotal, comboDiscount, shipping, total, hasPromo } = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const remaining = Math.max(0, FREE_SHIP - subtotal);
   const progress = Math.min(100, (subtotal / FREE_SHIP) * 100);
