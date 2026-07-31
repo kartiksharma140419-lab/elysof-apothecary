@@ -189,7 +189,18 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
             setSubmitting(false);
             return;
           }
-          setConfirmation({ id: response.razorpay_payment_id, name: form.fullName });
+          await notify({
+            paymentMethod: "online",
+            paymentId: response.razorpay_payment_id,
+            orderId: response.razorpay_order_id,
+            customer: form,
+            items: orderItems,
+            subtotal,
+            shipping,
+            totalAmount: total,
+          });
+          setConfirmation({ id: response.razorpay_payment_id, name: form.fullName, cod: false });
+
           setCartOpen(false);
           clear();
           setSubmitting(false);
