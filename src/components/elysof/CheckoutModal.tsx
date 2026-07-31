@@ -31,17 +31,30 @@ const empty: AddressForm = {
   pincode: "",
 };
 
+type PayMethod = "online" | "cod";
+
 export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { items, total, clear, setOpen: setCartOpen } = useCart();
+  const { items, total, subtotal, shipping, clear, setOpen: setCartOpen } = useCart();
   const [form, setForm] = useState<AddressForm>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof AddressForm, string>>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [confirmation, setConfirmation] = useState<{ id: string; name: string } | null>(null);
+  const [method, setMethod] = useState<PayMethod>("online");
+  const [confirmation, setConfirmation] = useState<{ id: string; name: string; cod: boolean } | null>(null);
 
   const update = (k: keyof AddressForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
     setErrors((er) => ({ ...er, [k]: undefined }));
   };
+
+  const notify = async (payload: Record<string, unknown>) => {
+    try {
+      await supabase.functions.invoke("send-order-email", { body: payload });
+    } catch (err) {
+      // Never block the customer on a mail failure.
+      console.error("order email failed", err);
+    }
+  };
+
 
   const closeAll = () => {
     setConfirmation(null);
@@ -70,12 +83,39 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
 
     setSubmitting(true);
 
+    const orderItems = items.map((i) => ({
+      id: i.product.id,
+      name: i.product.shortName,
+      quantity: i.qty,
+      price: i.product.price,
+    }));
+
+    // ---------- CASH ON DELIVERY ----------
+    if (method === "cod") {
+      const codId = `COD-${Date.now().toString(36).toUpperCase()}`;
+      await notify({
+        paymentMethod: "cod",
+        orderId: codId,
+        customer: form,
+        items: orderItems,
+        subtotal,
+        shipping,
+        totalAmount: total,
+      });
+      setConfirmation({ id: codId, name: form.fullName, cod: true });
+      setCartOpen(false);
+      clear();
+      setSubmitting(false);
+      return;
+    }
+
     const ok = await loadRazorpay();
     if (!ok) {
       toast.error("Could not load Razorpay. Check your connection.");
       setSubmitting(false);
       return;
     }
+
 
     // 1. Create the order SERVER-SIDE
     let order: { orderId: string; amount: number; currency: string };
@@ -149,7 +189,18 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
             setSubmitting(false);
             return;
           }
-          setConfirmation({ id: response.razorpay_payment_id, name: form.fullName });
+          await notify({
+            paymentMethod: "online",
+            paymentId: response.razorpay_payment_id,
+            orderId: response.razorpay_order_id,
+            customer: form,
+            items: orderItems,
+            subtotal,
+            shipping,
+            totalAmount: total,
+          });
+          setConfirmation({ id: response.razorpay_payment_id, name: form.fullName, cod: false });
+
           setCartOpen(false);
           clear();
           setSubmitting(false);
@@ -217,14 +268,21 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                   <CheckCircle2 size={48} strokeWidth={2.5} />
                 </motion.div>
                 <h3 className="mt-6 font-display text-3xl">Thank you, {confirmation.name}!</h3>
-                <p className="mt-2 text-sm text-muted-foreground">Your order is confirmed and verified.</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {confirmation.cod
+                    ? "Your Cash on Delivery order is placed. Pay the courier when it arrives."
+                    : "Payment successful — your order is confirmed and verified."}
+                </p>
                 <div className="mt-6 border-2 border-dashed border-ink bg-paper px-4 py-3 text-left">
-                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Payment ID</p>
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {confirmation.cod ? "Order Reference" : "Payment ID"}
+                  </p>
                   <p className="break-all font-mono text-sm">{confirmation.id}</p>
                 </div>
                 <p className="mt-6 font-accent text-sm italic text-muted-foreground">
                   Our team will contact you within 24 hours for delivery updates. 🌿
                 </p>
+
                 <button
                   onClick={closeAll}
                   className="mt-6 w-full border-2 border-ink bg-forest py-3 text-sm font-bold uppercase tracking-wider text-primary-foreground shadow-brut-sm transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
@@ -251,9 +309,29 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                   <Field label="Pincode" className="col-span-2" maxLength={6} value={form.pincode} onChange={update("pincode")} error={errors.pincode} />
                 </div>
 
+                <p className="mt-6 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Payment method
+                </p>
+                <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                  <PayOption
+                    active={method === "online"}
+                    onClick={() => setMethod("online")}
+                    title="Pay Online"
+                    sub="UPI · Cards · Netbanking"
+                  />
+                  <PayOption
+                    active={method === "cod"}
+                    onClick={() => setMethod("cod")}
+                    title="Cash on Delivery"
+                    sub="Pay the courier on arrival"
+                  />
+                </div>
+
                 <div className="mt-5 flex items-center justify-between border-t-2 border-dashed border-ink pt-4">
                   <div>
-                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Total payable</p>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                      {method === "cod" ? "Pay on delivery" : "Total payable"}
+                    </p>
                     <p className="font-display text-2xl">₹{total}</p>
                   </div>
                   <button
@@ -261,13 +339,20 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                     disabled={submitting || items.length === 0}
                     className="border-2 border-ink bg-forest px-6 py-3 text-sm font-bold uppercase tracking-wider text-primary-foreground shadow-brut-sm transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none disabled:opacity-60"
                   >
-                    {submitting ? "Opening…" : "Continue to Pay →"}
+                    {submitting
+                      ? method === "cod"
+                        ? "Placing…"
+                        : "Opening…"
+                      : method === "cod"
+                        ? "Place COD Order →"
+                        : "Continue to Pay →"}
                   </button>
                 </div>
 
                 <p className="mt-3 text-center text-[10px] uppercase tracking-wider text-muted-foreground">
-                  🔒 Server-verified payments · UPI · Cards · Netbanking
+                  🔒 Server-verified payments · UPI · Cards · Netbanking · COD
                 </p>
+
               </form>
             )}
           </motion.div>
@@ -301,5 +386,37 @@ function Field({
       />
       {error && <span className="text-[10px] font-medium text-destructive">{error}</span>}
     </label>
+  );
+}
+
+function PayOption({
+  active,
+  onClick,
+  title,
+  sub,
+}: {
+  active: boolean;
+  onClick: () => void;
+  title: string;
+  sub: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`border-2 border-ink px-3 py-3 text-left transition ${
+        active ? "bg-forest text-primary-foreground shadow-brut-sm" : "bg-paper hover:bg-parchment"
+      }`}
+    >
+      <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider">
+        <span
+          className={`inline-block h-3 w-3 shrink-0 rounded-full border-2 ${
+            active ? "border-current bg-current" : "border-ink"
+          }`}
+        />
+        {title}
+      </span>
+      <span className="mt-1 block text-[10px] uppercase tracking-wider opacity-70">{sub}</span>
+    </button>
   );
 }
