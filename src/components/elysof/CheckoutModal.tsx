@@ -388,3 +388,35 @@ function Field({
     </label>
   );
 }
+
+function PayOption({
+  active,
+  onClick,
+  title,
+  sub,
+}: {
+  active: boolean;
+  onClick: () => void;
+  title: string;
+  sub: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`border-2 border-ink px-3 py-3 text-left transition ${
+        active ? "bg-forest text-primary-foreground shadow-brut-sm" : "bg-paper hover:bg-parchment"
+      }`}
+    >
+      <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider">
+        <span
+          className={`inline-block h-3 w-3 shrink-0 rounded-full border-2 ${
+            active ? "border-current bg-current" : "border-ink"
+          }`}
+        />
+        {title}
+      </span>
+      <span className="mt-1 block text-[10px] uppercase tracking-wider opacity-70">{sub}</span>
+    </button>
+  );
+}
