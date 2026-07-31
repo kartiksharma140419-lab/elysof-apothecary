@@ -83,12 +83,39 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
 
     setSubmitting(true);
 
+    const orderItems = items.map((i) => ({
+      id: i.product.id,
+      name: i.product.shortName,
+      quantity: i.qty,
+      price: i.product.price,
+    }));
+
+    // ---------- CASH ON DELIVERY ----------
+    if (method === "cod") {
+      const codId = `COD-${Date.now().toString(36).toUpperCase()}`;
+      await notify({
+        paymentMethod: "cod",
+        orderId: codId,
+        customer: form,
+        items: orderItems,
+        subtotal,
+        shipping,
+        totalAmount: total,
+      });
+      setConfirmation({ id: codId, name: form.fullName, cod: true });
+      setCartOpen(false);
+      clear();
+      setSubmitting(false);
+      return;
+    }
+
     const ok = await loadRazorpay();
     if (!ok) {
       toast.error("Could not load Razorpay. Check your connection.");
       setSubmitting(false);
       return;
     }
+
 
     // 1. Create the order SERVER-SIDE
     let order: { orderId: string; amount: number; currency: string };
