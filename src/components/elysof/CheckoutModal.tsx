@@ -309,9 +309,29 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                   <Field label="Pincode" className="col-span-2" maxLength={6} value={form.pincode} onChange={update("pincode")} error={errors.pincode} />
                 </div>
 
+                <p className="mt-6 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Payment method
+                </p>
+                <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                  <PayOption
+                    active={method === "online"}
+                    onClick={() => setMethod("online")}
+                    title="Pay Online"
+                    sub="UPI · Cards · Netbanking"
+                  />
+                  <PayOption
+                    active={method === "cod"}
+                    onClick={() => setMethod("cod")}
+                    title="Cash on Delivery"
+                    sub="Pay the courier on arrival"
+                  />
+                </div>
+
                 <div className="mt-5 flex items-center justify-between border-t-2 border-dashed border-ink pt-4">
                   <div>
-                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Total payable</p>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                      {method === "cod" ? "Pay on delivery" : "Total payable"}
+                    </p>
                     <p className="font-display text-2xl">₹{total}</p>
                   </div>
                   <button
@@ -319,13 +339,20 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                     disabled={submitting || items.length === 0}
                     className="border-2 border-ink bg-forest px-6 py-3 text-sm font-bold uppercase tracking-wider text-primary-foreground shadow-brut-sm transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none disabled:opacity-60"
                   >
-                    {submitting ? "Opening…" : "Continue to Pay →"}
+                    {submitting
+                      ? method === "cod"
+                        ? "Placing…"
+                        : "Opening…"
+                      : method === "cod"
+                        ? "Place COD Order →"
+                        : "Continue to Pay →"}
                   </button>
                 </div>
 
                 <p className="mt-3 text-center text-[10px] uppercase tracking-wider text-muted-foreground">
-                  🔒 Server-verified payments · UPI · Cards · Netbanking
+                  🔒 Server-verified payments · UPI · Cards · Netbanking · COD
                 </p>
+
               </form>
             )}
           </motion.div>
