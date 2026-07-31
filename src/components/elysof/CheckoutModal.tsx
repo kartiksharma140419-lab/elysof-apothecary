@@ -268,14 +268,21 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                   <CheckCircle2 size={48} strokeWidth={2.5} />
                 </motion.div>
                 <h3 className="mt-6 font-display text-3xl">Thank you, {confirmation.name}!</h3>
-                <p className="mt-2 text-sm text-muted-foreground">Your order is confirmed and verified.</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {confirmation.cod
+                    ? "Your Cash on Delivery order is placed. Pay the courier when it arrives."
+                    : "Payment successful — your order is confirmed and verified."}
+                </p>
                 <div className="mt-6 border-2 border-dashed border-ink bg-paper px-4 py-3 text-left">
-                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Payment ID</p>
+                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {confirmation.cod ? "Order Reference" : "Payment ID"}
+                  </p>
                   <p className="break-all font-mono text-sm">{confirmation.id}</p>
                 </div>
                 <p className="mt-6 font-accent text-sm italic text-muted-foreground">
                   Our team will contact you within 24 hours for delivery updates. 🌿
                 </p>
+
                 <button
                   onClick={closeAll}
                   className="mt-6 w-full border-2 border-ink bg-forest py-3 text-sm font-bold uppercase tracking-wider text-primary-foreground shadow-brut-sm transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
