@@ -17,6 +17,7 @@ import { CartDrawer } from "@/components/elysof/CartDrawer";
 import { HeroSlider } from "@/components/elysof/HeroSlider";
 import { ComboOffer } from "@/components/elysof/ComboOffer";
 import { PromoModal } from "@/components/elysof/PromoModal";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
         <CartDrawer />
         <PromoModal />
         <Toaster position="top-center" richColors />
+        <Analytics />
       </div>
     </CartProvider>
   );
