@@ -6,7 +6,9 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const ORDER_INBOX = "info@elysof.com";
+// Override with the ORDER_INBOX secret to point orders at a mailbox that can
+// actually receive mail (elysof.com needs MX records for info@elysof.com to work).
+const ORDER_INBOX = Deno.env.get("ORDER_INBOX") || "info@elysof.com";
 const FROM = "ElySof Orders <orders@elysof.com>";
 
 type Item = { name: string; quantity: number; price: number };
