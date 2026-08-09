@@ -114,10 +114,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const comboCount = hasPromo
       ? 0
       : Math.min(honeyAlmondQty, glutasofQty, neemQty, sandalwoodQty);
-    const comboDiscount = comboCount * 97;
+    // Rakhi offer: any 3 soaps (neem + sandalwood & kesar + honey & almond) for ₹199.
+    // Applied to units left over after the full 4-product combo.
+    const rakhiCount = hasPromo
+      ? 0
+      : Math.min(neemQty - comboCount, sandalwoodQty - comboCount, honeyAlmondQty - comboCount);
+    const RAKHI_SET_MRP = 89 + 99 + 109;
+    const rakhiDiscount = Math.max(0, rakhiCount) * (RAKHI_SET_MRP - 199);
+    const comboDiscount = comboCount * 97 + rakhiDiscount;
     const subtotal = rawSubtotal - comboDiscount;
 
     return { count, subtotal, comboDiscount, hasPromo };
+
   }, [items]);
 
   const shipping = hasPromo
