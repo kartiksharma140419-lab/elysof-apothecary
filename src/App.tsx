@@ -17,6 +17,7 @@ import { CartDrawer } from "@/components/elysof/CartDrawer";
 import { HeroSlider } from "@/components/elysof/HeroSlider";
 import { ComboOffer } from "@/components/elysof/ComboOffer";
 import { PromoModal } from "@/components/elysof/PromoModal";
+import { RakhiOffer } from "@/components/elysof/RakhiOffer";
 
 export default function App() {
   return (
@@ -27,7 +28,9 @@ export default function App() {
         <main>
           <Hero />
           <Marquee />
+          <RakhiOffer />
           <Products />
+
           <div className="offer-section-legacy">
             <ComboOffer />
           </div>
