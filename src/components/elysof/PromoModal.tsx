@@ -41,9 +41,7 @@ export function PromoModal() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const eligible = products.filter((p) =>
-    (ELIGIBLE_IDS as readonly string[]).includes(p.id),
-  );
+  const eligible = products.filter((p) => (ELIGIBLE_IDS as readonly string[]).includes(p.id));
 
   const handleSelect = (p: Product) => {
     addPromo(p, PROMO_PRICE);

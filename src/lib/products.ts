@@ -20,7 +20,8 @@ export const products: Product[] = [
     id: "honey-almond",
     name: "ElySof Honey & Almond 2-in-1 Scrub Soap Bar",
     shortName: "Honey & Almond Scrub Soap",
-    description: "Exfoliates gently, nourishes deeply. The ultimate 2-in-1 soap for soft, radiant skin.",
+    description:
+      "Exfoliates gently, nourishes deeply. The ultimate 2-in-1 soap for soft, radiant skin.",
     mrp: 250,
     price: 109,
     image: honeyAlmond,
@@ -31,7 +32,8 @@ export const products: Product[] = [
     id: "glutasof",
     name: "ElySof Glutasof Facewash",
     shortName: "Glutasof Facewash",
-    description: "Enriched with Glutathione, Kojic Acid & Alpha Arbutin for skin brightening and rejuvenation.",
+    description:
+      "Enriched with Glutathione, Kojic Acid & Alpha Arbutin for skin brightening and rejuvenation.",
     mrp: 490,
     price: 299,
     image: glutasof,
@@ -42,7 +44,8 @@ export const products: Product[] = [
     id: "neem",
     name: "ElySof Neem Soap",
     shortName: "Neem Soap",
-    description: "Ayurvedic Neem goodness that gently cleanses, protects, and refreshes your skin every day.",
+    description:
+      "Ayurvedic Neem goodness that gently cleanses, protects, and refreshes your skin every day.",
     mrp: 225,
     price: 89,
     image: neem,

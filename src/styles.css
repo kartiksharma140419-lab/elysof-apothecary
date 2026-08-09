@@ -49,14 +49,14 @@
   --radius: 0.25rem;
 
   /* Brand - NEW Logo-Derived Palette */
-  --parchment: #FBF5E9;                   /* Neutral cream/parchment background */
-  --paper: #F8EEF4;                       /* Card/secondary background (very soft pink-tinted off-white) */
-  --forest: #3D5F82;                      /* Logo Navy primary accent */
-  --forest-deep: #2A3F54;                 /* Dark navy variant for footer/dark sections */
-  --terracotta: #FF99CB;                  /* Logo Pink secondary accent */
-  --gold: #D4A847;                        /* Warm gold for star ratings */
-  --ink: #121212;                         /* Near-black body text */
-  --line: oklch(0.88 0.02 70);            /* #E8DDD0 */
+  --parchment: #fbf5e9; /* Neutral cream/parchment background */
+  --paper: #f8eef4; /* Card/secondary background (very soft pink-tinted off-white) */
+  --forest: #3d5f82; /* Logo Navy primary accent */
+  --forest-deep: #2a3f54; /* Dark navy variant for footer/dark sections */
+  --terracotta: #ff99cb; /* Logo Pink secondary accent */
+  --gold: #d4a847; /* Warm gold for star ratings */
+  --ink: #121212; /* Near-black body text */
+  --line: oklch(0.88 0.02 70); /* #E8DDD0 */
 
   /* shadcn semantics mapped to brand */
   --background: var(--parchment);
@@ -70,7 +70,7 @@
   --secondary: var(--terracotta);
   --secondary-foreground: oklch(0.985 0.005 85);
   --muted: oklch(0.94 0.015 80);
-  --muted-foreground: #5C6B7A;            /* Cool grey-navy tint */
+  --muted-foreground: #5c6b7a; /* Cool grey-navy tint */
   --accent: var(--gold);
   --accent-foreground: var(--ink);
   --destructive: oklch(0.55 0.22 27);
@@ -83,14 +83,14 @@
 /* Safety lock — prevents global palette vars from leaking into these sections */
 .offer-section-legacy,
 .section-after-offer-legacy {
-  --parchment: oklch(0.972 0.018 85);     /* #FBF7F0 */
-  --paper: oklch(1 0 0);                  /* #ffffff */
-  --forest: oklch(0.46 0.09 158);          /* #2D6A4F */
+  --parchment: oklch(0.972 0.018 85); /* #FBF7F0 */
+  --paper: oklch(1 0 0); /* #ffffff */
+  --forest: oklch(0.46 0.09 158); /* #2D6A4F */
   --forest-deep: oklch(0.36 0.08 158);
-  --terracotta: oklch(0.55 0.14 45);       /* #B5541A */
-  --gold: oklch(0.74 0.13 85);             /* #C9A84C */
-  --ink: oklch(0.18 0 0);                  /* #1C1C1C */
-  --line: oklch(0.88 0.02 70);             /* #E8DDD0 */
+  --terracotta: oklch(0.55 0.14 45); /* #B5541A */
+  --gold: oklch(0.74 0.13 85); /* #C9A84C */
+  --ink: oklch(0.18 0 0); /* #1C1C1C */
+  --line: oklch(0.88 0.02 70); /* #E8DDD0 */
 
   --background: var(--parchment);
   --foreground: var(--ink);
@@ -117,13 +117,17 @@
   * {
     border-color: var(--color-border);
   }
-  html, body {
+  html,
+  body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
@@ -131,8 +135,12 @@
 
 /* Marquee */
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 .animate-marquee {
   animation: marquee 35s linear infinite;
@@ -166,15 +174,17 @@
   margin-top: 8px;
   padding: 12px 0;
   background: transparent;
-  border: 1.5px solid #3D5F82;
-  color: #3D5F82;
+  border: 1.5px solid #3d5f82;
+  color: #3d5f82;
   font-family: inherit;
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 200ms ease, color 200ms ease;
+  transition:
+    background 200ms ease,
+    color 200ms ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,7 +192,7 @@
 }
 
 .btn-explore-more:hover {
-  background: #3D5F82;
+  background: #3d5f82;
   color: #ffffff;
 }
 
@@ -205,7 +215,7 @@
 }
 
 .product-modal-content {
-  background: #FBF5E9; /* cream background */
+  background: #fbf5e9; /* cream background */
   border: 2px solid #121212;
   max-width: 920px;
   width: 100%;
@@ -227,7 +237,7 @@
   font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #3D5F82;
+  color: #3d5f82;
   margin-bottom: 16px;
 }
 
@@ -265,10 +275,13 @@
     transform: translateY(0);
     animation: modalSlideUp 300ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   @keyframes modalSlideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 }
-

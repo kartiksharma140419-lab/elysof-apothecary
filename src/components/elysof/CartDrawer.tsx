@@ -7,7 +7,18 @@ import { CheckoutModal } from "./CheckoutModal";
 const FREE_SHIP = 199;
 
 export function CartDrawer() {
-  const { items, open, setOpen, setQty, remove, subtotal, comboDiscount, shipping, total, hasPromo } = useCart();
+  const {
+    items,
+    open,
+    setOpen,
+    setQty,
+    remove,
+    subtotal,
+    comboDiscount,
+    shipping,
+    total,
+    hasPromo,
+  } = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const remaining = Math.max(0, FREE_SHIP - subtotal);
   const progress = Math.min(100, (subtotal / FREE_SHIP) * 100);
@@ -34,8 +45,12 @@ export function CartDrawer() {
             >
               <header className="flex items-center justify-between border-b-2 border-ink px-6 py-4">
                 <div>
-                  <p className="font-accent text-xs uppercase tracking-[0.2em] text-forest">Your Basket</p>
-                  <h3 className="font-display text-2xl">{items.length} item{items.length === 1 ? "" : "s"}</h3>
+                  <p className="font-accent text-xs uppercase tracking-[0.2em] text-forest">
+                    Your Basket
+                  </p>
+                  <h3 className="font-display text-2xl">
+                    {items.length} item{items.length === 1 ? "" : "s"}
+                  </h3>
                 </div>
                 <button
                   onClick={() => setOpen(false)}
@@ -49,7 +64,9 @@ export function CartDrawer() {
               {items.length === 0 ? (
                 <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
                   <p className="font-display text-3xl">Your basket is empty.</p>
-                  <p className="mt-2 font-accent italic text-muted-foreground">Pick up something nourishing →</p>
+                  <p className="mt-2 font-accent italic text-muted-foreground">
+                    Pick up something nourishing →
+                  </p>
                   <button
                     onClick={() => setOpen(false)}
                     className="mt-6 border-2 border-ink bg-forest px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-brut-sm transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
@@ -62,12 +79,17 @@ export function CartDrawer() {
                   <div className="border-b border-line bg-paper/60 px-6 py-3">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-medium">
-                        {remaining > 0 ? `Add ₹${remaining} more for FREE shipping` : "🎉 Free shipping unlocked!"}
+                        {remaining > 0
+                          ? `Add ₹${remaining} more for FREE shipping`
+                          : "🎉 Free shipping unlocked!"}
                       </span>
                       <span className="font-accent italic">₹{FREE_SHIP}</span>
                     </div>
                     <div className="mt-2 h-2 w-full overflow-hidden border border-ink bg-paper">
-                      <div className="h-full bg-forest transition-all" style={{ width: `${progress}%` }} />
+                      <div
+                        className="h-full bg-forest transition-all"
+                        style={{ width: `${progress}%` }}
+                      />
                     </div>
                   </div>
 
@@ -75,11 +97,17 @@ export function CartDrawer() {
                     {items.map((i) => (
                       <li key={i.product.id} className="flex gap-4 px-6 py-4">
                         <div className="h-20 w-20 shrink-0 border-2 border-ink bg-paper p-1">
-                          <img src={i.product.image} alt={i.product.shortName} className="h-full w-full object-contain" />
+                          <img
+                            src={i.product.image}
+                            alt={i.product.shortName}
+                            className="h-full w-full object-contain"
+                          />
                         </div>
                         <div className="flex min-w-0 flex-1 flex-col">
                           <div className="flex items-start justify-between gap-2">
-                            <p className="truncate font-display text-base leading-snug">{i.product.shortName}</p>
+                            <p className="truncate font-display text-base leading-snug">
+                              {i.product.shortName}
+                            </p>
                             <span className="shrink-0 text-sm font-semibold">₹{lineTotal(i)}</span>
                           </div>
                           {i.isPromoOrigin ? (
@@ -99,7 +127,9 @@ export function CartDrawer() {
                               >
                                 <Minus size={14} />
                               </button>
-                              <span className="min-w-[2rem] px-2 text-center text-sm font-semibold">{i.qty}</span>
+                              <span className="min-w-[2rem] px-2 text-center text-sm font-semibold">
+                                {i.qty}
+                              </span>
                               <button
                                 onClick={() => setQty(i.product.id, i.qty + 1)}
                                 className="px-2 py-1 hover:bg-ink hover:text-parchment"
@@ -124,30 +154,40 @@ export function CartDrawer() {
                   <footer className="border-t-2 border-ink bg-paper px-6 py-4">
                     {hasPromo && (
                       <div className="mb-2 flex items-center justify-between text-xs text-forest">
-                        <span className="font-semibold uppercase tracking-wider">★ ₹1 Promo Active</span>
+                        <span className="font-semibold uppercase tracking-wider">
+                          ★ ₹1 Promo Active
+                        </span>
                         <span className="font-bold">Flat ₹98 shipping</span>
                       </div>
                     )}
                     {comboDiscount > 0 && (
                       <div className="mb-2 flex items-center justify-between text-xs text-forest">
-                        <span className="font-semibold uppercase tracking-wider">★ Combo Discount Applied</span>
+                        <span className="font-semibold uppercase tracking-wider">
+                          ★ Combo Discount Applied
+                        </span>
                         <span className="font-bold">-₹{comboDiscount}</span>
                       </div>
                     )}
                     <div className="space-y-1.5 border-b border-dashed border-ink pb-3 mb-3">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-accent uppercase tracking-wider text-muted-foreground">Subtotal</span>
+                        <span className="font-accent uppercase tracking-wider text-muted-foreground">
+                          Subtotal
+                        </span>
                         <span className="font-semibold">₹{subtotal}</span>
                       </div>
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-accent uppercase tracking-wider text-muted-foreground">
                           Shipping &amp; Handling
                         </span>
-                        <span className="font-semibold">{shipping === 0 ? "FREE" : `₹${shipping}`}</span>
+                        <span className="font-semibold">
+                          {shipping === 0 ? "FREE" : `₹${shipping}`}
+                        </span>
                       </div>
                     </div>
                     <div className="mb-4 flex items-end justify-between">
-                      <span className="font-accent text-sm font-bold uppercase tracking-wider">Total Payable</span>
+                      <span className="font-accent text-sm font-bold uppercase tracking-wider">
+                        Total Payable
+                      </span>
                       <span className="font-display text-3xl">₹{total}</span>
                     </div>
                     <button

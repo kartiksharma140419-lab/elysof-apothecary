@@ -221,7 +221,8 @@ export function HeroSlider() {
                       className="e-cta group mt-7 inline-flex items-center gap-2 bg-[#FFFC81] px-7 py-4 text-sm font-extrabold uppercase tracking-wider text-[#0A0A0A] transition-colors hover:bg-[#0A0A0A] hover:text-[#FFFC81] sm:text-base"
                       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                     >
-                      {s.cta} <span className="transition-transform group-hover:translate-x-1">→</span>
+                      {s.cta}{" "}
+                      <span className="transition-transform group-hover:translate-x-1">→</span>
                     </button>
                   </div>
 
@@ -257,7 +258,10 @@ export function HeroSlider() {
       </div>
 
       <div className="elysof-marquee w-full overflow-hidden border-t border-[#FFFC81] bg-[#0A0A0A]">
-        <div className="elysof-marquee-track flex whitespace-nowrap" style={{ width: "max-content" }}>
+        <div
+          className="elysof-marquee-track flex whitespace-nowrap"
+          style={{ width: "max-content" }}
+        >
           {[0, 1].map((dup) => (
             <div key={dup} className="flex">
               {MARQUEE_ITEMS.map((item, i) => (

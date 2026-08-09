@@ -86,7 +86,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const setQty = (id: string, qty: number) =>
     setItems((c) =>
-      qty <= 0 ? c.filter((i) => i.product.id !== id) : c.map((i) => (i.product.id === id ? { ...i, qty } : i)),
+      qty <= 0
+        ? c.filter((i) => i.product.id !== id)
+        : c.map((i) => (i.product.id === id ? { ...i, qty } : i)),
     );
 
   const clear = () => setItems([]);
@@ -111,9 +113,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
 
     // Combo discount is suppressed for promo carts so the two offers don't stack.
-    const comboCount = hasPromo
-      ? 0
-      : Math.min(honeyAlmondQty, glutasofQty, neemQty, sandalwoodQty);
+    const comboCount = hasPromo ? 0 : Math.min(honeyAlmondQty, glutasofQty, neemQty, sandalwoodQty);
     // Rakhi offer: any 3 soaps (neem + sandalwood & kesar + honey & almond) for ₹199.
     // Applied to units left over after the full 4-product combo.
     const rakhiCount = hasPromo
@@ -125,7 +125,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const subtotal = rawSubtotal - comboDiscount;
 
     return { count, subtotal, comboDiscount, hasPromo };
-
   }, [items]);
 
   const shipping = hasPromo

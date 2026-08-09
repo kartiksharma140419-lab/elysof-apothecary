@@ -18,7 +18,12 @@ const BENEFITS: Record<string, { name: string; desc: string }> = {
   "honey-almond": { name: "Honey & Almond Scrub Soap", desc: "Nourishes & Exfoliates" },
 };
 
-const ROTATIONS = ["rotate(-6deg) translateY(8px)", "rotate(-2deg)", "rotate(2deg)", "rotate(6deg) translateY(8px)"];
+const ROTATIONS = [
+  "rotate(-6deg) translateY(8px)",
+  "rotate(-2deg)",
+  "rotate(2deg)",
+  "rotate(6deg) translateY(8px)",
+];
 
 function RotatingBadge() {
   const text = "★ BEST VALUE ★ COMBO DEAL ";
@@ -133,14 +138,20 @@ export function ComboOffer() {
       <div className={inView ? "combo-in" : ""}>
         {/* Urgency strip */}
         <div className="c-urgency flex h-10 items-center justify-center gap-3 bg-[#FF3B30] px-4">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#FFFC81]" style={{ animation: "combo-pulse 1.5s ease-in-out infinite" }} />
+          <span
+            className="h-1.5 w-1.5 rounded-full bg-[#FFFC81]"
+            style={{ animation: "combo-pulse 1.5s ease-in-out infinite" }}
+          />
           <span
             className="text-[11px] font-bold uppercase tracking-[0.1em] text-white sm:text-[13px]"
             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
             Limited Time Offer · Combo Pack Ends Soon
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-[#FFFC81]" style={{ animation: "combo-pulse 1.5s ease-in-out infinite" }} />
+          <span
+            className="h-1.5 w-1.5 rounded-full bg-[#FFFC81]"
+            style={{ animation: "combo-pulse 1.5s ease-in-out infinite" }}
+          />
         </div>
 
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-20">
@@ -155,13 +166,21 @@ export function ComboOffer() {
               </div>
               <h2
                 className="font-black leading-[0.95] tracking-tight"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(32px, 5vw, 48px)" }}
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "clamp(32px, 5vw, 48px)",
+                }}
               >
                 <span className="block text-white">Everything Your Skin</span>
                 <span className="block text-[#FFFC81]">Needs. One Combo.</span>
               </h2>
-              <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/55" style={{ fontFamily: "Inter, sans-serif" }}>
-                Get all 4 ElySof bestsellers — Glutasof Facewash, Neem Soap, Sandalwood & Kesar Soap, and Honey & Almond Scrub Soap — in a single combo built for complete daily care.
+              <p
+                className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/55"
+                style={{ fontFamily: "Inter, sans-serif" }}
+              >
+                Get all 4 ElySof bestsellers — Glutasof Facewash, Neem Soap, Sandalwood & Kesar
+                Soap, and Honey & Almond Scrub Soap — in a single combo built for complete daily
+                care.
               </p>
 
               {/* Combo pack image */}
@@ -192,7 +211,10 @@ export function ComboOffer() {
                       >
                         {b.name}
                       </span>
-                      <span className="text-[12px] text-white/60" style={{ fontFamily: "Inter, sans-serif" }}>
+                      <span
+                        className="text-[12px] text-white/60"
+                        style={{ fontFamily: "Inter, sans-serif" }}
+                      >
                         {b.desc}
                       </span>
                     </div>
@@ -209,12 +231,18 @@ export function ComboOffer() {
               <RotatingBadge />
               <div
                 className="pointer-events-none absolute right-0 top-0 h-0 w-0"
-                style={{ borderStyle: "solid", borderWidth: "0 36px 36px 0", borderColor: "transparent #FFFC81 transparent transparent" }}
+                style={{
+                  borderStyle: "solid",
+                  borderWidth: "0 36px 36px 0",
+                  borderColor: "transparent #FFFC81 transparent transparent",
+                }}
               />
 
               {/* MRP */}
               <div className="flex items-center gap-3">
-                <span className="bg-[#222] px-2 py-0.5 text-[11px] font-semibold uppercase text-white">MRP</span>
+                <span className="bg-[#222] px-2 py-0.5 text-[11px] font-semibold uppercase text-white">
+                  MRP
+                </span>
                 <span
                   className="combo-strike text-[28px] text-white/40 sm:text-[32px]"
                   style={{ fontFamily: "'Space Mono', monospace" }}
@@ -233,7 +261,11 @@ export function ComboOffer() {
                 </div>
                 <div
                   className="leading-none text-[#FFFC81]"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 900, fontSize: "clamp(56px, 9vw, 84px)" }}
+                  style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontWeight: 900,
+                    fontSize: "clamp(56px, 9vw, 84px)",
+                  }}
                 >
                   ₹{displayPrice}/-
                 </div>
@@ -258,7 +290,10 @@ export function ComboOffer() {
                 {ORDER.map((id) => {
                   const p = products.find((x) => x.id === id)!;
                   return (
-                    <li key={id} className="flex items-center justify-between gap-3 text-[14px] text-white">
+                    <li
+                      key={id}
+                      className="flex items-center justify-between gap-3 text-[14px] text-white"
+                    >
                       <span className="flex items-center gap-2">
                         <span className="text-[#FFFC81]">✓</span>
                         {BENEFITS[id].name}
@@ -269,7 +304,9 @@ export function ComboOffer() {
                 })}
                 <li className="my-3 border-t border-dashed border-white/20" />
                 <li className="flex items-center justify-between text-[14px]">
-                  <span className="text-white/70">Total Value: ₹{COMBO_MRP.toLocaleString("en-IN")}</span>
+                  <span className="text-white/70">
+                    Total Value: ₹{COMBO_MRP.toLocaleString("en-IN")}
+                  </span>
                   <span className="font-bold text-[#FFFC81]">You Pay: ₹{COMBO_PRICE}</span>
                 </li>
               </ul>
