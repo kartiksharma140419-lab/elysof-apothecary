@@ -3,7 +3,7 @@ import { products } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { toast } from "sonner";
 import { CheckoutModal } from "./CheckoutModal";
-import rakhiAsset from "@/assets/rakhi-offer.jpeg.asset.json";
+import rakhiOfferImage from "@/assets/rakhi-offer.jpeg";
 
 const RAKHI_IDS = ["neem", "sandalwood-kesar", "honey-almond"];
 const RAKHI_PRICE = 199;
