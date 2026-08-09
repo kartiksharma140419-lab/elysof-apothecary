@@ -83,7 +83,7 @@ export function RakhiOffer() {
         {/* Offer poster */}
         <div className="rakhi-frame mt-8 border-4 border-[#F5C542]" style={{ boxShadow: "0 20px 50px rgba(0,0,0,.5)" }}>
           <img
-            src={rakhiAsset.url}
+            src={rakhiOfferImage}
             alt="ElySof Rakhi Special Offer — Buy 3 premium soaps (Neem, Sandalwood & Kesar, Honey & Almond Scrub) for ₹199 only"
             className="block h-auto w-full"
             loading="lazy"
