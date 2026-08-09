@@ -39,7 +39,10 @@ serve(async (req) => {
 
     const isCod = paymentMethod === "cod";
     const esc = (s: unknown) =>
-      String(s ?? "").replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]!));
+      String(s ?? "").replace(
+        /[<>&"]/g,
+        (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]!,
+      );
 
     const rows = (items as Item[])
       .map(

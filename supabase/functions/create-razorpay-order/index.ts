@@ -15,20 +15,20 @@ serve(async (req) => {
     const { amount, currency = "INR", receipt } = await req.json();
 
     if (!amount || typeof amount !== "number" || amount <= 0) {
-      return new Response(
-        JSON.stringify({ error: "Invalid amount" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
+      return new Response(JSON.stringify({ error: "Invalid amount" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const keyId = Deno.env.get("RAZORPAY_KEY_ID");
     const keySecret = Deno.env.get("RAZORPAY_KEY_SECRET");
 
     if (!keyId || !keySecret) {
-      return new Response(
-        JSON.stringify({ error: "Razorpay credentials not configured" }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
+      return new Response(JSON.stringify({ error: "Razorpay credentials not configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const auth = btoa(`${keyId}:${keySecret}`);
@@ -51,10 +51,10 @@ serve(async (req) => {
 
     if (!razorpayResponse.ok) {
       console.error("Razorpay order creation failed:", orderData);
-      return new Response(
-        JSON.stringify({ error: "Failed to create order", details: orderData }),
-        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
+      return new Response(JSON.stringify({ error: "Failed to create order", details: orderData }), {
+        status: 502,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     return new Response(
@@ -68,9 +68,9 @@ serve(async (req) => {
     );
   } catch (err) {
     console.error("create-razorpay-order error:", err);
-    return new Response(
-      JSON.stringify({ error: "Internal server error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-    );
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
 });

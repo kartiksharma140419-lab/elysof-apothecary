@@ -18,6 +18,7 @@ import { HeroSlider } from "@/components/elysof/HeroSlider";
 import { ComboOffer } from "@/components/elysof/ComboOffer";
 import { PromoModal } from "@/components/elysof/PromoModal";
 import { RakhiOffer } from "@/components/elysof/RakhiOffer";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   return (
@@ -48,6 +49,7 @@ export default function App() {
         <PromoModal />
         <Toaster position="top-center" richColors />
       </div>
+      <Analytics />
     </CartProvider>
   );
 }

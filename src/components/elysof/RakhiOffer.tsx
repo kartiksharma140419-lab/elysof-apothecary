@@ -55,16 +55,28 @@ export function RakhiOffer() {
 
       {/* Festival urgency strip */}
       <div className="flex h-10 items-center justify-center gap-3 bg-[#A3122B] px-4">
-        <span className="h-1.5 w-1.5 rounded-full bg-[#F5C542]" style={{ animation: "rakhi-pulse 1.5s ease-in-out infinite" }} />
-        <span className="text-[11px] font-bold uppercase tracking-[0.12em] sm:text-[13px]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        <span
+          className="h-1.5 w-1.5 rounded-full bg-[#F5C542]"
+          style={{ animation: "rakhi-pulse 1.5s ease-in-out infinite" }}
+        />
+        <span
+          className="text-[11px] font-bold uppercase tracking-[0.12em] sm:text-[13px]"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+        >
           Rakhi Special · Limited Time Festival Offer
         </span>
-        <span className="h-1.5 w-1.5 rounded-full bg-[#F5C542]" style={{ animation: "rakhi-pulse 1.5s ease-in-out infinite" }} />
+        <span
+          className="h-1.5 w-1.5 rounded-full bg-[#F5C542]"
+          style={{ animation: "rakhi-pulse 1.5s ease-in-out infinite" }}
+        />
       </div>
 
       <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <div className="text-center">
-          <div className="text-[12px] tracking-[0.25em] text-[#F5C542]" style={{ fontFamily: "'Space Mono', monospace" }}>
+          <div
+            className="text-[12px] tracking-[0.25em] text-[#F5C542]"
+            style={{ fontFamily: "'Space Mono', monospace" }}
+          >
             ✦ BEST RAKHI OFFER ✦
           </div>
           <h2
@@ -74,14 +86,20 @@ export function RakhiOffer() {
             <span className="block">Buy 3 Premium Soaps</span>
             <span className="block text-[#F5C542]">@ ₹199 Only</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-[15px] text-white/70" style={{ fontFamily: "Inter, sans-serif" }}>
-            Neem Soap · Sandalwood &amp; Kesar Soap · Honey &amp; Almond Scrub Soap Bar — one perfect gift, because every
-            bond deserves care.
+          <p
+            className="mx-auto mt-4 max-w-2xl text-[15px] text-white/70"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Neem Soap · Sandalwood &amp; Kesar Soap · Honey &amp; Almond Scrub Soap Bar — one
+            perfect gift, because every bond deserves care.
           </p>
         </div>
 
         {/* Offer poster */}
-        <div className="rakhi-frame mt-8 border-4 border-[#F5C542]" style={{ boxShadow: "0 20px 50px rgba(0,0,0,.5)" }}>
+        <div
+          className="rakhi-frame mt-8 border-4 border-[#F5C542]"
+          style={{ boxShadow: "0 20px 50px rgba(0,0,0,.5)" }}
+        >
           <img
             src={rakhiOfferImage}
             alt="ElySof Rakhi Special Offer — Buy 3 premium soaps (Neem, Sandalwood & Kesar, Honey & Almond Scrub) for ₹199 only"
@@ -100,7 +118,10 @@ export function RakhiOffer() {
                 className="flex items-center justify-between gap-3 border border-white/10 bg-white/5 px-4 py-3"
                 style={{ borderLeftWidth: 4, borderLeftColor: "#F5C542" }}
               >
-                <span className="text-[13px] font-bold uppercase tracking-[0.04em] text-[#F5C542]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                <span
+                  className="text-[13px] font-bold uppercase tracking-[0.04em] text-[#F5C542]"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
                   {p.shortName}
                 </span>
                 <span className="text-[12px] text-white/60">₹{p.mrp}</span>
@@ -112,16 +133,26 @@ export function RakhiOffer() {
         {/* Price + CTAs */}
         <div className="mt-8 flex flex-col items-center gap-5 border-2 border-[#F5C542] bg-[#2A060D] p-6 sm:p-8">
           <div className="flex flex-wrap items-end justify-center gap-4">
-            <span className="text-[24px] text-white/45 line-through" style={{ fontFamily: "'Space Mono', monospace" }}>
+            <span
+              className="text-[24px] text-white/45 line-through"
+              style={{ fontFamily: "'Space Mono', monospace" }}
+            >
               ₹{RAKHI_MRP}
             </span>
             <span
               className="leading-none text-[#F5C542]"
-              style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 900, fontSize: "clamp(46px,8vw,72px)" }}
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 900,
+                fontSize: "clamp(46px,8vw,72px)",
+              }}
             >
               ₹{RAKHI_PRICE}
             </span>
-            <span className="bg-[#A3122B] px-3 py-1 text-[13px] font-bold uppercase tracking-[0.05em]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <span
+              className="bg-[#A3122B] px-3 py-1 text-[13px] font-bold uppercase tracking-[0.05em]"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
               Save ₹{RAKHI_SAVE}
             </span>
           </div>
@@ -143,8 +174,12 @@ export function RakhiOffer() {
             </button>
           </div>
 
-          <p className="text-center text-[12px] text-white/50" style={{ fontFamily: "Inter, sans-serif" }}>
-            🎁 Perfect for Gifting · 🚚 Free Shipping · 🔒 Secure Checkout · 💵 Cash on Delivery Available
+          <p
+            className="text-center text-[12px] text-white/50"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            🎁 Perfect for Gifting · 🚚 Free Shipping · 🔒 Secure Checkout · 💵 Cash on Delivery
+            Available
           </p>
         </div>
       </div>

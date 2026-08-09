@@ -39,7 +39,11 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
   const [errors, setErrors] = useState<Partial<Record<keyof AddressForm, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [method, setMethod] = useState<PayMethod>("online");
-  const [confirmation, setConfirmation] = useState<{ id: string; name: string; cod: boolean } | null>(null);
+  const [confirmation, setConfirmation] = useState<{
+    id: string;
+    name: string;
+    cod: boolean;
+  } | null>(null);
 
   const update = (k: keyof AddressForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -54,7 +58,6 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
       console.error("order email failed", err);
     }
   };
-
 
   const closeAll = () => {
     setConfirmation(null);
@@ -115,7 +118,6 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
       setSubmitting(false);
       return;
     }
-
 
     // 1. Create the order SERVER-SIDE
     let order: { orderId: string; amount: number; currency: string };
@@ -206,7 +208,9 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
           setSubmitting(false);
         } catch (err) {
           console.error(err);
-          toast.error("We couldn't confirm your payment status. Please contact support before retrying.");
+          toast.error(
+            "We couldn't confirm your payment status. Please contact support before retrying.",
+          );
           setSubmitting(false);
         }
       },
@@ -292,21 +296,72 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
               </div>
             ) : (
               <form onSubmit={submit} className="px-6 py-6 sm:px-8 sm:py-8">
-                <p className="font-accent text-xs uppercase tracking-[0.2em] text-forest">Step 2 of 2</p>
+                <p className="font-accent text-xs uppercase tracking-[0.2em] text-forest">
+                  Step 2 of 2
+                </p>
                 <h3 className="mt-1 font-display text-3xl">Delivery details</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  We'll use this to ship your order and share updates. Payment opens after this step.
+                  We'll use this to ship your order and share updates. Payment opens after this
+                  step.
                 </p>
 
                 <div className="mt-5 grid grid-cols-2 gap-3">
-                  <Field label="Full Name" className="col-span-2" value={form.fullName} onChange={update("fullName")} error={errors.fullName} />
-                  <Field label="Phone (10-digit)" type="tel" maxLength={10} value={form.phone} onChange={update("phone")} error={errors.phone} />
-                  <Field label="Email" type="email" value={form.email} onChange={update("email")} error={errors.email} />
-                  <Field label="Address Line 1" className="col-span-2" value={form.addressLine1} onChange={update("addressLine1")} error={errors.addressLine1} />
-                  <Field label="Address Line 2 (optional)" className="col-span-2" value={form.addressLine2 ?? ""} onChange={update("addressLine2")} required={false} />
-                  <Field label="City" value={form.city} onChange={update("city")} error={errors.city} />
-                  <Field label="State" value={form.state} onChange={update("state")} error={errors.state} />
-                  <Field label="Pincode" className="col-span-2" maxLength={6} value={form.pincode} onChange={update("pincode")} error={errors.pincode} />
+                  <Field
+                    label="Full Name"
+                    className="col-span-2"
+                    value={form.fullName}
+                    onChange={update("fullName")}
+                    error={errors.fullName}
+                  />
+                  <Field
+                    label="Phone (10-digit)"
+                    type="tel"
+                    maxLength={10}
+                    value={form.phone}
+                    onChange={update("phone")}
+                    error={errors.phone}
+                  />
+                  <Field
+                    label="Email"
+                    type="email"
+                    value={form.email}
+                    onChange={update("email")}
+                    error={errors.email}
+                  />
+                  <Field
+                    label="Address Line 1"
+                    className="col-span-2"
+                    value={form.addressLine1}
+                    onChange={update("addressLine1")}
+                    error={errors.addressLine1}
+                  />
+                  <Field
+                    label="Address Line 2 (optional)"
+                    className="col-span-2"
+                    value={form.addressLine2 ?? ""}
+                    onChange={update("addressLine2")}
+                    required={false}
+                  />
+                  <Field
+                    label="City"
+                    value={form.city}
+                    onChange={update("city")}
+                    error={errors.city}
+                  />
+                  <Field
+                    label="State"
+                    value={form.state}
+                    onChange={update("state")}
+                    error={errors.state}
+                  />
+                  <Field
+                    label="Pincode"
+                    className="col-span-2"
+                    maxLength={6}
+                    value={form.pincode}
+                    onChange={update("pincode")}
+                    error={errors.pincode}
+                  />
                 </div>
 
                 <p className="mt-6 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -352,7 +407,6 @@ export function CheckoutModal({ open, onClose }: { open: boolean; onClose: () =>
                 <p className="mt-3 text-center text-[10px] uppercase tracking-wider text-muted-foreground">
                   🔒 Server-verified payments · UPI · Cards · Netbanking · COD
                 </p>
-
               </form>
             )}
           </motion.div>
@@ -376,7 +430,9 @@ function Field({
 } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className={`flex flex-col gap-1 ${className}`}>
-      <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         {...rest}
         required={required}

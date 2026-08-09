@@ -1,6 +1,20 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { ShoppingBag, Menu, X, Star, Leaf, Hand, ScaleIcon, HeartHandshake, ArrowRight, Phone, Mail, Instagram, MessageCircle } from "lucide-react";
+import {
+  ShoppingBag,
+  Menu,
+  X,
+  Star,
+  Leaf,
+  Hand,
+  ScaleIcon,
+  HeartHandshake,
+  ArrowRight,
+  Phone,
+  Mail,
+  Instagram,
+  MessageCircle,
+} from "lucide-react";
 import { products, discount, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { toast } from "sonner";
@@ -84,15 +98,18 @@ export function Navbar() {
   ];
   return (
     <header
-      className={`sticky top-0 z-40 border-b-2 border-ink transition-all ${scrolled ? "bg-parchment/90 backdrop-blur" : "bg-parchment"
-        }`}
+      className={`sticky top-0 z-40 border-b-2 border-ink transition-all ${
+        scrolled ? "bg-parchment/90 backdrop-blur" : "bg-parchment"
+      }`}
     >
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
         <a href="#home" className="flex min-w-0 items-center gap-2">
           <BirdLogo className="h-8 w-8 shrink-0" />
           <div className="min-w-0">
             <p className="truncate font-display text-2xl leading-none">ElySof</p>
-            <p className="font-accent text-[10px] italic text-muted-foreground">The Essence of Soft Elegance</p>
+            <p className="font-accent text-[10px] italic text-muted-foreground">
+              The Essence of Soft Elegance
+            </p>
           </div>
         </a>
         <nav className="ml-auto hidden items-center gap-7 lg:flex">
@@ -210,8 +227,20 @@ function StoryCard() {
           transition={{ duration: 0.45 }}
           className="mt-4 grid grid-cols-2 gap-3"
         >
-          <SkinPanel cls={s.before[0]} label="Before" sub={s.before[1]} acne={idx === 0} img={(s as any).beforeImg} />
-          <SkinPanel cls={s.after[0]} label="After" sub={s.after[1]} glow={idx === 0} img={(s as any).afterImg} />
+          <SkinPanel
+            cls={s.before[0]}
+            label="Before"
+            sub={s.before[1]}
+            acne={idx === 0}
+            img={(s as any).beforeImg}
+          />
+          <SkinPanel
+            cls={s.after[0]}
+            label="After"
+            sub={s.after[1]}
+            glow={idx === 0}
+            img={(s as any).afterImg}
+          />
         </motion.div>
 
         <motion.blockquote
@@ -272,7 +301,9 @@ function SkinPanel({
           {label}
         </div>
       </div>
-      <p className="border-t border-ink bg-white px-2 py-1 text-center text-[11px] font-medium">{sub}</p>
+      <p className="border-t border-ink bg-white px-2 py-1 text-center text-[11px] font-medium">
+        {sub}
+      </p>
     </div>
   );
 }
@@ -387,78 +418,123 @@ const productDetailsMap: Record<
   }
 > = {
   "sandalwood-kesar": {
-    about: "ElySof's Sandalwood & Kesar Soap is a breakthrough natural brightening and nourishing soap, handcrafted to bring the calming richness of sandalwood together with the radiant glow of real kesar (saffron). Every bar is infused with sandalwood oil and kesar extract, rich in antioxidants and natural compounds that work together to deeply cleanse while visibly brightening the skin. This is soap as ritual — soothing, divine, and elegant, designed for those who want their daily cleanse to feel like a luxury.",
+    about:
+      "ElySof's Sandalwood & Kesar Soap is a breakthrough natural brightening and nourishing soap, handcrafted to bring the calming richness of sandalwood together with the radiant glow of real kesar (saffron). Every bar is infused with sandalwood oil and kesar extract, rich in antioxidants and natural compounds that work together to deeply cleanse while visibly brightening the skin. This is soap as ritual — soothing, divine, and elegant, designed for those who want their daily cleanse to feel like a luxury.",
     benefits: [
       "Deep Cleansing & Skin Brightening — helps reduce the appearance of pigmentation",
       "Radiant Glow & Nourishment — moisturizes and evens out skin tone",
       "Sandalwood Oil & Kesar Infused Formula — rich in antioxidants and natural extracts",
-      "Anti-Inflammatory & Anti-Bacterial — helps soothe skin and fight acne"
+      "Anti-Inflammatory & Anti-Bacterial — helps soothe skin and fight acne",
     ],
     whatMakesItWork: [
-      { title: "Sandalwood", desc: "calms inflammation, soothes irritated skin, and leaves a naturally cooling sensation" },
-      { title: "Kesar (Saffron)", desc: "a brightening agent prized in Ayurveda for evening out skin tone and restoring natural radiance" },
-      { title: "Cold-Processed Formula", desc: "preserves the integrity of natural oils so nourishment isn't stripped away during the cleanse" }
+      {
+        title: "Sandalwood",
+        desc: "calms inflammation, soothes irritated skin, and leaves a naturally cooling sensation",
+      },
+      {
+        title: "Kesar (Saffron)",
+        desc: "a brightening agent prized in Ayurveda for evening out skin tone and restoring natural radiance",
+      },
+      {
+        title: "Cold-Processed Formula",
+        desc: "preserves the integrity of natural oils so nourishment isn't stripped away during the cleanse",
+      },
     ],
     howToUse: [
       "Apply on damp skin",
       "Massage gently into a soft lather, then rinse thoroughly",
-      "Use everyday for best results"
+      "Use everyday for best results",
     ],
-    trustLine: "Fights acne, loves your skin. Tough on blemishes, kind to skin. Tough on dark spots, gentle on your skin. Brightens dark spots, lightens mood.",
-    additionalImages: [sandalwoodWhySpecial, sandalwoodOgExperts]
+    trustLine:
+      "Fights acne, loves your skin. Tough on blemishes, kind to skin. Tough on dark spots, gentle on your skin. Brightens dark spots, lightens mood.",
+    additionalImages: [sandalwoodWhySpecial, sandalwoodOgExperts],
   },
-  "neem": {
-    about: "ElySof Neem Soap brings the time-trusted power of pure neem into a gentle, everyday cleansing bar. Rooted in an Ayurvedic Inspired Formula, this soap is handcrafted through a cold process using organic neem — prioritizing quality and care in every batch. It's built for people who want their skincare grounded in tradition: a soap that gently cleanses, protects, and refreshes the skin every single day, without harsh chemicals or stripping your skin's natural balance.",
+  neem: {
+    about:
+      "ElySof Neem Soap brings the time-trusted power of pure neem into a gentle, everyday cleansing bar. Rooted in an Ayurvedic Inspired Formula, this soap is handcrafted through a cold process using organic neem — prioritizing quality and care in every batch. It's built for people who want their skincare grounded in tradition: a soap that gently cleanses, protects, and refreshes the skin every single day, without harsh chemicals or stripping your skin's natural balance.",
     benefits: [
       "Fights Acne — neem's natural antibacterial action helps target breakouts at the source",
       "Moisturizes Skin — leaves skin feeling soft and hydrated, never tight or dry",
       "Reduces Skin Inflammation — calms redness and irritation with consistent use",
-      "Anti-Bacterial Properties — helps keep skin clear and protected throughout the day"
+      "Anti-Bacterial Properties — helps keep skin clear and protected throughout the day",
     ],
     whatMakesItWork: [
-      { title: "Natural Antiseptic Care", desc: "packed with neem's antibacterial and Ayurvedic benefits to soothe and cleanse deeply" },
-      { title: "Gentle Hydration", desc: "retains skin's natural oils, keeping it soft, supple, and irritation-free" },
-      { title: "Ethically Crafted", desc: "handcrafted through a cold process with organic neem, prioritizing quality and care at every step" }
+      {
+        title: "Natural Antiseptic Care",
+        desc: "packed with neem's antibacterial and Ayurvedic benefits to soothe and cleanse deeply",
+      },
+      {
+        title: "Gentle Hydration",
+        desc: "retains skin's natural oils, keeping it soft, supple, and irritation-free",
+      },
+      {
+        title: "Ethically Crafted",
+        desc: "handcrafted through a cold process with organic neem, prioritizing quality and care at every step",
+      },
     ],
     trustLine: "Ayurvedic Inspired Formula — your neem care for healthy skin.",
-    additionalImages: [neemBenefits, neemWhyChoose]
+    additionalImages: [neemBenefits, neemWhyChoose],
   },
-  "glutasof": {
-    about: "Glutasof Facewash is ElySof's answer to dull, uneven-looking skin — a brightening face wash enriched with Glutathione, Kojic Acid Dipalmitate, Niacinamide, and Alpha Arbutin, four of the most trusted actives in modern skin-brightening science. Designed for all skin types and dermatologically tested, this paraben-free, sulfate-free formula goes beyond basic cleansing — it actively works to even out skin tone, fade the appearance of dark spots, and bring back a fresh, radiant glow, all while keeping skin hydrated rather than stripped.",
+  glutasof: {
+    about:
+      "Glutasof Facewash is ElySof's answer to dull, uneven-looking skin — a brightening face wash enriched with Glutathione, Kojic Acid Dipalmitate, Niacinamide, and Alpha Arbutin, four of the most trusted actives in modern skin-brightening science. Designed for all skin types and dermatologically tested, this paraben-free, sulfate-free formula goes beyond basic cleansing — it actively works to even out skin tone, fade the appearance of dark spots, and bring back a fresh, radiant glow, all while keeping skin hydrated rather than stripped.",
     benefits: [
       "Instant Brightening Effect — helps improve dull and tired skin, giving a fresh and radiant glow",
       "Evens Out Skin Tone — reduces uneven pigmentation for a clearer, more uniform complexion",
       "Deep Yet Gentle Cleansing — removes dirt, oil, and impurities without stripping natural moisture",
       "Supports Skin Rejuvenation — active ingredients help refresh and revive tired-looking skin",
       "Helps Reduce Dark Spots Appearance — works gradually to improve skin clarity and smoothness",
-      "Hydrating & Non-Drying Formula — leaves skin soft, smooth, and supple after every wash"
+      "Hydrating & Non-Drying Formula — leaves skin soft, smooth, and supple after every wash",
     ],
     whatMakesItWork: [
-      { title: "Glutathione", desc: "a powerful antioxidant known for its skin-brightening and tone-evening properties" },
-      { title: "Kojic Acid Dipalmitate", desc: "a stable, skin-friendly form of Kojic Acid that targets dark spots and uneven pigmentation" },
-      { title: "Niacinamide", desc: "strengthens the skin barrier while visibly refining texture and tone" },
-      { title: "Alpha Arbutin", desc: "works gradually to brighten skin and fade the look of dark spots over time" }
+      {
+        title: "Glutathione",
+        desc: "a powerful antioxidant known for its skin-brightening and tone-evening properties",
+      },
+      {
+        title: "Kojic Acid Dipalmitate",
+        desc: "a stable, skin-friendly form of Kojic Acid that targets dark spots and uneven pigmentation",
+      },
+      {
+        title: "Niacinamide",
+        desc: "strengthens the skin barrier while visibly refining texture and tone",
+      },
+      {
+        title: "Alpha Arbutin",
+        desc: "works gradually to brighten skin and fade the look of dark spots over time",
+      },
     ],
-    trustMarkers: ["Paraben Free", "Sulfate Free", "Dermatologically Tested", "pH Balanced", "For All Skin Types"],
-    trustLine: "Paraben Free · Sulfate Free · Dermatologically Tested · pH Balanced · For All Skin Types",
-    additionalImages: [glutasofKeyBenefits]
+    trustMarkers: [
+      "Paraben Free",
+      "Sulfate Free",
+      "Dermatologically Tested",
+      "pH Balanced",
+      "For All Skin Types",
+    ],
+    trustLine:
+      "Paraben Free · Sulfate Free · Dermatologically Tested · pH Balanced · For All Skin Types",
+    additionalImages: [glutasofKeyBenefits],
   },
   "honey-almond": {
-    about: "ElySof's Honey & Almond Scrub Soap Bar is a textured natural soap built for people who want exfoliation and nourishment in a single step. Real crushed almond shells provide gentle physical exfoliation, sweeping away dead skin cells, while pure honey works underneath to hydrate and soothe — leaving skin not just clean, but genuinely cared for. This is the 2-in-1 soap for soft, radiant skin: scrub and glow, in one bar.",
+    about:
+      "ElySof's Honey & Almond Scrub Soap Bar is a textured natural soap built for people who want exfoliation and nourishment in a single step. Real crushed almond shells provide gentle physical exfoliation, sweeping away dead skin cells, while pure honey works underneath to hydrate and soothe — leaving skin not just clean, but genuinely cared for. This is the 2-in-1 soap for soft, radiant skin: scrub and glow, in one bar.",
     benefits: [
       "Exfoliates Dead Skin Cells — buffs away dullness and roughness for noticeably smoother skin",
       "Moisturizes and Nourishes Skin — honey locks in hydration so skin never feels stripped after exfoliating",
       "Soothes and Calms Irritation — gentle enough for regular use without overworking the skin",
-      "Improves Skin's Texture & Glow — consistent use reveals visibly softer, more radiant skin over time"
+      "Improves Skin's Texture & Glow — consistent use reveals visibly softer, more radiant skin over time",
     ],
     whatMakesItWork: [
       { title: "Almond Oil", desc: "nourishes and softens the skin with every wash" },
       { title: "Honey", desc: "hydrates and soothes for a healthy, lasting glow" },
-      { title: "Crushed Almond Shells", desc: "gently exfoliate to remove dead skin cells without harsh scrubbing" }
+      {
+        title: "Crushed Almond Shells",
+        desc: "gently exfoliate to remove dead skin cells without harsh scrubbing",
+      },
     ],
     trustLine: "125g of nourishing dual care — exfoliating and moisturizing in every bar.",
-    additionalImages: [honeyAlmondBenefits, honeyAlmondWhatMakesItWork]
-  }
+    additionalImages: [honeyAlmondBenefits, honeyAlmondWhatMakesItWork],
+  },
 };
 
 function ModalGallery({ images }: { images: string[] }) {
@@ -470,7 +546,7 @@ function ModalGallery({ images }: { images: string[] }) {
       const slideWidth = containerRef.current.clientWidth;
       containerRef.current.scrollTo({
         left: slideWidth * index,
-        behavior: "smooth"
+        behavior: "smooth",
       });
       setActiveIndex(index);
     }
@@ -503,7 +579,10 @@ function ModalGallery({ images }: { images: string[] }) {
         className="w-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-none border-2 border-ink bg-parchment aspect-[4/3] sm:aspect-square relative"
       >
         {images.map((img, idx) => (
-          <div key={idx} className="w-full shrink-0 snap-start flex items-center justify-center p-4">
+          <div
+            key={idx}
+            className="w-full shrink-0 snap-start flex items-center justify-center p-4"
+          >
             <img
               src={img}
               alt={`Product View ${idx + 1}`}
@@ -520,8 +599,9 @@ function ModalGallery({ images }: { images: string[] }) {
             <button
               key={idx}
               onClick={() => scrollTo(idx)}
-              className={`h-2 w-6 border border-ink transition-colors cursor-pointer ${idx === activeIndex ? "bg-[#3D5F82]" : "bg-paper/40 border-slate-400"
-                }`}
+              className={`h-2 w-6 border border-ink transition-colors cursor-pointer ${
+                idx === activeIndex ? "bg-[#3D5F82]" : "bg-paper/40 border-slate-400"
+              }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
           ))}
@@ -535,8 +615,9 @@ function ModalGallery({ images }: { images: string[] }) {
             <button
               key={idx}
               onClick={() => scrollTo(idx)}
-              className={`h-16 w-16 shrink-0 border-2 cursor-pointer ${idx === activeIndex ? "border-[#3D5F82]" : "border-ink/20 hover:border-ink"
-                } bg-parchment p-1 transition`}
+              className={`h-16 w-16 shrink-0 border-2 cursor-pointer ${
+                idx === activeIndex ? "border-[#3D5F82]" : "border-ink/20 hover:border-ink"
+              } bg-parchment p-1 transition`}
             >
               <img src={img} alt="" className="h-full w-full object-contain" />
             </button>
@@ -610,14 +691,8 @@ function ProductDetailModal({ product, onClose, onAddToCart, onBuyNow }: Product
   };
 
   return (
-    <div
-      className="product-modal-overlay"
-      onClick={onClose}
-    >
-      <div
-        className="product-modal-content"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="product-modal-overlay" onClick={onClose}>
+      <div className="product-modal-content" onClick={(e) => e.stopPropagation()}>
         {/* Mobile Swipe-down Dismiss Handle */}
         <div
           className="sm:hidden flex justify-center py-2 -mt-4 mb-2 cursor-grab"
@@ -651,7 +726,9 @@ function ProductDetailModal({ product, onClose, onAddToCart, onBuyNow }: Product
                 {[...Array(product.rating)].map((_, i) => (
                   <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
                 ))}
-                <span className="text-xs text-muted-foreground ml-1.5 font-accent italic">⭐ 5.0 (verified)</span>
+                <span className="text-xs text-muted-foreground ml-1.5 font-accent italic">
+                  ⭐ 5.0 (verified)
+                </span>
               </div>
               <h2 className="mt-3 font-display text-3xl sm:text-4xl text-ink leading-tight">
                 {product.name}
@@ -667,7 +744,10 @@ function ProductDetailModal({ product, onClose, onAddToCart, onBuyNow }: Product
 
               <div className="mt-5 flex flex-wrap gap-1.5">
                 {product.tags.map((t) => (
-                  <span key={t} className="border border-line bg-parchment px-2.5 py-1 text-xs font-accent italic">
+                  <span
+                    key={t}
+                    className="border border-line bg-parchment px-2.5 py-1 text-xs font-accent italic"
+                  >
                     {t}
                   </span>
                 ))}
@@ -746,7 +826,9 @@ function ProductDetailModal({ product, onClose, onAddToCart, onBuyNow }: Product
               <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6">
                 {details.howToUse.map((step, idx) => (
                   <div key={idx} className="flex flex-col gap-2 border-l-2 border-line pl-4">
-                    <span className="font-accent text-3xl text-[#FF99CB] font-bold leading-none">0{idx + 1}</span>
+                    <span className="font-accent text-3xl text-[#FF99CB] font-bold leading-none">
+                      0{idx + 1}
+                    </span>
                     <p className="text-sm text-muted-foreground leading-relaxed">{step}</p>
                   </div>
                 ))}
@@ -840,7 +922,10 @@ function ProductCard({
         <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>
         <div className="mt-3 flex flex-wrap gap-1.5">
           {p.tags.map((t) => (
-            <span key={t} className="border border-line bg-parchment px-2 py-0.5 font-accent text-[11px] italic">
+            <span
+              key={t}
+              className="border border-line bg-parchment px-2 py-0.5 font-accent text-[11px] italic"
+            >
               {t}
             </span>
           ))}
@@ -869,10 +954,7 @@ function ProductCard({
               Buy Now
             </button>
           </div>
-          <button
-            onClick={() => onExplore(p)}
-            className="btn-explore-more"
-          >
+          <button onClick={() => onExplore(p)} className="btn-explore-more">
             EXPLORE MORE <span className="explore-arrow">→</span>
           </button>
         </div>
@@ -948,7 +1030,10 @@ const pillars = [
 
 export function WhyElysof() {
   return (
-    <section id="story" className="relative overflow-hidden border-b-2 border-ink bg-parchment py-20">
+    <section
+      id="story"
+      className="relative overflow-hidden border-b-2 border-ink bg-parchment py-20"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="max-w-xl">
           <span className="font-accent text-sm italic text-forest">— Why ElySof</span>
@@ -997,9 +1082,33 @@ export function WhyElysof() {
 
 /* ---------------- Results / Before-After ---------------- */
 const results = [
-  { who: "Priya · Mumbai", quote: "My acne is finally calm.", product: "Neem Soap", before: "oklch(0.78 0.05 50)", after: "#FF99CB", beforeImg: beforeAcne, afterImg: afterAcne },
-  { who: "Ritika · Delhi", quote: "Brightness in 14 days.", product: "Glutasof Facewash", before: "oklch(0.72 0.01 70)", after: "#FF99CB", beforeImg: beforeTired, afterImg: afterBright },
-  { who: "Aakash · Pune", quote: "Soft like never before.", product: "Honey & Almond Soap", before: "oklch(0.78 0.03 55)", after: "#FF99CB", beforeImg: beforeSoft, afterImg: afterSoft },
+  {
+    who: "Priya · Mumbai",
+    quote: "My acne is finally calm.",
+    product: "Neem Soap",
+    before: "oklch(0.78 0.05 50)",
+    after: "#FF99CB",
+    beforeImg: beforeAcne,
+    afterImg: afterAcne,
+  },
+  {
+    who: "Ritika · Delhi",
+    quote: "Brightness in 14 days.",
+    product: "Glutasof Facewash",
+    before: "oklch(0.72 0.01 70)",
+    after: "#FF99CB",
+    beforeImg: beforeTired,
+    afterImg: afterBright,
+  },
+  {
+    who: "Aakash · Pune",
+    quote: "Soft like never before.",
+    product: "Honey & Almond Soap",
+    before: "oklch(0.78 0.03 55)",
+    after: "#FF99CB",
+    beforeImg: beforeSoft,
+    afterImg: afterSoft,
+  },
 ];
 
 export function Results() {
@@ -1036,7 +1145,10 @@ export function Results() {
                         <span
                           key={k}
                           className="absolute h-1.5 w-1.5 rounded-full bg-[oklch(0.5_0.15_25)]/60"
-                          style={{ top: `${20 + ((k * 41) % 60)}%`, left: `${15 + ((k * 53) % 70)}%` }}
+                          style={{
+                            top: `${20 + ((k * 41) % 60)}%`,
+                            left: `${15 + ((k * 53) % 70)}%`,
+                          }}
                         />
                       ))}
                     </div>
@@ -1083,14 +1195,54 @@ export function Results() {
 
 /* ---------------- Reviews ---------------- */
 const reviews = [
-  { name: "Neha Sharma", city: "Delhi", text: "The Neem Soap is absolutely amazing! My acne has reduced significantly in just 2-3 weeks. Skin feels so clean and fresh. Will definitely reorder!", product: "Neem Soap" },
-  { name: "Rohan Mehta", city: "Mumbai", text: "Glutasof Face Wash is a game changer. My skin tone has visibly improved. It's gentle yet effective. Highly recommend for anyone with uneven skin tone.", product: "Glutasof Facewash" },
-  { name: "Priya Verma", city: "Pune", text: "The Honey & Almond Scrub Soap is my new favourite. Skin feels silky smooth after every wash. The exfoliation is gentle — not harsh at all. Love it!", product: "Honey & Almond Scrub Soap" },
-  { name: "Ananya Singh", city: "Bangalore", text: "Sandalwood & Kesar Soap smells divine! It's like a spa at home. My skin feels calm and radiant. This is 100% worth every rupee.", product: "Sandalwood & Kesar Soap" },
-  { name: "Kavya Nair", city: "Chennai", text: "I was skeptical at first but WOW. The Neem Soap cleared my stubborn breakouts. Natural ingredients, no irritation. ElySof is now my go-to skincare brand!", product: "Neem Soap" },
-  { name: "Arjun Kapoor", city: "Hyderabad", text: "Ordered for my wife and she loves the Honey & Almond Soap. Packaging is beautiful and the quality is premium. Great value for money!", product: "Honey & Almond Scrub Soap" },
-  { name: "Meera Pillai", city: "Kochi", text: "Glutasof Facewash has improved my skin brightness noticeably. No more dullness. Lightweight, non-sticky, and the pump bottle is so convenient.", product: "Glutasof Facewash" },
-  { name: "Siddharth Rao", city: "Ahmedabad", text: "The Sandalwood & Kesar Soap is incredibly soothing. Perfect for sensitive skin. The fragrance stays for hours. Premium luxury at an affordable price!", product: "Sandalwood & Kesar Soap" },
+  {
+    name: "Neha Sharma",
+    city: "Delhi",
+    text: "The Neem Soap is absolutely amazing! My acne has reduced significantly in just 2-3 weeks. Skin feels so clean and fresh. Will definitely reorder!",
+    product: "Neem Soap",
+  },
+  {
+    name: "Rohan Mehta",
+    city: "Mumbai",
+    text: "Glutasof Face Wash is a game changer. My skin tone has visibly improved. It's gentle yet effective. Highly recommend for anyone with uneven skin tone.",
+    product: "Glutasof Facewash",
+  },
+  {
+    name: "Priya Verma",
+    city: "Pune",
+    text: "The Honey & Almond Scrub Soap is my new favourite. Skin feels silky smooth after every wash. The exfoliation is gentle — not harsh at all. Love it!",
+    product: "Honey & Almond Scrub Soap",
+  },
+  {
+    name: "Ananya Singh",
+    city: "Bangalore",
+    text: "Sandalwood & Kesar Soap smells divine! It's like a spa at home. My skin feels calm and radiant. This is 100% worth every rupee.",
+    product: "Sandalwood & Kesar Soap",
+  },
+  {
+    name: "Kavya Nair",
+    city: "Chennai",
+    text: "I was skeptical at first but WOW. The Neem Soap cleared my stubborn breakouts. Natural ingredients, no irritation. ElySof is now my go-to skincare brand!",
+    product: "Neem Soap",
+  },
+  {
+    name: "Arjun Kapoor",
+    city: "Hyderabad",
+    text: "Ordered for my wife and she loves the Honey & Almond Soap. Packaging is beautiful and the quality is premium. Great value for money!",
+    product: "Honey & Almond Scrub Soap",
+  },
+  {
+    name: "Meera Pillai",
+    city: "Kochi",
+    text: "Glutasof Facewash has improved my skin brightness noticeably. No more dullness. Lightweight, non-sticky, and the pump bottle is so convenient.",
+    product: "Glutasof Facewash",
+  },
+  {
+    name: "Siddharth Rao",
+    city: "Ahmedabad",
+    text: "The Sandalwood & Kesar Soap is incredibly soothing. Perfect for sensitive skin. The fragrance stays for hours. Premium luxury at an affordable price!",
+    product: "Sandalwood & Kesar Soap",
+  },
 ];
 
 const avatarColors = ["bg-forest", "bg-terracotta", "bg-forest", "bg-terracotta"];
@@ -1129,8 +1281,14 @@ export function Reviews() {
               className={`border-2 border-ink bg-parchment p-6 ${i === 1 ? "lg:translate-y-3" : ""}`}
             >
               <div className="flex items-center gap-3">
-                <div className={`grid h-11 w-11 place-items-center rounded-full border-2 border-ink ${avatarColors[i % avatarColors.length]} ${avatarColors[i % avatarColors.length] === 'bg-terracotta' ? 'text-forest-deep' : 'text-primary-foreground'} font-bold`}>
-                  {r.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
+                <div
+                  className={`grid h-11 w-11 place-items-center rounded-full border-2 border-ink ${avatarColors[i % avatarColors.length]} ${avatarColors[i % avatarColors.length] === "bg-terracotta" ? "text-forest-deep" : "text-primary-foreground"} font-bold`}
+                >
+                  {r.name
+                    .split(" ")
+                    .map((s) => s[0])
+                    .join("")
+                    .slice(0, 2)}
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold">{r.name}</p>
@@ -1174,10 +1332,10 @@ export function Contact() {
     const message = formData.get("message") as string;
 
     const mailtoBody = encodeURIComponent(
-      `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\n\nMessage:\n${message}`
+      `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\n\nMessage:\n${message}`,
     );
     const mailtoUrl = `mailto:info@elysof.com?subject=${encodeURIComponent(
-      subject || "Query from ElySof Website"
+      subject || "Query from ElySof Website",
     )}&body=${mailtoBody}`;
 
     setSubmitting(true);
@@ -1201,23 +1359,42 @@ export function Contact() {
 
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-start gap-3">
-              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-forest text-primary-foreground"><Phone size={16} /></span>
+              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-forest text-primary-foreground">
+                <Phone size={16} />
+              </span>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Phone</p>
-                <a href="tel:+918369729653" className="text-base font-semibold hover:text-forest">+91 83697 29653</a>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Phone
+                </p>
+                <a href="tel:+918369729653" className="text-base font-semibold hover:text-forest">
+                  +91 83697 29653
+                </a>
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-forest text-primary-foreground"><Mail size={16} /></span>
+              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-forest text-primary-foreground">
+                <Mail size={16} />
+              </span>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Email</p>
-                <a href="mailto:info@elysof.com" className="text-base font-semibold hover:text-forest">info@elysof.com</a>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Email
+                </p>
+                <a
+                  href="mailto:info@elysof.com"
+                  className="text-base font-semibold hover:text-forest"
+                >
+                  info@elysof.com
+                </a>
               </div>
             </li>
             <li className="flex items-start gap-3">
-              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-ink text-parchment"><MessageCircle size={16} /></span>
+              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-ink text-parchment">
+                <MessageCircle size={16} />
+              </span>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Support hours</p>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Support hours
+                </p>
                 <p className="text-base font-semibold">Mon–Sat · 10AM – 6PM IST</p>
               </div>
             </li>
@@ -1228,16 +1405,26 @@ export function Contact() {
           <div className="grid gap-4 sm:grid-cols-2">
             <CField label="Your Name" name="name" required />
             <CField label="Phone Number" name="phone" type="tel" required />
-            <CField label="Email Address" name="email" type="email" required className="sm:col-span-2" />
+            <CField
+              label="Email Address"
+              name="email"
+              type="email"
+              required
+              className="sm:col-span-2"
+            />
             <label className="flex flex-col gap-1 sm:col-span-2">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Subject</span>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                Subject
+              </span>
               <select
                 name="subject"
                 required
                 className="border-2 border-ink bg-parchment px-3 py-2.5 text-sm outline-none"
                 defaultValue=""
               >
-                <option value="" disabled>Select…</option>
+                <option value="" disabled>
+                  Select…
+                </option>
                 <option>General Query</option>
                 <option>Order Issue</option>
                 <option>Bulk Order</option>
@@ -1245,7 +1432,9 @@ export function Contact() {
               </select>
             </label>
             <label className="flex flex-col gap-1 sm:col-span-2">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Message</span>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                Message
+              </span>
               <textarea
                 name="message"
                 rows={4}
@@ -1274,8 +1463,13 @@ function CField({
 }: { label: string; className?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className={`flex flex-col gap-1 ${className}`}>
-      <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</span>
-      <input {...rest} className="border-2 border-ink bg-parchment px-3 py-2.5 text-sm outline-none" />
+      <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
+      <input
+        {...rest}
+        className="border-2 border-ink bg-parchment px-3 py-2.5 text-sm outline-none"
+      />
     </label>
   );
 }
@@ -1291,7 +1485,9 @@ export function Footer() {
               <BirdLogo />
               <p className="font-display text-2xl">ElySof</p>
             </div>
-            <p className="mt-1 font-accent text-xs italic text-parchment/70">The Essence of Soft Elegance</p>
+            <p className="mt-1 font-accent text-xs italic text-parchment/70">
+              The Essence of Soft Elegance
+            </p>
             <p className="mt-4 text-sm text-parchment/80">
               Handcrafted Ayurvedic skincare for soft, radiant, healthy skin.
             </p>
@@ -1303,16 +1499,47 @@ export function Footer() {
             </a>
           </div>
 
-          <FCol title="Quick Links" items={[["Home", "#home"], ["Products", "#products"], ["Our Story", "#story"], ["Reviews", "#reviews"], ["Contact", "#contact"]]} />
+          <FCol
+            title="Quick Links"
+            items={[
+              ["Home", "#home"],
+              ["Products", "#products"],
+              ["Our Story", "#story"],
+              ["Reviews", "#reviews"],
+              ["Contact", "#contact"],
+            ]}
+          />
           <FCol title="Our Products" items={products.map((p) => [p.shortName, "#products"])} />
           <div>
-            <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">Customer Care</p>
+            <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">
+              Customer Care
+            </p>
             <ul className="mt-3 space-y-2 text-sm">
-              <li><a href="tel:+918369729653" className="hover:text-gold">+91 83697 29653</a></li>
-              <li><a href="mailto:info@elysof.com" className="hover:text-gold">info@elysof.com</a></li>
-              <li><a href="#" className="hover:text-gold">Shipping Policy</a></li>
-              <li><a href="#" className="hover:text-gold">Return Policy</a></li>
-              <li><a href="#" className="hover:text-gold">Privacy Policy</a></li>
+              <li>
+                <a href="tel:+918369729653" className="hover:text-gold">
+                  +91 83697 29653
+                </a>
+              </li>
+              <li>
+                <a href="mailto:info@elysof.com" className="hover:text-gold">
+                  info@elysof.com
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gold">
+                  Shipping Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gold">
+                  Return Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gold">
+                  Privacy Policy
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -1327,11 +1554,15 @@ export function Footer() {
 function FCol({ title, items }: { title: string; items: [string, string][] }) {
   return (
     <div>
-      <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">{title}</p>
+      <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">
+        {title}
+      </p>
       <ul className="mt-3 space-y-2 text-sm">
         {items.map(([label, href]) => (
           <li key={label}>
-            <a href={href} className="hover:text-gold">{label}</a>
+            <a href={href} className="hover:text-gold">
+              {label}
+            </a>
           </li>
         ))}
       </ul>
