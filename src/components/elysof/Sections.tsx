@@ -1347,15 +1347,17 @@ export function Footer() {
               Handcrafted Ayurvedic skincare for soft, radiant, healthy skin.
             </p>
             <a
-              href="#"
+              href="https://www.instagram.com/elysof"
+              target="_blank"
+              rel="noreferrer"
               className="mt-5 inline-flex items-center gap-2 border-2 border-parchment px-3 py-1.5 text-xs font-semibold uppercase tracking-wider hover:bg-parchment hover:text-ink"
             >
               <Instagram size={14} /> @elysof
             </a>
           </div>
 
-          <FCol title="Quick Links" items={[["Home", "#home"], ["Products", "#products"], ["Our Story", "#story"], ["Reviews", "#reviews"], ["Contact", "#contact"]]} />
-          <FCol title="Our Products" items={products.map((p) => [p.shortName, "#products"])} />
+          <FCol title="Quick Links" items={[["Home", "/"], ["Products", "/products"], ["Our Story", "/#story"], ["Reviews", "/reviews"], ["Offers", "/offers"], ["Contact", "/contact"]]} />
+          <FCol title="Our Products" items={products.map((p) => [p.shortName, "/products"] as [string, string])} />
           <div>
             <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">Customer Care</p>
             <ul className="mt-3 space-y-2 text-sm">
