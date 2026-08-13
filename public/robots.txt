@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /*.js$
+Allow: /*.css$
+
+Sitemap: https://www.elysof.com/sitemap.xml

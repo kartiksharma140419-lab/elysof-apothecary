@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { ShoppingBag, Menu, X, Star, Leaf, Hand, ScaleIcon, HeartHandshake, ArrowRight, Phone, Mail, Instagram, MessageCircle } from "lucide-react";
+import { ShoppingBag, Menu, X, Star, Leaf, Hand, ScaleIcon, HeartHandshake, ArrowRight, Phone, Mail, Instagram, MessageCircle, MoreHorizontal } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { products, discount, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { toast } from "sonner";
@@ -69,6 +70,9 @@ export function Navbar() {
   const { count, setOpen: setCartOpen } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [more, setMore] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 8);
     h();
@@ -82,33 +86,79 @@ export function Navbar() {
     { label: "Reviews", id: "reviews" },
     { label: "Contact", id: "contact" },
   ];
+  const morePages = [
+    { label: "All Products", to: "/products" },
+    { label: "Offers", to: "/offers" },
+    { label: "Reviews", to: "/reviews" },
+    { label: "Results", to: "/results" },
+    { label: "Contact", to: "/contact" },
+  ];
+  const goAnchor = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    setMenu(false);
+    const scroll = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    if (location.pathname === "/") scroll();
+    else {
+      navigate("/");
+      setTimeout(scroll, 120);
+    }
+  };
   return (
     <header
       className={`sticky top-0 z-40 border-b-2 border-ink transition-all ${scrolled ? "bg-parchment/90 backdrop-blur" : "bg-parchment"
         }`}
     >
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
-        <a href="#home" className="flex min-w-0 items-center gap-2">
+        <Link to="/" className="flex min-w-0 items-center gap-2">
           <BirdLogo className="h-8 w-8 shrink-0" />
           <div className="min-w-0">
             <p className="truncate font-display text-2xl leading-none">ElySof</p>
             <p className="font-accent text-[10px] italic text-muted-foreground">The Essence of Soft Elegance</p>
           </div>
-        </a>
+        </Link>
         <nav className="ml-auto hidden items-center gap-7 lg:flex">
           {navItems.map((n) => (
             <a
               key={n.id}
-              href={`#${n.id}`}
+              href={`/#${n.id}`}
+              onClick={(e) => goAnchor(e, n.id)}
               className="relative text-sm font-medium uppercase tracking-wider text-ink transition hover:text-forest"
             >
               {n.label}
             </a>
           ))}
         </nav>
+        <div className="relative ml-auto lg:ml-0">
+          <button
+            onClick={() => setMore((m) => !m)}
+            className="grid h-10 w-10 place-items-center border-2 border-ink bg-paper transition hover:bg-ink hover:text-parchment"
+            aria-label="More pages"
+            aria-expanded={more}
+          >
+            <MoreHorizontal size={18} />
+          </button>
+          {more && (
+            <div className="absolute right-0 top-12 z-50 w-48 border-2 border-ink bg-paper shadow-brut">
+              {morePages.map((p) => (
+                <Link
+                  key={p.to}
+                  to={p.to}
+                  onClick={() => setMore(false)}
+                  className="block border-b border-line px-4 py-2.5 text-sm font-medium uppercase tracking-wider last:border-b-0 hover:bg-forest hover:text-primary-foreground"
+                >
+                  {p.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
         <button
           onClick={() => setCartOpen(true)}
-          className="relative ml-auto lg:ml-0 flex h-10 items-center gap-2 border-2 border-ink bg-paper px-3 text-sm font-semibold transition hover:bg-ink hover:text-parchment"
+          className="relative flex h-10 items-center gap-2 border-2 border-ink bg-paper px-3 text-sm font-semibold transition hover:bg-ink hover:text-parchment"
           aria-label={`Cart (${count} items)`}
         >
           <ShoppingBag size={18} />
@@ -131,8 +181,8 @@ export function Navbar() {
             {navItems.map((n) => (
               <a
                 key={n.id}
-                href={`#${n.id}`}
-                onClick={() => setMenu(false)}
+                href={`/#${n.id}`}
+                onClick={(e) => goAnchor(e, n.id)}
                 className="border-b border-line py-3 text-sm font-medium uppercase tracking-wider"
               >
                 {n.label}
@@ -144,6 +194,7 @@ export function Navbar() {
     </header>
   );
 }
+
 
 /* ---------------- Hero ---------------- */
 const heroStories = [
@@ -1296,15 +1347,17 @@ export function Footer() {
               Handcrafted Ayurvedic skincare for soft, radiant, healthy skin.
             </p>
             <a
-              href="#"
+              href="https://www.instagram.com/elysof"
+              target="_blank"
+              rel="noreferrer"
               className="mt-5 inline-flex items-center gap-2 border-2 border-parchment px-3 py-1.5 text-xs font-semibold uppercase tracking-wider hover:bg-parchment hover:text-ink"
             >
               <Instagram size={14} /> @elysof
             </a>
           </div>
 
-          <FCol title="Quick Links" items={[["Home", "#home"], ["Products", "#products"], ["Our Story", "#story"], ["Reviews", "#reviews"], ["Contact", "#contact"]]} />
-          <FCol title="Our Products" items={products.map((p) => [p.shortName, "#products"])} />
+          <FCol title="Quick Links" items={[["Home", "/"], ["Products", "/products"], ["Our Story", "/#story"], ["Reviews", "/reviews"], ["Offers", "/offers"], ["Contact", "/contact"]]} />
+          <FCol title="Our Products" items={products.map((p) => [p.shortName, "/products"] as [string, string])} />
           <div>
             <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">Customer Care</p>
             <ul className="mt-3 space-y-2 text-sm">

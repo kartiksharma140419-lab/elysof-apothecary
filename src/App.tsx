@@ -1,53 +1,28 @@
-import { Toaster } from "@/components/ui/sonner";
+import { Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/lib/cart-context";
-import {
-  AnnouncementBar,
-  Navbar,
-  Hero,
-  Marquee,
-  Products,
-  WhyElysof,
-  Results,
-  Reviews,
-  Contact,
-  Footer,
-  Divider,
-} from "@/components/elysof/Sections";
-import { CartDrawer } from "@/components/elysof/CartDrawer";
-import { HeroSlider } from "@/components/elysof/HeroSlider";
-import { ComboOffer } from "@/components/elysof/ComboOffer";
-import { PromoModal } from "@/components/elysof/PromoModal";
-import { RakhiOffer } from "@/components/elysof/RakhiOffer";
+import { Layout } from "@/components/Layout";
+import Home from "@/pages/Home";
+import ProductsPage from "@/pages/ProductsPage";
+import ReviewsPage from "@/pages/ReviewsPage";
+import ResultsPage from "@/pages/ResultsPage";
+import OffersPage from "@/pages/OffersPage";
+import ContactPage from "@/pages/ContactPage";
+import NotFound from "@/pages/NotFound";
 
 export default function App() {
   return (
     <CartProvider>
-      <div className="min-h-screen bg-parchment text-ink">
-        <AnnouncementBar />
-        <Navbar />
-        <main>
-          <Hero />
-          <Marquee />
-          <RakhiOffer />
-          <Products />
-
-          <div className="offer-section-legacy">
-            <ComboOffer />
-          </div>
-          <div className="section-after-offer-legacy">
-            <HeroSlider />
-          </div>
-          <Divider />
-          <WhyElysof />
-          <Results />
-          <Reviews />
-          <Contact />
-        </main>
-        <Footer />
-        <CartDrawer />
-        <PromoModal />
-        <Toaster position="top-center" richColors />
-      </div>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/offers" element={<OffersPage />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
+          <Route path="/results" element={<ResultsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
     </CartProvider>
   );
 }
