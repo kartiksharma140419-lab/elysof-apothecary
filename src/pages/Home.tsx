@@ -1,8 +1,15 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Hero, Marquee, Products, WhyElysof, Divider } from "@/components/elysof/Sections";
+import {
+  LifestyleHero,
+  LifestyleMarquee,
+  LifestyleBathMoodSelector,
+  LifestyleThreeSenses,
+  LifestylePurityComparison,
+  LifestyleLookbook,
+  LifestyleFinalBanner,
+} from "@/components/elysof/LifestyleHome";
 import { SEO, organizationSchema } from "@/components/SEO";
-import { productListSchema } from "@/lib/schema";
 
 export default function Home() {
   const { hash } = useLocation();
@@ -15,17 +22,19 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="ElySof — Premium Ayurvedic Skincare | Neem, Honey, Sandalwood Soaps"
-        description="Handcrafted Ayurvedic skincare from India. Shop ElySof Neem Soap, Glutasof Facewash, Honey & Almond Scrub, Sandalwood & Kesar Soap. Free shipping above ₹299."
+        title="ElySof — Elevate Your Everyday Bath Ritual | Premium Ayurvedic Skincare"
+        description="Premium bath, body, and personal care essentials, crafted to make everyday self-care feel luxurious. Handcrafted in small batches with pure Ayurvedic extracts."
         path="/"
         image="/og/combo-pack.jpeg"
-        jsonLd={[organizationSchema, productListSchema()]}
+        jsonLd={[organizationSchema]}
       />
-      <Hero />
-      <Marquee />
-      <Products />
-      <Divider />
-      <WhyElysof />
+      <LifestyleHero />
+      <LifestyleMarquee />
+      <LifestyleBathMoodSelector />
+      <LifestyleThreeSenses />
+      <LifestylePurityComparison />
+      <LifestyleLookbook />
+      <LifestyleFinalBanner />
     </>
   );
 }

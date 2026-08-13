@@ -3,6 +3,7 @@ import { CartProvider } from "@/lib/cart-context";
 import { Layout } from "@/components/Layout";
 import Home from "@/pages/Home";
 import ProductsPage from "@/pages/ProductsPage";
+import CombosPage from "@/pages/CombosPage";
 import ReviewsPage from "@/pages/ReviewsPage";
 import ResultsPage from "@/pages/ResultsPage";
 import OffersPage from "@/pages/OffersPage";
@@ -16,6 +17,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/combos" element={<CombosPage />} />
           <Route path="/offers" element={<OffersPage />} />
           <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/results" element={<ResultsPage />} />

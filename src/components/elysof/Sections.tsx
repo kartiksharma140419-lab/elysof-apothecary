@@ -83,6 +83,7 @@ export function Navbar() {
   const navItems = [
     { label: "Home", to: "/" },
     { label: "Products", to: "/products" },
+    { label: "Combos", to: "/combos", badge: "Steal Deals" },
     { label: "Offers", to: "/offers", badge: "Festive" },
     { label: "Reviews", to: "/reviews" },
     { label: "Results", to: "/results" },
@@ -1368,7 +1369,7 @@ export function Footer() {
             </a>
           </div>
 
-          <FCol title="Quick Links" items={[["Home", "/"], ["Products", "/products"], ["Our Story", "/#story"], ["Reviews", "/reviews"], ["Offers", "/offers"], ["Contact", "/contact"]]} />
+          <FCol title="Quick Links" items={[["Home", "/"], ["Products", "/products"], ["Combos", "/combos"], ["Our Story", "/#story"], ["Reviews", "/reviews"], ["Offers", "/offers"], ["Contact", "/contact"]]} />
           <FCol title="Our Products" items={products.map((p) => [p.shortName, "/products"] as [string, string])} />
           <div>
             <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">Customer Care</p>
