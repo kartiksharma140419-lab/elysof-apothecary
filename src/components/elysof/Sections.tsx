@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { ShoppingBag, Menu, X, Star, Leaf, Hand, ScaleIcon, HeartHandshake, ArrowRight, Phone, Mail, Instagram, MessageCircle } from "lucide-react";
+import { ShoppingBag, Menu, X, Star, Leaf, Hand, ScaleIcon, HeartHandshake, ArrowRight, Phone, Mail, Instagram, MessageCircle, MoreHorizontal } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { products, discount, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { toast } from "sonner";
