@@ -70,29 +70,26 @@ export function Navbar() {
   const { count, setOpen: setCartOpen } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [more, setMore] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 8);
     h();
     window.addEventListener("scroll", h);
     return () => window.removeEventListener("scroll", h);
   }, []);
+
   const navItems = [
-    { label: "Home", id: "home" },
-    { label: "Products", id: "products" },
-    { label: "Our Story", id: "story" },
-    { label: "Reviews", id: "reviews" },
-    { label: "Contact", id: "contact" },
-  ];
-  const morePages = [
-    { label: "All Products", to: "/products" },
-    { label: "Offers", to: "/offers" },
+    { label: "Home", to: "/" },
+    { label: "Products", to: "/products" },
+    { label: "Offers", to: "/offers", badge: "Festive" },
     { label: "Reviews", to: "/reviews" },
     { label: "Results", to: "/results" },
+    { label: "Our Story", to: "/#story" },
     { label: "Contact", to: "/contact" },
   ];
+
   const goAnchor = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     setMenu(false);
@@ -103,14 +100,16 @@ export function Navbar() {
     };
     if (location.pathname === "/") scroll();
     else {
-      navigate("/");
+      navigate(`/#${id}`);
       setTimeout(scroll, 120);
     }
   };
+
   return (
     <header
-      className={`sticky top-0 z-40 border-b-2 border-ink transition-all ${scrolled ? "bg-parchment/90 backdrop-blur" : "bg-parchment"
-        }`}
+      className={`sticky top-0 z-40 border-b-2 border-ink transition-all ${
+        scrolled ? "bg-parchment/90 backdrop-blur" : "bg-parchment"
+      }`}
     >
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
         <Link to="/" className="flex min-w-0 items-center gap-2">
@@ -120,74 +119,87 @@ export function Navbar() {
             <p className="font-accent text-[10px] italic text-muted-foreground">The Essence of Soft Elegance</p>
           </div>
         </Link>
-        <nav className="ml-auto hidden items-center gap-7 lg:flex">
-          {navItems.map((n) => (
-            <a
-              key={n.id}
-              href={`/#${n.id}`}
-              onClick={(e) => goAnchor(e, n.id)}
-              className="relative text-sm font-medium uppercase tracking-wider text-ink transition hover:text-forest"
-            >
-              {n.label}
-            </a>
-          ))}
-        </nav>
-        <div className="relative ml-auto lg:ml-0">
-          <button
-            onClick={() => setMore((m) => !m)}
-            className="grid h-10 w-10 place-items-center border-2 border-ink bg-paper transition hover:bg-ink hover:text-parchment"
-            aria-label="More pages"
-            aria-expanded={more}
-          >
-            <MoreHorizontal size={18} />
-          </button>
-          {more && (
-            <div className="absolute right-0 top-12 z-50 w-48 border-2 border-ink bg-paper shadow-brut">
-              {morePages.map((p) => (
-                <Link
-                  key={p.to}
-                  to={p.to}
-                  onClick={() => setMore(false)}
-                  className="block border-b border-line px-4 py-2.5 text-sm font-medium uppercase tracking-wider last:border-b-0 hover:bg-forest hover:text-primary-foreground"
-                >
-                  {p.label}
-                </Link>
-              ))}
-            </div>
+        <nav className="ml-auto hidden items-center gap-6 xl:gap-7 lg:flex">
+          {navItems.map((n) =>
+            n.to.startsWith("/#") ? (
+              <a
+                key={n.label}
+                href={n.to}
+                onClick={(e) => goAnchor(e, n.to.slice(2))}
+                className="relative text-sm font-medium uppercase tracking-wider text-ink transition hover:text-forest"
+              >
+                {n.label}
+              </a>
+            ) : (
+              <Link
+                key={n.label}
+                to={n.to}
+                className={`relative flex items-center gap-1.5 text-sm font-medium uppercase tracking-wider transition hover:text-forest ${
+                  location.pathname === n.to ? "font-bold text-forest" : "text-ink"
+                }`}
+              >
+                <span>{n.label}</span>
+                {n.badge && (
+                  <span className="rounded bg-terracotta/30 px-1.5 py-0.5 text-[9px] font-bold text-forest-deep">
+                    {n.badge}
+                  </span>
+                )}
+              </Link>
+            )
           )}
+        </nav>
+        <div className="ml-auto flex items-center gap-2 lg:ml-0">
+          <button
+            onClick={() => setCartOpen(true)}
+            className="relative flex h-10 items-center gap-2 border-2 border-ink bg-paper px-3 text-sm font-semibold transition hover:bg-ink hover:text-parchment"
+            aria-label={`Cart (${count} items)`}
+          >
+            <ShoppingBag size={18} />
+            <span className="hidden sm:inline">Cart</span>
+            <span className="grid h-5 min-w-[1.25rem] place-items-center bg-terracotta px-1 text-[11px] font-bold text-forest-deep">
+              {count}
+            </span>
+          </button>
+          <button
+            onClick={() => setMenu((m) => !m)}
+            className="grid h-10 w-10 place-items-center border-2 border-ink bg-paper lg:hidden"
+            aria-label="Menu"
+          >
+            {menu ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
-        <button
-          onClick={() => setCartOpen(true)}
-          className="relative flex h-10 items-center gap-2 border-2 border-ink bg-paper px-3 text-sm font-semibold transition hover:bg-ink hover:text-parchment"
-          aria-label={`Cart (${count} items)`}
-        >
-          <ShoppingBag size={18} />
-          <span className="hidden sm:inline">Cart</span>
-          <span className="grid h-5 min-w-[1.25rem] place-items-center bg-terracotta px-1 text-[11px] font-bold text-forest-deep">
-            {count}
-          </span>
-        </button>
-        <button
-          onClick={() => setMenu((m) => !m)}
-          className="grid h-10 w-10 place-items-center border-2 border-ink bg-paper lg:hidden"
-          aria-label="Menu"
-        >
-          {menu ? <X size={18} /> : <Menu size={18} />}
-        </button>
       </div>
       {menu && (
         <nav className="border-t-2 border-ink bg-parchment lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col px-4 py-2">
-            {navItems.map((n) => (
-              <a
-                key={n.id}
-                href={`/#${n.id}`}
-                onClick={(e) => goAnchor(e, n.id)}
-                className="border-b border-line py-3 text-sm font-medium uppercase tracking-wider"
-              >
-                {n.label}
-              </a>
-            ))}
+            {navItems.map((n) =>
+              n.to.startsWith("/#") ? (
+                <a
+                  key={n.label}
+                  href={n.to}
+                  onClick={(e) => goAnchor(e, n.to.slice(2))}
+                  className="flex items-center justify-between border-b border-line py-3.5 text-sm font-medium uppercase tracking-wider transition hover:text-forest"
+                >
+                  <span>{n.label}</span>
+                </a>
+              ) : (
+                <Link
+                  key={n.label}
+                  to={n.to}
+                  onClick={() => setMenu(false)}
+                  className={`flex items-center justify-between border-b border-line py-3.5 text-sm font-medium uppercase tracking-wider transition hover:text-forest ${
+                    location.pathname === n.to ? "font-bold text-forest" : "text-ink"
+                  }`}
+                >
+                  <span>{n.label}</span>
+                  {n.badge && (
+                    <span className="rounded bg-terracotta/30 px-2 py-0.5 text-[10px] font-bold text-forest-deep">
+                      {n.badge}
+                    </span>
+                  )}
+                </Link>
+              )
+            )}
           </div>
         </nav>
       )}
