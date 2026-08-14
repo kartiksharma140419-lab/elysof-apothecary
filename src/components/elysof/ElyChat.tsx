@@ -28,7 +28,8 @@ function parse(content: string) {
         .filter(Boolean)
     : [];
   return {
-    text: content.replace(RECO_RE, "").trim(),
+    // strips the finished marker plus any half-streamed one at the tail
+    text: content.replace(RECO_RE, "").replace(/\[{1,2}R?E?C?O?M?M?E?N?D?:?[^\]]*$/i, "").trim(),
     recos: ids.map((id) => products.find((p) => p.id === id)).filter(Boolean) as typeof products,
   };
 }
