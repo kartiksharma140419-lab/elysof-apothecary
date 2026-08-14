@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AnnouncementBar, Navbar, Footer } from "@/components/elysof/Sections";
 import { CartDrawer } from "@/components/elysof/CartDrawer";
 import { PromoModal } from "@/components/elysof/PromoModal";
+import { RakhiPopUp } from "@/components/elysof/RakhiPopUp";
 
 export function Layout() {
   const { pathname, hash } = useLocation();
@@ -24,6 +25,7 @@ export function Layout() {
       <Footer />
       <CartDrawer />
       <PromoModal />
+      <RakhiPopUp />
       <Toaster position="top-center" richColors />
     </div>
   );
