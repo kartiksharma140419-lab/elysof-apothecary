@@ -3,12 +3,12 @@ import { useLocation } from "react-router-dom";
 import {
   LifestyleHero,
   LifestyleMarquee,
-  LifestyleBathMoodSelector,
   LifestyleThreeSenses,
   LifestylePurityComparison,
   LifestyleLookbook,
   LifestyleFinalBanner,
 } from "@/components/elysof/LifestyleHome";
+import { ShopOurBestsellers } from "@/components/elysof/ShopOurBestsellers";
 import { SEO, organizationSchema } from "@/components/SEO";
 
 export default function Home() {
@@ -30,7 +30,7 @@ export default function Home() {
       />
       <LifestyleHero />
       <LifestyleMarquee />
-      <LifestyleBathMoodSelector />
+      <ShopOurBestsellers />
       <LifestyleThreeSenses />
       <LifestylePurityComparison />
       <LifestyleLookbook />
