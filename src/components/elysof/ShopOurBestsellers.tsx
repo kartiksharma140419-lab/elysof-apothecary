@@ -324,7 +324,7 @@ export function ShopOurBestsellers() {
   };
 
   return (
-    <section className="bg-white py-10 sm:py-14 border-b-2 border-ink">
+    <section id="bestsellers" className="bg-white py-10 sm:py-14 border-b-2 border-ink scroll-mt-16">
       <div className="mx-auto max-w-7xl px-3 sm:px-6">
 
         {/* Title Header matching Screenshot 2 */}
@@ -350,7 +350,8 @@ export function ShopOurBestsellers() {
             return (
               <div
                 key={item.id}
-                className="flex flex-col border border-neutral-300 sm:border-2 sm:border-neutral-900 bg-white overflow-hidden shadow-sm transition hover:shadow-md"
+                id={`product-${item.id}`}
+                className="flex flex-col border border-neutral-300 sm:border-2 sm:border-neutral-900 bg-white overflow-hidden shadow-sm transition hover:shadow-md scroll-mt-24"
               >
                 {/* 1. Image Container with Badge */}
                 <div className="relative aspect-square w-full bg-[#fbf6ee] border-b border-neutral-200 p-2 sm:p-4 flex items-center justify-center group overflow-hidden">

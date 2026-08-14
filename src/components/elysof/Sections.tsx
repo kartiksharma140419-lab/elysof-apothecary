@@ -879,9 +879,10 @@ function ProductCard({
   const { add } = useCart();
   return (
     <motion.article
+      id={`product-${p.id}`}
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 200, damping: 18 }}
-      className="group flex flex-col border-2 border-ink bg-paper shadow-brut-sm transition-shadow hover:shadow-brut"
+      className="group flex flex-col border-2 border-ink bg-paper shadow-brut-sm transition-shadow hover:shadow-brut scroll-mt-24"
     >
       <div className="relative aspect-square overflow-hidden border-b-2 border-ink bg-parchment">
         <img

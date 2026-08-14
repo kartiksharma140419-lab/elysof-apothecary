@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import {
   Leaf,
   Sparkles,
@@ -15,6 +16,13 @@ import {
   Check,
   X,
   Compass,
+  ChevronLeft,
+  ChevronRight,
+  Pause,
+  Play,
+  ArrowLeftRight,
+  Sparkle,
+  ShoppingBag,
 } from "lucide-react";
 
 import brandLogo from "@/assets/logo.png";
@@ -26,6 +34,8 @@ import sandalwoodImg from "@/assets/sandalwood-kesar-new.png";
 import textureHoney from "@/assets/media__1781947933413.jpg";
 import textureSandalwood from "@/assets/media__1781947909390.jpg";
 import textureNeem from "@/assets/media__1781949607698.jpg";
+import glutasofKeyBenefits from "@/assets/media__1781948612099.jpg";
+import sandalwoodWhySpecial from "@/assets/media__1781947909404.jpg";
 
 /* ---------------- 1. Hero Section ---------------- */
 export function LifestyleHero() {
@@ -400,102 +410,284 @@ export function LifestyleBathMoodSelector() {
   );
 }
 
-/* ---------------- 4. The 3 Senses of Bathing (Visual Artwork Grid) ---------------- */
+/* ---------------- 4. The Senses of Bathing (Sliding Animated Carousel) ---------------- */
+const SENSE_CARDS = [
+  {
+    id: "touch",
+    num: "01",
+    tag: "The Touch",
+    subBadge: "Whipped Micro-Foam",
+    title: "Velvety Dense Lather",
+    desc: "Whipped micro-foam created from cold-pressed coconut & castor oils that cushions your skin, rinsing clean with zero sticky film.",
+    pills: "✨ Soft · Cushioning · Gentle",
+    image: textureHoney,
+    alt: "Honey and almond scrub texture and benefits",
+    productId: "honey-almond",
+    btnLabel: "Honey & Almond Bar",
+  },
+  {
+    id: "scent",
+    num: "02",
+    tag: "The Scent",
+    subBadge: "Pure Aromatherapy",
+    title: "Botanical Steam Aromas",
+    desc: "Warm steam activates real sandalwood oil, raw saffron, and crushed herbs. No synthetic perfumes — purely grounding aromatherapy.",
+    pills: "🌿 Calming · Earthy · Sacred",
+    image: textureSandalwood,
+    alt: "Sandalwood and kesar aromatic lather and benefits",
+    productId: "sandalwood-kesar",
+    btnLabel: "Sandalwood & Saffron Bar",
+  },
+  {
+    id: "glow",
+    num: "03",
+    tag: "The Glow",
+    subBadge: "Ayurvedic Formula",
+    title: "Deep Skin Barrier Calm",
+    desc: "Preserves 100% natural vegetable glycerin. Your skin feels dewy, hydrated, and calm the moment you step out of the shower.",
+    pills: "💧 Hydrated · Breathable · Radiance",
+    image: textureNeem,
+    alt: "Neem herbal richness and benefits",
+    productId: "neem",
+    btnLabel: "Organic Neem Bar",
+  },
+  {
+    id: "clarity",
+    num: "04",
+    tag: "The Clarity",
+    subBadge: "Kojic & Glutathione",
+    title: "Active Luminous Complexion",
+    desc: "Target stubborn tan lines and blemishes with potent antioxidant glutathione, kojic acid, and gentle micro-exfoliating nutrients.",
+    pills: "⚡ Clarifying · Even-Tone · Glow",
+    image: glutasofKeyBenefits,
+    alt: "GlutaSof kojic and glutathione key benefits",
+    productId: "glutasof",
+    btnLabel: "GlutaSof Glow Bar",
+  },
+  {
+    id: "ritual",
+    num: "05",
+    tag: "The Ritual",
+    subBadge: "Apothecary Crafted",
+    title: "21-Day Slow Cured Purity",
+    desc: "Each bar is handcrafted in small batches and cured for 3 weeks to preserve essential botanical fatty acids without artificial hardeners.",
+    pills: "🌸 Slow-Cured · Zero SLS · Rich",
+    image: sandalwoodWhySpecial,
+    alt: "Why ElySof authentic curing makes the difference",
+    productId: "sandalwood-kesar",
+    btnLabel: "Explore All Bars",
+  },
+];
+
 export function LifestyleThreeSenses() {
+  const [direction, setDirection] = useState<"right" | "left">("right");
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  // Repeat items 3 times for a seamless infinite loop across all screen sizes
+  const carouselItems = [...SENSE_CARDS, ...SENSE_CARDS, ...SENSE_CARDS];
+
+  const handleManualScroll = (delta: number) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: delta, behavior: "smooth" });
+    }
+  };
+
+  const handleShopProduct = (productId: string, productName: string) => {
+    const targetElement = document.getElementById(`product-${productId}`);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      targetElement.classList.add(
+        "ring-4",
+        "ring-[#B2511E]",
+        "ring-offset-4",
+        "scale-[1.02]",
+        "transition-all",
+        "duration-500"
+      );
+      setTimeout(() => {
+        targetElement.classList.remove("scale-[1.02]");
+      }, 400);
+      setTimeout(() => {
+        targetElement.classList.remove("ring-4", "ring-[#B2511E]", "ring-offset-4");
+      }, 2500);
+      toast.success(`Selected ${productName}! Choose your pack option below.`);
+    } else {
+      navigate(`/#product-${productId}`);
+      toast.info(`Opening ${productName}...`);
+    }
+  };
+
   return (
-    <section className="border-b-2 border-ink bg-paper py-14 sm:py-20">
+    <section className="relative border-b-2 border-ink bg-paper py-14 sm:py-20 overflow-hidden select-none">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="text-center max-w-xl mx-auto">
-          <span className="font-accent text-sm italic text-forest">— The Art of Pure Bathing</span>
-          <h2 className="mt-1 font-display text-3xl sm:text-4xl">Designed For All Senses</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+        {/* Section Heading */}
+        <div className="text-center max-w-2xl mx-auto">
+          <span className="font-accent text-sm italic text-forest tracking-wide">— The Art of Pure Bathing —</span>
+          <h2 className="mt-1 font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink">
+            Designed For All Senses
+          </h2>
+          <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
             How authentic Ayurvedic cold-process care transforms a hurried 15-minute shower.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {/* Card 1: Touch */}
-          <div className="group flex flex-col border-2 border-ink bg-parchment shadow-brut-sm transition hover:shadow-brut">
-            <div className="aspect-[4/3] overflow-hidden border-b-2 border-ink bg-white relative">
-              <img
-                src={textureHoney}
-                alt="Honey and almond texture"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <span className="absolute bottom-2 left-2 border border-ink bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
-                01 · The Touch
-              </span>
-            </div>
-            <div className="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 className="font-display text-xl">Velvety Dense Lather</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  Whipped micro-foam created from cold-pressed coconut & castor oils that cushions your skin,
-                  rinsing clean with zero sticky film.
-                </p>
-              </div>
-              <p className="mt-4 font-accent text-xs italic text-forest font-semibold">
-                ✨ Soft · Cushioning · Gentle
-              </p>
-            </div>
+        {/* Interactive Controls Bar */}
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-y border-line/60 py-3 text-xs">
+          {/* Status / Mode Indicator */}
+          <div className="flex items-center gap-2 text-muted-foreground font-medium">
+            <span
+              className={`inline-block h-2 w-2 rounded-full ${
+                isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"
+              }`}
+            />
+            <span className="hidden sm:inline">
+              {isPaused ? "Animation Paused" : `Smooth Sliding (${direction === "right" ? "Left to Right" : "Right to Left"})`}
+            </span>
+            <span className="text-[11px] text-muted-foreground/80 sm:hidden">
+              {isPaused ? "Paused" : "Live Carousel"}
+            </span>
           </div>
 
-          {/* Card 2: Scent */}
-          <div className="group flex flex-col border-2 border-ink bg-parchment shadow-brut-sm transition hover:shadow-brut">
-            <div className="aspect-[4/3] overflow-hidden border-b-2 border-ink bg-white relative">
-              <img
-                src={textureSandalwood}
-                alt="Sandalwood aromatic cure"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <span className="absolute bottom-2 left-2 border border-ink bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
-                02 · The Scent
-              </span>
-            </div>
-            <div className="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 className="font-display text-xl">Botanical Steam Aromas</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  Warm steam activates real sandalwood oil, raw saffron, and crushed herbs. No synthetic
-                  perfumes — purely grounding aromatherapy.
-                </p>
-              </div>
-              <p className="mt-4 font-accent text-xs italic text-forest font-semibold">
-                🌿 Calming · Earthy · Sacred
-              </p>
-            </div>
-          </div>
+          {/* Interactive Action Buttons */}
+          <div className="flex items-center gap-2">
+            {/* Direction Toggle */}
+            <button
+              type="button"
+              onClick={() => setDirection((prev) => (prev === "right" ? "left" : "right"))}
+              className="flex items-center gap-1.5 border border-ink bg-parchment px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-ink shadow-brut-sm transition hover:bg-parchment-deep active:translate-y-0.5"
+              title="Change sliding direction"
+            >
+              <ArrowLeftRight size={12} />
+              <span>{direction === "right" ? "➔ Left to Right" : "⬅ Right to Left"}</span>
+            </button>
 
-          {/* Card 3: Glow */}
-          <div className="group flex flex-col border-2 border-ink bg-parchment shadow-brut-sm transition hover:shadow-brut">
-            <div className="aspect-[4/3] overflow-hidden border-b-2 border-ink bg-white relative">
-              <img
-                src={textureNeem}
-                alt="Pure neem herbal richness"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <span className="absolute bottom-2 left-2 border border-ink bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">
-                03 · The Glow
-              </span>
-            </div>
-            <div className="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 className="font-display text-xl">Deep Skin Barrier Calm</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  Preserves 100% natural vegetable glycerin. Your skin feels dewy, hydrated, and calm the
-                  moment you step out of the shower.
-                </p>
-              </div>
-              <p className="mt-4 font-accent text-xs italic text-forest font-semibold">
-                💧 Hydrated · Breathable · Radiance
-              </p>
+            {/* Pause / Resume Button */}
+            <button
+              type="button"
+              onClick={() => setIsPaused((prev) => !prev)}
+              className="flex items-center gap-1.5 border border-ink bg-white px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-ink shadow-brut-sm transition hover:bg-parchment active:translate-y-0.5"
+              title={isPaused ? "Resume continuous sliding" : "Pause sliding animation"}
+            >
+              {isPaused ? <Play size={12} className="fill-current text-forest" /> : <Pause size={12} />}
+              <span>{isPaused ? "Resume" : "Pause"}</span>
+            </button>
+
+            {/* Manual Step Buttons */}
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => handleManualScroll(-320)}
+                aria-label="Scroll left"
+                className="flex h-7 w-7 items-center justify-center border border-ink bg-white shadow-brut-sm transition hover:bg-parchment active:scale-95"
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                type="button"
+                onClick={() => handleManualScroll(320)}
+                aria-label="Scroll right"
+                className="flex h-7 w-7 items-center justify-center border border-ink bg-white shadow-brut-sm transition hover:bg-parchment active:scale-95"
+              >
+                <ChevronRight size={14} />
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Infinite Sliding Carousel Container */}
+      <div className="relative mt-8 w-full overflow-hidden">
+        {/* Left & Right Edge Gradient Fade Masks */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-8 sm:w-16 md:w-24 bg-gradient-to-r from-paper to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-8 sm:w-16 md:w-24 bg-gradient-to-l from-paper to-transparent" />
+
+        {/* Scrollable Track Wrapper with smooth continuous sliding animation */}
+        <div
+          ref={scrollRef}
+          className="overflow-x-auto no-scrollbar py-2"
+          style={{ scrollBehavior: "smooth" }}
+        >
+          <div
+            className={`sense-track flex gap-5 sm:gap-6 pl-4 sm:pl-6 w-max ${
+              direction === "right" ? "animate-sense-right" : "animate-sense-left"
+            } ${isPaused ? "pause-animation" : ""}`}
+          >
+            {carouselItems.map((item, index) => (
+              <div
+                key={`${item.id}-${index}`}
+                onClick={() => handleShopProduct(item.productId, item.title)}
+                className="group flex flex-col w-[285px] sm:w-[330px] md:w-[370px] lg:w-[390px] shrink-0 border-2 border-ink bg-parchment shadow-brut-sm transition-all duration-300 hover:shadow-brut hover:-translate-y-1 cursor-pointer"
+              >
+                {/* Image Container with Neo-Brutalist Frame */}
+                <div className="aspect-[4/3] overflow-hidden border-b-2 border-ink bg-white relative">
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+
+                  {/* Sense Badge */}
+                  <span className="absolute bottom-2.5 left-2.5 border-2 border-ink bg-white/95 backdrop-blur-xs px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-ink shadow-brut-sm">
+                    {item.num} · {item.tag}
+                  </span>
+
+                  {/* Top Right Feature Sub-badge */}
+                  {item.subBadge && (
+                    <span className="absolute top-2.5 right-2.5 border border-ink/70 bg-parchment/95 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-ink backdrop-blur-xs">
+                      {item.subBadge}
+                    </span>
+                  )}
+                </div>
+
+                {/* Card Body */}
+                <div className="p-5 flex-1 flex flex-col justify-between bg-parchment">
+                  <div>
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-ink leading-snug group-hover:text-forest transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-muted-foreground line-clamp-3">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 pt-3 border-t border-line/60 flex items-center justify-between gap-2">
+                    <p className="font-accent text-xs italic text-forest font-semibold">
+                      {item.pills}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleShopProduct(item.productId, item.title);
+                      }}
+                      className="relative z-20 inline-flex items-center gap-1.5 border-2 border-ink bg-forest text-white hover:bg-forest-deep px-3 py-1.5 text-[11px] font-black uppercase tracking-wider shadow-brut-sm transition-all hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 active:scale-95 cursor-pointer"
+                      title={`Shop ${item.title}`}
+                    >
+                      <span>Shop</span>
+                      <ShoppingBag size={12} className="text-white" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Helpful Hover/Touch Hint */}
+      <div className="mt-4 text-center">
+        <p className="font-accent text-xs italic text-muted-foreground">
+          ✨ Click "Shop" or any card to jump directly to product pack options
+        </p>
+      </div>
     </section>
   );
 }
+
 
 /* ---------------- 5. Purity vs Commercial (Visual Card) ---------------- */
 export function LifestylePurityComparison() {
