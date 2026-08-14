@@ -146,72 +146,83 @@ export function ElyChat() {
         type="button"
         aria-label={open ? "Close ElySof chat" : "Chat with Ely, ElySof beauty expert"}
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-4 right-4 z-[900] flex items-center gap-2 border-2 border-ink bg-terracotta px-3 py-2 text-ink shadow-brut-sm transition-transform hover:-translate-y-0.5 sm:bottom-6 sm:right-6"
+        className="fixed bottom-4 right-4 z-[900] flex items-center gap-2 rounded-full bg-terracotta py-1.5 pl-1.5 pr-4 text-ink shadow-soft-sm ring-1 ring-ink/10 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft sm:bottom-6 sm:right-6"
       >
         {open ? (
-          <X className="h-5 w-5" />
+          <X className="mx-2 h-5 w-5" />
         ) : (
           <>
             <img
               src={elyAvatar.url}
               alt="Ely, the ElySof AI skincare expert"
-              className="h-8 w-8 rounded-full border-2 border-ink object-cover object-top"
+              className="h-9 w-9 rounded-full object-cover object-top ring-2 ring-parchment/80"
             />
-            <span className="text-xs font-bold uppercase tracking-widest">Ask Ely</span>
-            <MessageCircle className="h-4 w-4" />
+            <span className="text-sm font-semibold tracking-tight">Ask Ely</span>
+            <MessageCircle className="h-4 w-4 opacity-70" />
           </>
         )}
       </button>
 
       {open && (
         <div
-          className="fixed inset-x-0 bottom-0 z-[901] flex h-[85dvh] flex-col border-2 border-ink bg-parchment shadow-brut sm:inset-x-auto sm:bottom-24 sm:right-6 sm:h-[560px] sm:w-[380px]"
+          className="animate-ely-pop fixed inset-x-0 bottom-0 z-[901] flex h-[85dvh] flex-col overflow-hidden rounded-t-3xl bg-parchment shadow-soft ring-1 ring-ink/10 sm:inset-x-auto sm:bottom-24 sm:right-6 sm:h-[560px] sm:w-[390px] sm:rounded-3xl"
           role="dialog"
           aria-label="Chat with Ely"
         >
           {/* Header */}
-          <header className="flex items-center gap-3 border-b-2 border-ink bg-forest px-4 py-3">
+          <header className="flex items-center gap-3 bg-forest px-4 py-3.5">
             <div className="relative">
               <img
                 src={elyAvatar.url}
                 alt="Ely, the ElySof AI skincare expert"
-                className="h-11 w-11 rounded-full border-2 border-parchment object-cover object-top"
+                className="h-11 w-11 rounded-full object-cover object-top ring-2 ring-parchment/70"
               />
-              <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-forest bg-green-400" />
+              <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-green-400 ring-2 ring-forest" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="font-display text-base font-bold leading-tight text-parchment">
+              <p className="font-display text-base font-semibold leading-tight text-parchment">
                 Ely — ElySof Expert
               </p>
-              <p className="text-[11px] uppercase tracking-widest text-parchment/70">Online</p>
+              <p className="text-[11px] text-parchment/70">Online · usually replies instantly</p>
             </div>
             <button
               type="button"
               aria-label="Close chat"
               onClick={() => setOpen(false)}
-              className="text-parchment/80 hover:text-parchment"
+              className="rounded-full p-1.5 text-parchment/80 transition-colors hover:bg-parchment/10 hover:text-parchment"
             >
               <X className="h-5 w-5" />
             </button>
           </header>
 
           {/* Transcript */}
-          <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+          <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-5">
             {msgs.map((m, i) => {
               const { text, recos } = m.role === "assistant" ? parse(m.content) : { text: m.content, recos: [] };
               return (
-                <div key={i} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-                  <div className={cn("max-w-[88%] space-y-3", m.role === "user" && "max-w-[80%]")}>
+                <div
+                  key={i}
+                  className={cn("animate-ely-bubble flex gap-2", m.role === "user" ? "justify-end" : "justify-start")}
+                >
+                  {m.role === "assistant" && (
+                    <img
+                      src={elyAvatar.url}
+                      alt=""
+                      aria-hidden
+                      className="mt-0.5 h-7 w-7 flex-none rounded-full object-cover object-top ring-1 ring-ink/10"
+                    />
+                  )}
+                  <div className={cn("max-w-[85%] space-y-3", m.role === "user" && "max-w-[80%]")}>
                     <div
                       className={cn(
-                        "text-sm leading-relaxed",
+                        "px-4 py-2.5 text-sm leading-relaxed shadow-soft-sm",
                         m.role === "user"
-                          ? "border-2 border-ink bg-forest px-3 py-2 text-parchment"
-                          : "text-ink",
+                          ? "rounded-3xl rounded-br-md bg-forest text-parchment"
+                          : "rounded-3xl rounded-bl-md bg-paper text-ink ring-1 ring-ink/5",
                       )}
                     >
                       {m.role === "assistant" ? (
-                        <div className="[&_a]:underline [&_li]:ml-4 [&_li]:list-disc [&_p+p]:mt-2 [&_strong]:font-bold">
+                        <div className="[&_a]:underline [&_li]:ml-4 [&_li]:list-disc [&_p+p]:mt-2 [&_strong]:font-semibold">
                           <ReactMarkdown>{text}</ReactMarkdown>
                         </div>
                       ) : (
@@ -220,22 +231,25 @@ export function ElyChat() {
                     </div>
 
                     {recos.map((p) => (
-                      <div key={p.id} className="flex gap-3 border-2 border-ink bg-paper p-2">
+                      <div
+                        key={p.id}
+                        className="flex gap-3 rounded-2xl bg-paper p-2.5 shadow-soft-sm ring-1 ring-ink/5"
+                      >
                         <img
                           src={p.image}
                           alt={`${p.name} product pack`}
-                          className="h-16 w-16 flex-none border border-ink object-cover"
+                          className="h-16 w-16 flex-none rounded-xl object-cover"
                         />
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-xs font-bold text-ink">{p.shortName}</p>
+                          <p className="truncate text-xs font-semibold text-ink">{p.shortName}</p>
                           <p className="text-xs text-muted-foreground">
-                            <span className="font-bold text-ink">₹{p.price}</span>{" "}
+                            <span className="font-semibold text-ink">₹{p.price}</span>{" "}
                             <span className="line-through">₹{p.mrp}</span>
                           </p>
                           <button
                             type="button"
                             onClick={() => add(p)}
-                            className="mt-1 border border-ink bg-terracotta px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-ink"
+                            className="mt-1.5 rounded-full bg-terracotta px-3 py-1 text-[11px] font-semibold text-ink transition-transform hover:-translate-y-0.5"
                           >
                             Add to cart
                           </button>
@@ -248,17 +262,33 @@ export function ElyChat() {
             })}
 
             {busy && msgs[msgs.length - 1]?.role === "user" && (
-              <p className="animate-pulse text-sm text-muted-foreground">Ely is typing…</p>
+              <div className="flex items-center gap-2">
+                <img
+                  src={elyAvatar.url}
+                  alt=""
+                  aria-hidden
+                  className="h-7 w-7 flex-none rounded-full object-cover object-top ring-1 ring-ink/10"
+                />
+                <div className="flex items-center gap-1 rounded-3xl rounded-bl-md bg-paper px-4 py-3 shadow-soft-sm ring-1 ring-ink/5">
+                  {[0, 150, 300].map((d) => (
+                    <span
+                      key={d}
+                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-forest/60"
+                      style={{ animationDelay: `${d}ms` }}
+                    />
+                  ))}
+                </div>
+              </div>
             )}
 
             {msgs.length === 1 && (
-              <div className="flex flex-col items-end gap-2 pt-2">
+              <div className="flex flex-wrap justify-end gap-2 pt-2">
                 {STARTERS.map((s) => (
                   <button
                     key={s}
                     type="button"
                     onClick={() => send(s)}
-                    className="rounded-full border-2 border-forest px-3 py-1.5 text-xs font-semibold text-forest transition-colors hover:bg-forest hover:text-parchment"
+                    className="rounded-full bg-forest/10 px-3.5 py-1.5 text-xs font-medium text-forest transition-colors hover:bg-forest hover:text-parchment"
                   >
                     {s}
                   </button>
@@ -273,27 +303,29 @@ export function ElyChat() {
               e.preventDefault();
               send(input);
             }}
-            className="flex items-end gap-2 border-t-2 border-ink bg-paper p-2"
+            className="flex items-end gap-2 bg-paper/70 px-3 py-3"
           >
-            <textarea
-              ref={inputRef}
-              rows={1}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  send(input);
-                }
-              }}
-              placeholder="Ask about ElySof — any language"
-              className="max-h-28 flex-1 resize-none bg-transparent px-2 py-2 text-sm text-ink outline-none placeholder:text-muted-foreground"
-            />
+            <div className="flex flex-1 items-end gap-2 rounded-3xl bg-paper px-3 py-1 shadow-soft-sm ring-1 ring-ink/10 focus-within:ring-2 focus-within:ring-forest/40">
+              <textarea
+                ref={inputRef}
+                rows={1}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    send(input);
+                  }
+                }}
+                placeholder="Ask about ElySof — any language"
+                className="max-h-28 flex-1 resize-none bg-transparent py-2.5 text-sm text-ink outline-none placeholder:text-muted-foreground"
+              />
+            </div>
             <button
               type="submit"
               aria-label="Send message"
               disabled={busy || !input.trim()}
-              className="flex h-9 w-9 flex-none items-center justify-center border-2 border-ink bg-forest text-parchment disabled:opacity-40"
+              className="mb-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-forest text-parchment shadow-soft-sm transition-transform hover:-translate-y-0.5 disabled:opacity-40 disabled:hover:translate-y-0"
             >
               <Send className="h-4 w-4" />
             </button>
@@ -303,3 +335,4 @@ export function ElyChat() {
     </>
   );
 }
+
