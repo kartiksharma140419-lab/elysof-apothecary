@@ -27,6 +27,7 @@ export function Layout() {
       <CartDrawer />
       <PromoModal />
       <RakhiPopUp />
+      <ElyChat />
       <Toaster position="top-center" richColors />
     </div>
   );
