@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import elyAvatar from "@/assets/ely-avatar.jpeg.asset.json";
+import elyAvatar from "@/assets/ely-avatar.jpeg";
 import { products } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
@@ -153,7 +153,7 @@ export function ElyChat() {
         ) : (
           <>
             <img
-              src={elyAvatar.url}
+              src={elyAvatar}
               alt="Ely, the ElySof AI skincare expert"
               className="h-9 w-9 rounded-full object-cover object-top ring-2 ring-parchment/80"
             />
@@ -173,7 +173,7 @@ export function ElyChat() {
           <header className="flex items-center gap-3 bg-forest px-4 py-3.5">
             <div className="relative">
               <img
-                src={elyAvatar.url}
+                src={elyAvatar}
                 alt="Ely, the ElySof AI skincare expert"
                 className="h-11 w-11 rounded-full object-cover object-top ring-2 ring-parchment/70"
               />
@@ -206,7 +206,7 @@ export function ElyChat() {
                 >
                   {m.role === "assistant" && (
                     <img
-                      src={elyAvatar.url}
+                      src={elyAvatar}
                       alt=""
                       aria-hidden
                       className="mt-0.5 h-7 w-7 flex-none rounded-full object-cover object-top ring-1 ring-ink/10"
