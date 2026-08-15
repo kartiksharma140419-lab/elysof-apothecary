@@ -39,22 +39,22 @@ const pillars = [
   {
     icon: Sparkles,
     title: "Luxury",
-    desc: "Products that make your daily routine feel premium and indulgent.",
+    desc: "Products that make your daily routine feel premium.",
   },
   {
     icon: Heart,
     title: "Softness",
-    desc: "Beautifully cared-for skin should feel soft, supple, and comfortable.",
+    desc: "Because beautifully cared-for skin should feel soft and comfortable.",
   },
   {
     icon: ShieldCheck,
     title: "Quality",
-    desc: "Thoughtfully designed with care, attention to detail, and clean ingredients.",
+    desc: "Thoughtful products designed with care and attention to detail.",
   },
   {
     icon: Sun,
     title: "Experience",
-    desc: "Turning a simple bath into a moment of calm self-care.",
+    desc: "Turning a simple bath into a moment of self-care.",
   },
 ];
 
@@ -190,18 +190,19 @@ export default function StoryPage() {
               >
                 <motion.p variants={reveal} className="font-accent text-sm italic text-forest">— The Birth of ElySof</motion.p>
                 <motion.h2 variants={reveal} className="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl">
-                  Born from a passion for <span className="text-terracotta">softness</span>, luxury, and mindful self-care.
+                  Born from a passion for <span className="text-terracotta">luxury</span>, softness, and mindful self-care.
                 </motion.h2>
 
                 <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
                   <p>
-                    ElySof brings together the richness of traditional beauty ingredients with the elegance of modern bathing. Every product is created with one simple purpose: to make everyday bathing feel special.
+                    Born from a passion for luxury, softness, and mindful self-care, ElySof brings together the richness of traditional beauty ingredients with the elegance of modern bathing. Every product is created with one simple purpose: to make everyday bathing feel special.
                   </p>
                   <p>
                     From our luxurious Sandalwood & Kesar Soap to our refreshing Neem Soap, nourishing Honey & Almond Soap, and skincare-focused Glutasof Face Wash, each product is thoughtfully crafted to turn ordinary care into a luxurious experience.
                   </p>
-                  <p className="text-ink">
-                    But ElySof is more than soaps. We are building a complete luxury bath and body experience — from indulgent soaps and skincare to bath towels, robes, loofahs, hair care, and other bath essentials. Our vision is to bring everything you need for a beautiful, relaxing bath ritual under one roof.
+                  <p className="text-ink font-semibold">But ElySof is more than soaps.</p>
+                  <p>
+                    We are building a complete luxury bath and body experience — from indulgent soaps and skincare to bath towels, robes, loofahs, hair care, and other bath essentials. Our vision is to bring everything you need for a beautiful, relaxing bath ritual under one roof.
                   </p>
                 </div>
 
@@ -251,6 +252,9 @@ export default function StoryPage() {
               <h2 className="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl">
                 The four pillars behind every ElySof product
               </h2>
+              <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                We believe luxury should feel good, look beautiful, and become a part of everyday life. That is why we focus on:
+              </p>
             </div>
 
             <motion.div
@@ -296,7 +300,7 @@ export default function StoryPage() {
                 To become a trusted luxury bath and body brand
               </motion.h2>
               <motion.p variants={reveal} className="mx-auto mt-5 max-w-2xl text-base leading-relaxed opacity-90 sm:text-lg">
-                We want to inspire people to slow down, care for themselves, and enjoy the little moments of everyday luxury. Because you don't need a special occasion to treat yourself — every bath deserves a little luxury.
+                To become a trusted luxury bath and body brand that inspires people to slow down, care for themselves, and enjoy the little moments of everyday luxury. Because you don't need a special occasion to treat yourself. Every bath deserves a little luxury.
               </motion.p>
               <motion.div variants={reveal} className="mt-10 flex flex-wrap justify-center gap-3">
                 <Link
