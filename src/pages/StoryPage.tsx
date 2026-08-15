@@ -8,6 +8,7 @@ import {
   Droplets,
   Star,
   ArrowRight,
+  Sun,
   Sprout,
 } from "lucide-react";
 import { SEO, breadcrumbSchema, organizationSchema } from "@/components/SEO";
