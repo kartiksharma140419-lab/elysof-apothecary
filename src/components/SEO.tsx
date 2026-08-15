@@ -23,7 +23,7 @@ export const organizationSchema = {
   logo: `${SITE_URL}/logo.png`,
   email: "info@elysof.com",
   telephone: "+91-83697-29653",
-  sameAs: ["https://www.instagram.com/elysof"],
+  sameAs: ["https://www.instagram.com/elysofofficial?igsh=cXBoNGJ1cjRycDVo"],
 };
 
 export function breadcrumbSchema(name: string, path: string) {

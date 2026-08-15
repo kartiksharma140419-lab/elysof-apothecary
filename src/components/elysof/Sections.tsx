@@ -1280,6 +1280,20 @@ export function Contact() {
               </div>
             </li>
             <li className="flex items-start gap-3">
+              <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-forest text-primary-foreground"><Instagram size={16} /></span>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Instagram</p>
+                <a
+                  href="https://www.instagram.com/elysofofficial?igsh=cXBoNGJ1cjRycDVo"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-base font-semibold hover:text-forest transition-colors"
+                >
+                  @elysofofficial
+                </a>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
               <span className="grid h-10 w-10 place-items-center border-2 border-ink bg-ink text-parchment"><MessageCircle size={16} /></span>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Support hours</p>
@@ -1361,12 +1375,12 @@ export function Footer() {
               Handcrafted Ayurvedic skincare for soft, radiant, healthy skin.
             </p>
             <a
-              href="https://www.instagram.com/elysof"
+              href="https://www.instagram.com/elysofofficial?igsh=cXBoNGJ1cjRycDVo"
               target="_blank"
               rel="noreferrer"
-              className="mt-5 inline-flex items-center gap-2 border-2 border-parchment px-3 py-1.5 text-xs font-semibold uppercase tracking-wider hover:bg-parchment hover:text-ink"
+              className="mt-5 inline-flex items-center gap-2 border-2 border-parchment px-3 py-1.5 text-xs font-semibold uppercase tracking-wider hover:bg-parchment hover:text-ink transition-colors"
             >
-              <Instagram size={14} /> @elysof
+              <Instagram size={14} /> @elysofofficial
             </a>
           </div>
 

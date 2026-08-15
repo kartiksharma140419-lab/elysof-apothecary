@@ -23,6 +23,7 @@ import {
   ArrowLeftRight,
   Sparkle,
   ShoppingBag,
+  Instagram,
 } from "lucide-react";
 
 import brandLogo from "@/assets/logo.png";
@@ -844,6 +845,30 @@ export function LifestyleLookbook() {
               Before & After →
             </p>
           </Link>
+        </div>
+
+        {/* Instagram Community Banner */}
+        <div className="mt-8 border-2 border-ink bg-parchment p-5 sm:p-6 shadow-brut-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 text-left">
+            <div className="grid h-12 w-12 shrink-0 place-items-center border-2 border-ink bg-forest text-primary-foreground">
+              <Instagram size={24} />
+            </div>
+            <div>
+              <p className="font-display text-base sm:text-lg font-bold text-ink">Join Our Bath Sanctuary on Instagram</p>
+              <p className="font-accent text-xs italic text-muted-foreground">
+                Follow <span className="font-semibold text-forest">@elysofofficial</span> for skincare rituals, behind-the-scenes & festive giveaways.
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://www.instagram.com/elysofofficial?igsh=cXBoNGJ1cjRycDVo"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex shrink-0 items-center gap-2 border-2 border-ink bg-forest px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-brut-sm transition hover:bg-forest-deep"
+          >
+            <Instagram size={14} />
+            <span>Follow @elysofofficial</span>
+          </a>
         </div>
       </div>
     </section>
