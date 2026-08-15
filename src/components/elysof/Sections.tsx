@@ -87,7 +87,7 @@ export function Navbar() {
     { label: "Offers", to: "/offers", badge: "Festive" },
     { label: "Reviews", to: "/reviews" },
     { label: "Results", to: "/results" },
-    { label: "Our Story", to: "/#story" },
+    { label: "Our Story", to: "/story" },
     { label: "Contact", to: "/contact" },
   ];
 
@@ -1370,7 +1370,7 @@ export function Footer() {
             </a>
           </div>
 
-          <FCol title="Quick Links" items={[["Home", "/"], ["Products", "/products"], ["Combos", "/combos"], ["Our Story", "/#story"], ["Reviews", "/reviews"], ["Offers", "/offers"], ["Contact", "/contact"]]} />
+          <FCol title="Quick Links" items={[["Home", "/"], ["Products", "/products"], ["Combos", "/combos"], ["Our Story", "/story"], ["Reviews", "/reviews"], ["Offers", "/offers"], ["Contact", "/contact"]]} />
           <FCol title="Our Products" items={products.map((p) => [p.shortName, "/products"] as [string, string])} />
           <div>
             <p className="font-accent text-[11px] uppercase tracking-[0.25em] text-parchment/60">Customer Care</p>
@@ -1398,7 +1398,11 @@ function FCol({ title, items }: { title: string; items: [string, string][] }) {
       <ul className="mt-3 space-y-2 text-sm">
         {items.map(([label, href]) => (
           <li key={label}>
-            <a href={href} className="hover:text-gold">{label}</a>
+            {href.startsWith("/") ? (
+              <Link to={href} className="hover:text-gold">{label}</Link>
+            ) : (
+              <a href={href} className="hover:text-gold">{label}</a>
+            )}
           </li>
         ))}
       </ul>

@@ -7,6 +7,7 @@ import CombosPage from "@/pages/CombosPage";
 import ReviewsPage from "@/pages/ReviewsPage";
 import ResultsPage from "@/pages/ResultsPage";
 import OffersPage from "@/pages/OffersPage";
+import StoryPage from "@/pages/StoryPage";
 import ContactPage from "@/pages/ContactPage";
 import NotFound from "@/pages/NotFound";
 
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/combos" element={<CombosPage />} />
           <Route path="/offers" element={<OffersPage />} />
+          <Route path="/story" element={<StoryPage />} />
           <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/contact" element={<ContactPage />} />
