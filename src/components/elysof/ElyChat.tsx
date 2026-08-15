@@ -264,7 +264,7 @@ export function ElyChat() {
             {busy && msgs[msgs.length - 1]?.role === "user" && (
               <div className="flex items-center gap-2">
                 <img
-                  src={elyAvatar.url}
+                  src={elyAvatar}
                   alt=""
                   aria-hidden
                   className="h-7 w-7 flex-none rounded-full object-cover object-top ring-1 ring-ink/10"

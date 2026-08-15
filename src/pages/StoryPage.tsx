@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Leaf,
@@ -8,9 +8,6 @@ import {
   Droplets,
   Star,
   ArrowRight,
-  Award,
-  Sun,
-  Moon,
   Sprout,
 } from "lucide-react";
 import { SEO, breadcrumbSchema, organizationSchema } from "@/components/SEO";
@@ -18,12 +15,12 @@ import { products } from "@/lib/products";
 import brandLogo from "@/assets/logo.png";
 import comboImg from "@/assets/combo-pack.jpeg";
 
-const reveal = {
+const reveal: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-const stagger = {
+const stagger: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
