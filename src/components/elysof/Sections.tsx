@@ -1398,7 +1398,11 @@ function FCol({ title, items }: { title: string; items: [string, string][] }) {
       <ul className="mt-3 space-y-2 text-sm">
         {items.map(([label, href]) => (
           <li key={label}>
-            <a href={href} className="hover:text-gold">{label}</a>
+            {href.startsWith("/") ? (
+              <Link to={href} className="hover:text-gold">{label}</Link>
+            ) : (
+              <a href={href} className="hover:text-gold">{label}</a>
+            )}
           </li>
         ))}
       </ul>
