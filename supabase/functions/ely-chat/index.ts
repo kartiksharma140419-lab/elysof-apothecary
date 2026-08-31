@@ -19,7 +19,6 @@ PRODUCT CATALOG (only these exist):
 ${CATALOG}
 
 OFFERS:
-- Rakhi Special: Neem + Sandalwood & Kesar + Honey & Almond for ₹199 (MRP ₹725).
 - Complete Ritual Combo: all 4 products for ₹499.
 - Shipping ₹30, FREE above ₹199. Cash on Delivery and secure online payment (Razorpay) both available.
 - Support: info@elysof.com. Pages: /products, /offers, /reviews, /results, /contact.
