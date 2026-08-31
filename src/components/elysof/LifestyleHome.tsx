@@ -90,15 +90,6 @@ export function LifestyleHero() {
               <ArrowRight size={16} />
             </Link>
 
-            <Link
-              to="/offers"
-              className="inline-flex items-center justify-center gap-2 border-2 border-ink bg-paper px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-ink transition hover:bg-parchment"
-            >
-              <span>Festive Offers</span>
-              <span className="rounded bg-terracotta/30 px-1.5 py-0.5 text-[10px] font-bold text-forest-deep">
-                ₹199
-              </span>
-            </Link>
           </div>
 
           {/* Sensory Touchpoints Pills */}
