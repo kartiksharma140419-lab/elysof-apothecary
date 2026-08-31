@@ -1,4 +1,3 @@
-import { RakhiOffer } from "@/components/elysof/RakhiOffer";
 import { ComboOffer } from "@/components/elysof/ComboOffer";
 import { HeroSlider } from "@/components/elysof/HeroSlider";
 import { SEO, breadcrumbSchema } from "@/components/SEO";
@@ -7,20 +6,15 @@ export default function OffersPage() {
   return (
     <>
       <SEO
-        title="ElySof Offers — Rakhi 3-Soap Combo ₹199 & Full Combo ₹499"
-        description="Grab the limited-time ElySof festive offers: any 3 Ayurvedic soaps for ₹199 and the complete 4-product ritual combo for ₹499. Free shipping on prepaid orders."
+        title="ElySof Offers — Complete 4-Product Ritual Combo at ₹499"
+        description="Grab the limited-time ElySof offer: the complete 4-product Ayurvedic ritual combo for just ₹499. Free shipping on prepaid orders."
         path="/offers"
-        image="/og/rakhi-offer.jpeg"
+        image="/og/combo-pack.jpeg"
         jsonLd={breadcrumbSchema("Offers", "/offers")}
       />
       <h1 className="sr-only">ElySof Festive Offers</h1>
-      <RakhiOffer />
-      <div className="offer-section-legacy">
-        <ComboOffer />
-      </div>
-      <div className="section-after-offer-legacy">
-        <HeroSlider />
-      </div>
+      <ComboOffer />
+      <HeroSlider />
     </>
   );
 }

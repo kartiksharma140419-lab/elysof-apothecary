@@ -22,7 +22,6 @@ import { ComboDetailModal } from "@/components/elysof/ComboDetailModal";
 import { CheckoutModal } from "@/components/elysof/CheckoutModal";
 
 import comboPackHero from "@/assets/combo-pack.jpeg";
-import rakhiOfferImg from "@/assets/rakhi-offer.jpeg";
 
 export default function CombosPage() {
   const { add, setOpen: setCartOpen } = useCart();
@@ -231,52 +230,6 @@ export default function CombosPage() {
           </div>
         </section>
 
-        {/* 3. Festive Limited Time Variety Offer Banner */}
-        <section className="border-y-2 border-ink bg-forest py-12 text-primary-foreground">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6">
-            <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
-              <div className="lg:col-span-4">
-                <div className="relative aspect-[4/3] overflow-hidden border-2 border-ink bg-parchment shadow-brut-sm">
-                  <img
-                    src={rakhiOfferImg}
-                    alt="Festive 3 Soap Variety Offer"
-                    className="h-full w-full object-cover"
-                  />
-                  <span className="absolute left-3 top-3 border border-ink bg-[#B2511E] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-                    Special Festive Pack
-                  </span>
-                </div>
-              </div>
-
-              <div className="lg:col-span-8">
-                <span className="font-accent text-xs uppercase tracking-widest text-parchment/70 font-bold">
-                  🎁 Want to Mix & Match?
-                </span>
-                <h3 className="mt-1 font-display text-3xl sm:text-4xl text-parchment">
-                  Get Any 3 Custom Soaps For Just ₹199!
-                </h3>
-                <p className="mt-3 text-sm text-parchment/80 max-w-xl leading-relaxed">
-                  Want one Neem, one Sandalwood, and one Honey Almond? Our custom 3-soap builder lets you
-                  mix any 3 bars for ₹199 with Free Prepaid Delivery.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-4">
-                  <Link
-                    to="/offers"
-                    className="border-2 border-ink bg-parchment px-6 py-3 text-xs font-bold uppercase tracking-wider text-ink shadow-brut-sm transition hover:bg-white"
-                  >
-                    Build Your Custom 3-Soap Pack →
-                  </Link>
-                  <Link
-                    to="/products"
-                    className="border-2 border-parchment bg-transparent px-5 py-3 text-xs font-bold uppercase tracking-wider text-parchment transition hover:bg-parchment hover:text-ink"
-                  >
-                    View Solo Soaps
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
 
       {/* Explore More Detail Modal */}

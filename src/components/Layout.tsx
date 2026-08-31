@@ -4,7 +4,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { AnnouncementBar, Navbar, Footer } from "@/components/elysof/Sections";
 import { CartDrawer } from "@/components/elysof/CartDrawer";
 import { PromoModal } from "@/components/elysof/PromoModal";
-import { RakhiPopUp } from "@/components/elysof/RakhiPopUp";
 import { ElyChat } from "@/components/elysof/ElyChat";
 
 export function Layout() {
@@ -26,7 +25,6 @@ export function Layout() {
       <Footer />
       <CartDrawer />
       <PromoModal />
-      <RakhiPopUp />
       <ElyChat />
       <Toaster position="top-center" richColors />
     </div>
