@@ -9,7 +9,9 @@ const corsHeaders = {
 // Override with the ORDER_INBOX secret to point orders at a mailbox that can
 // actually receive mail (elysof.com needs MX records for info@elysof.com to work).
 const ORDER_INBOX = Deno.env.get("ORDER_INBOX") || "info@elysof.com";
-const FROM = "ElySof Orders <orders@elysof.com>";
+// elysof.com is not verified in Resend, so sending from it is rejected (403).
+// Use Resend's always-verified shared sender unless a verified domain is configured.
+const FROM = Deno.env.get("ORDER_FROM") || "ElySof Orders <onboarding@resend.dev>";
 
 type Item = { name: string; quantity: number; price: number };
 
